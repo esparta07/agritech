@@ -1,0 +1,756 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AgriTech</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load static %}
+     <!-- Place favicon.png in the root directory -->
+     <link rel="shortcut icon" href="{% static 'ecom/img/favicon.png' %}" type="image/x-icon" />
+     <!-- Font Icons css -->
+     <link rel="stylesheet" href="{% static 'ecom/css/font-icons.css' %}"> 
+     <!-- plugins css -->
+     <link rel="stylesheet" href="{% static 'ecom/css/plugins.css' %}">
+     <!-- Main Stylesheet -->
+     <link rel="stylesheet" href="{% static 'ecom/css/style.css' %}">
+     <!-- Responsive css -->
+     <link rel="stylesheet" href="{% static 'ecom/css/responsive.css' %}">
+     <!-- Custom css -->
+     <link rel="stylesheet" href="{% static 'ecom/css/custom.css' %}">
+     <!-- All JS Plugins -->
+    <script src="{% static 'ecom/js/plugins.js' %}"></script>
+    <!-- Main JS -->
+    <script src="{% static 'ecom/js/main.js' %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'ecom/js/custom.js' %}"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!--Jquerry-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=INR"></script>
+    <!--Khalti-->
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready( function () {
+        $('#myOrdersTable').DataTable();
+      } );
+    </script>
+
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+
+<!-- Body main wrapper start -->
+<div class="body-wrapper">
+
+  
+        <!-- ltn__header-middle-area start -->
+        <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="site-logo-wrap">
+                            <div class="site-logo">
+                                <a href="{% url 'index' %}"><img src="{% static 'ecom/img/logo.png' %}" alt="Logo"></a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col header-menu-column">
+                        <div class="header-menu d-none d-xl-block">
+                            <nav>
+                                <div class="ltn__main-menu">
+                                    <ul>
+                                        <li class="menu-icon"><a href="{% url 'index' %}">Home</a>
+                                            
+                                        </li>
+                                        <li class="menu-icon"><a href="#">About</a>
+                                          <ul>
+                                              <li><a href="{% url 'about' %}">About</a></li>
+                                              
+                                              <li><a href="{% url 'faq' %}">FAQ</a></li>
+
+                                          </ul>
+                                      </li>
+                                        <li class="menu-icon"><a href="{% url 'ecom:shop' %}">Market</a>
+                                            {% comment %} <ul>
+                                                
+                                                <li><a href="{% url 'ecom:shop' %}">Investor Market</a></li>
+                                                 <li><a href="{% url 'account:registerUser' %}">user</a></li>
+                                                <li><a href="{% url 'account:registerVendor' %}">farm</a></li> 
+                                            </ul>
+                                        </li>
+                                        <li class="menu-icon"><a href="{% url 'blog' %}">Agri-Support</a>
+                                            
+                                        </li>  {% endcomment %}
+                                        <li class="menu-icon"><a href="{% url 'contact' %}">Contact</a>
+                                            
+                                          
+                                        </li>
+                                        <li>
+                                            {% if user.is_authenticated %}
+                                                <a href="{% url 'account:logout' %}">Logout</a></li>
+                                                {% else %}
+                                                <a href="{% url 'account:login' %}">Login</a></li>
+                                                {% endif %}
+                                        </li>
+                                      
+                                        {% comment %} <li>
+                                            {% if user.is_authenticated %}
+                                                Profile_image
+                                                {% else %}
+                                                
+                                                {% endif %}
+                                        </li> {% endcomment %}
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="ltn__header-options ltn__header-options-2 mb-sm-20">
+                        <!-- header-search-1 -->
+                        <div class="header-search-wrap">
+                            {% comment %} <div class="header-search-1">
+                                <div class="search-icon">
+                                    <i class="icon-search for-search-show"></i>
+                                    <i class="icon-cancel  for-search-close"></i>
+                                </div>
+                            </div> {% endcomment %}
+                            {% comment %} <div class="header-search-1-form">
+                                <form id="#" method="get"  action="#">
+                                    <input type="text" name="search" value="" placeholder="Search here..."/>
+                                    <button type="submit">
+                                        <span><i class="icon-search"></i></span>
+                                    </button>
+                                </form>
+                            </div> {% endcomment %}
+                        </div>
+                        <!-- user-menu -->
+                        <div class="ltn__drop-menu user-menu">
+                          <ul>
+                              <li>
+                                  {% if user.is_authenticated %}
+                                  <a href="{% url 'account:myAccount' %}">
+                                      {% if user.userprofile.profile_picture %}
+                                      <div style="position: relative; display: inline-block;">
+                                          <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover;">
+                                          {% if user.is_verified %}
+                                          <img src="{% static 'ecom/img/verified.png' %}" alt="Verification Badge" style="position: absolute; bottom: 4px; right: -6px; width: 20px; height: 20px;">
+                                          {% endif %}
+                                        </div>
+                                      {% else %}
+                                      <img src="{% static 'ecom/img/icons/user.png' %}" alt="Profile Picture">
+                                      {% if user.is_verified %}
+                                      <img src="{% static 'ecom/img/verified.png' %}" alt="Verification Badge" style="position: absolute; bottom: 1px; right: 1px; width: 20px; height: 20px;">
+                                      {% endif %}
+                                      {% endif %}
+                                  </a>
+                                  
+                                  {% else %}
+                                  <a href="{% url 'account:myAccount' %}"><i class="icon-user"></i></a>
+                                  {% endif %}
+                              </li>
+                          </ul>
+                        </div>
+                         <!-- mini-cart -->
+                         {% if user.is_authenticated %}
+                         <div class="mini-cart-icon">
+                          
+                            <a href="{% url 'ecom:cart' %}" title="Shoping Cart">
+                            <span class="utilize-btn-icon">
+                            <i class="fas fa-shopping-cart"></i><span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom:10px; left: -5px;">{{ cart_count }}</span>
+                            
+                            </a>
+                            {% endif %}
+                      </div>
+                      <!-- mini-cart -->
+                        <!-- Mobile Menu Button -->
+                        <div class="mobile-menu-toggle d-xl-none">
+                            <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
+                                <svg viewBox="0 0 800 600">
+                                    <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
+                                    <path d="M300,320 L540,320" id="middle"></path>
+                                    <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ltn__header-middle-area end -->
+    </header>
+    <!-- HEADER AREA END -->
+
+
+    {% block content %}
+      
+    {% endblock %}
+     <!-- Utilize Cart Menu Start -->
+     <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
+      <div class="ltn__utilize-menu-inner ltn__scrollbar">
+          <div class="ltn__utilize-menu-head">
+              <span class="ltn__utilize-menu-title">Cart</span>
+              <button class="ltn__utilize-close">×</button>
+          </div>
+          <div class="mini-cart-product-area ltn__scrollbar">
+              <div class="mini-cart-item clearfix">
+                  <div class="mini-cart-img">
+                      <a href="#"><img src="img/product/1.png" alt="Image"></a>
+                      <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                  </div>
+                  <div class="mini-cart-info">
+                      <h6><a href="#">Wheel Bearing Retainer</a></h6>
+                      <span class="mini-cart-quantity">1 x $65.00</span>
+                  </div>
+              </div>
+              <div class="mini-cart-item clearfix">
+                  <div class="mini-cart-img">
+                      <a href="#"><img src="img/product/2.png" alt="Image"></a>
+                      <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                  </div>
+                  <div class="mini-cart-info">
+                      <h6><a href="#">Brake Conversion Kit</a></h6>
+                      <span class="mini-cart-quantity">1 x $85.00</span>
+                  </div>
+              </div>
+              <div class="mini-cart-item clearfix">
+                  <div class="mini-cart-img">
+                      <a href="#"><img src="img/product/3.png" alt="Image"></a>
+                      <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                  </div>
+                  <div class="mini-cart-info">
+                      <h6><a href="#">OE Replica Wheels</a></h6>
+                      <span class="mini-cart-quantity">1 x $92.00</span>
+                  </div>
+              </div>
+              <div class="mini-cart-item clearfix">
+                  <div class="mini-cart-img">
+                      <a href="#"><img src="img/product/4.png" alt="Image"></a>
+                      <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                  </div>
+                  <div class="mini-cart-info">
+                      <h6><a href="#">Shock Mount Insulator</a></h6>
+                      <span class="mini-cart-quantity">1 x $68.00</span>
+                  </div>
+              </div>
+          </div>
+          <div class="mini-cart-footer">
+              <div class="mini-cart-sub-total">
+                  <h5>Subtotal: <span>$310.00</span></h5>
+              </div>
+              <div class="btn-wrapper">
+                  <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                  <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+              </div>
+              <p>Free Shipping on All Orders Over $100!</p>
+          </div>
+
+      </div>
+  </div>
+  <!-- Utilize Cart Menu End -->
+  <!-- Utilize Mobile Menu Start -->
+  <div id="ltn__utilize-mobile-menu" class="ltn__utilize ltn__utilize-mobile-menu">
+    <div class="ltn__utilize-menu-inner ltn__scrollbar">
+        <div class="ltn__utilize-menu-head">
+            <div class="site-logo">
+                <a href="index.html"><img src="img/logo.png" alt="Logo"></a>
+            </div>
+            <button class="ltn__utilize-close">×</button>
+        </div>
+        <div class="ltn__utilize-menu-search-form">
+            <form action="#">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="ltn__utilize-menu">
+            <ul>
+                <li><a href="#">Home</a>
+                    <ul class="sub-menu">
+                        <li><a href="index.html">Home Style 01</a></li>
+                        <li><a href="index-2.html">Home Style 02</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">About</a>
+                    <ul class="sub-menu">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="service.html">Services</a></li>
+                        <li><a href="service-details.html">Service Details</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="portfolio-2.html">Portfolio - 02</a></li>
+                        <li><a href="portfolio-details.html">Portfolio Details</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="team-details.html">Team Details</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="locations.html">Google Map Locations</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Market</a>
+                    <ul class="sub-menu">
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="shop-grid.html">Shop Grid</a></li>
+                        <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
+                        <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
+                        <li><a href="product-details.html">Shop details </a></li>
+                        {% comment %} <li><a href="{% url 'ecom:cart' %}">Cart</a></li> {% endcomment %}
+                        <li><a href="wishlist.html">Wishlist</a></li>
+                        <li><a href="{% url 'ecom:checkout' %}">Checkout</a></li>
+                        <li><a href="order-tracking.html">Order Tracking</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="login.html">Sign in</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">News</a>
+                    <ul class="sub-menu">
+                        <li><a href="blog.html">News</a></li>
+                        <li><a href="blog-grid.html">News Grid</a></li>
+                        <li><a href="blog-left-sidebar.html">News Left sidebar</a></li>
+                        <li><a href="blog-right-sidebar.html">News Right sidebar</a></li>
+                        <li><a href="blog-details.html">News details</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Pages</a>
+                    <ul class="sub-menu">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="service.html">Services</a></li>
+                        <li><a href="service-details.html">Service Details</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="portfolio-2.html">Portfolio - 02</a></li>
+                        <li><a href="portfolio-details.html">Portfolio Details</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="team-details.html">Team Details</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="history.html">History</a></li>
+                        <li><a href="add-listing.html">Add Listing</a></li>
+                        <li><a href="locations.html">Google Map Locations</a></li>
+                        <li><a href="404.html">404</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="coming-soon.html">Coming Soon</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="ltn__utilize-buttons ltn__utilize-buttons-2">
+            <ul>
+                <li>
+                    <a href="account.html" title="My Account">
+                        <span class="utilize-btn-icon">
+                            <i class="far fa-user"></i>
+                        </span>
+                        My Account
+                    </a>
+                </li>
+                <li>
+                    <a href="wishlist.html" title="Wishlist">
+                        <span class="utilize-btn-icon">
+                            <i class="far fa-heart"></i>
+                            <sup>3</sup>
+                        </span>
+                        Wishlist
+                    </a>
+                </li>
+                <li>
+                  
+                            
+                </li>
+            </ul>
+        </div>
+        <div class="ltn__social-media-2">
+            <ul>
+                <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Utilize Mobile Menu End -->
+
+    <!-- MODAL AREA START (Quick View Modal) -->
+<div class="ltn__modal-area ltn__quick-view-modal-area">
+    {% for proj in project %}
+    <div class="modal fade" id="quick_view_modal_{{ proj.id }}" tabindex="-1">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="ltn__quick-view-modal-inner">
+              <div class="modal-product-item">
+                <div class="row">
+                  <div class="col-lg-6 col-12">
+                    <div class="modal-product-img" style="width: 350px; height: 350px" >
+                      <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <div class="modal-product-info">
+                      <h3>{{ proj.project_title }}</h3>
+                      <div class="product-price">
+                        <span>{{ proj.value_of_share }}</span>
+                      </div>
+                      <div class="modal-product-meta ltn__product-details-menu-1">
+                        <ul>
+                          <li>
+                            <strong>Category:</strong>
+                            <span>
+                              <a href="#">{{ proj.project_type }}</a>
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="ltn__product-details-menu-2">
+                        <ul>
+                          <li>
+                            <a href="#" class="decrease_cart" data-id="{{ proj.id }}" data-url="{% url 'ecom:decrease_cart' proj.id %}" style="margin-right: 10px;">
+                              <img src="{% static 'ecom/img/minus.png' %}">
+                          </a>
+                          <label id="qty-{{proj.id}}">0</label>
+                          <a href="#" class="add_to_cart" data-id="{{ proj.id }}" data-url="{% url 'ecom:add_to_cart' proj.id %}" style="margin-left: 10px;">
+                              <img src="{% static 'ecom/img/plus.png' %}">
+                          </a>
+                          </li>
+                          <li>
+                            <a href={% url 'ecom:cart' %} class="theme-btn-1 btn btn-effect-1" title="Add to Cart"  style="height:45px">
+                              <i class="fas fa-shopping-cart"></i>
+                              <span>CART</span>
+                          </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="ltn__product-details-menu-3">
+                        <ul>
+                          <li>
+                            <a
+                              href="#"
+                              class=""
+                              title="Wishlist"
+                              data-toggle="modal"
+                              data-target="#liton_wishlist_modal"
+                            >
+                              <i class="far fa-heart"></i>
+                              <span>Add to Wishlist</span>
+                            </a>
+                          </li>
+                          <li>
+                           
+                          </li>
+                        </ul>
+                      </div>
+                      <hr />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- MODAL AREA END -->
+<!-- MODAL AREA START (Add To Cart Modal) -->
+<div class="ltn__modal-area ltn__add-to-cart-modal-area">
+    {% for proj in project  %}
+    <div class="modal fade" id="add_to_cart_modal_{{ proj.id }}" tabindex="-1">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="ltn__quick-view-modal-inner">
+              <div class="modal-product-item">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="modal-product-img " style="width: 100px; height: 100px">
+                        <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                    </div>
+                    <div class="modal-product-info">
+                      <h5>
+                        <a href="product-details.html">{{proj.project_title}}</a>
+                      </h5>
+                      <p class="added-cart">
+                        <i class="fa fa-check-circle"></i> Successfully
+                        added to your Cart
+                      </p>
+                      <div class="btn-wrapper">
+                        <a
+                          href="cart.html"
+                          class="theme-btn-1 btn btn-effect-1"
+                          >View Cart</a
+                        >
+                        <a
+                          href="checkout.html"
+                          class="theme-btn-2 btn btn-effect-2"
+                          >Checkout</a
+                        >
+                      </div>
+                    </div>
+                    <!-- additional-info -->
+                    <div class="additional-info d-none">
+                      <p>
+                        We want to give you <b>10% discount</b> for your
+                        first order, <br />
+                        Use discount code at checkout
+                      </p>
+                      <div class="payment-method">
+                        <img src="img/icons/payment.png" alt="#" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- MODAL AREA END --> 
+
+      
+
+      <!-- MODAL AREA START (Wishlist Modal) -->
+      <div class="ltn__modal-area ltn__add-to-cart-modal-area">
+        {% for proj in project  %}
+        <div class="modal fade" id="liton_wishlist_modal_{{ proj.id }}" tabindex="-1">
+          <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="ltn__quick-view-modal-inner">
+                  <div class="modal-product-item">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="modal-product-img " style="width: 100px; height: 100px">
+                            <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                        </div>
+                        <div class="modal-product-info">
+                          <h5>
+                            <a href="product-details.html"
+                              >{{proj.project_title}}</a
+                            >
+                          </h5>
+                          <p class="added-cart">
+                            <i class="fa fa-check-circle"></i> Successfully
+                            added to your Wishlist
+                          </p>
+                          <div class="btn-wrapper">
+                            <a
+                              href="wishlist.html"
+                              class="theme-btn-1 btn btn-effect-1"
+                              >View Wishlist</a
+                            >
+                          </div>
+                        </div>
+                        <!-- additional-info -->
+                        <div class="additional-info d-none">
+                          <p>
+                            We want to give you <b>10% discount</b> for your
+                            first order, <br />
+                            Use discount code at checkout
+                          </p>
+                          <div class="payment-method">
+                            <img src="img/icons/payment.png" alt="#" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- MODAL AREA END -->
+    <!-- FOOTER AREA START -->
+<footer class="ltn__footer-area  ">
+    <div class="footer-top-area  section-bg-2 plr--5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-md-6 col-sm-6 col-12">
+                    <div class="footer-widget footer-about-widget">
+                        <div class="footer-logo">
+                            <div class="site-logo">
+                                <img src="{% static 'ecom/img/logo-2.png' %}" alt="Logo">
+                            </div>
+                        </div>
+                        <p>We are a compnay working for the betterment of Farmers and pushing the agriculture sector to a new level.</p>
+                        <div class="footer-address">
+                            <ul>
+                                <li>
+                                    <div class="footer-address-icon">
+                                        <i class="icon-placeholder"></i>
+                                    </div>
+                                    <div class="footer-address-info">
+                                        <p>Bakhundole,Kathamndu</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="footer-address-icon">
+                                        <i class="icon-call"></i>
+                                    </div>
+                                    <div class="footer-address-info">
+                                        <p><a href="tel:+0123-456789">+0123-456789</a></p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="footer-address-icon">
+                                        <i class="icon-mail"></i>
+                                    </div>
+                                    <div class="footer-address-info">
+                                        <p><a href="mailto:example@example.com">agritech@gmail.com</a></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="ltn__social-media mt-20">
+                            <ul>
+                                <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                <li><a href="#" title="Youtube"><i class="fab fa-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                    <div class="footer-widget footer-menu-widget clearfix">
+                        <h4 class="footer-title">Company</h4>
+                        <div class="footer-menu">
+                            <ul>
+                                <li><a href="{% url 'about' %}">About</a></li>
+                                {% comment %} <li><a href="locations.html">Locations Map</a></li> {% endcomment %}
+                                <li><a href="{% url 'faq' %}">FAQ</a></li>
+                                <li><a href="{% url 'contact' %}">Contact us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                    <div class="footer-widget footer-menu-widget clearfix">
+                        <h4 class="footer-title">Services</h4>
+                        <div class="footer-menu">
+                            <ul>
+                                <li><a href="{% url 'ecom:shop' %}">Market</a></li>
+                                {% comment %} <li><a href="wishlist.html">Wish List</a></li> {% endcomment %}
+                                <li><a href="{% url 'account:login' %}">Login</a></li>
+                                
+                                <li><a href="about.html">Terms & Conditions</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                    <div class="footer-widget footer-menu-widget clearfix">
+                        <h4 class="footer-title">Customer Care</h4>
+                        <div class="footer-menu">
+                            <ul>
+                                <li><a href="{% url 'account:login' %}">Login</a></li>
+                                <li><a href={% url 'account:myAccount' %}>My account</a></li>
+                                {% comment %} <li><a href="wishlist.html">Wish List</a></li> {% endcomment %}
+                                
+                                <li><a href="{% url 'faq' %}">FAQ</a></li>
+                                <li><a href="{% url 'contact' %}">Contact us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12 col-12">
+                    <div class="footer-widget footer-newsletter-widget">
+                        <h4 class="footer-title">Issue</h4>
+                        <p>We will reach to you to solve any issues.</p>
+                        <div class="footer-newsletter">
+                            <form action="#">
+                                <input type="email" name="email" placeholder="Email*">
+                                <div class="btn-wrapper">
+                                    <button class="theme-btn-1 btn" type="submit"><i class="fas fa-location-arrow"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                        <h5 class="mt-30">We Accept</h5>
+                        <img src="{% static 'ecom/img/icons/khalti.png' %}" alt="Payment Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ltn__copyright-area ltn__copyright-2 section-bg-7  plr--5">
+        <div class="container-fluid ltn__border-top-2">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="ltn__copyright-design clearfix">
+                        <p>All Rights Reserved @ Agritech <span class="current-year"></span></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 align-self-center">
+                    <div class="ltn__copyright-menu text-right">
+                        <ul>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Claim</a></li>
+                            <li><a href="#">Privacy & Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- FOOTER AREA END -->
+</body>
+</html>
+ {% comment %} <!-- preloader area start -->
+ <div class="preloader" id="preloader">
+  <div class="preloader-inner">
+      <div class="spinner">
+          <div class="dot1"></div>
+          <div class="dot2"></div>
+      </div>
+  </div>
+</div>
+<!-- preloader area end --> {% endcomment %}

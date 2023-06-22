@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load humanize %}
+    <!-- SHOP DETAILS AREA START -->
+    {% for proj in project %}
+<div class="ltn__shop-details-area pb-85 pt-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+                <div class="ltn__shop-details-inner mb-60">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="ltn__shop-details-img-gallery">
+                                <div class="ltn__shop-details-large-img">
+                                    <div class="single-large-img" style="width: 150px; height: 445px">
+                                        <a href="{{ proj.farm_image.url }}" data-rel="lightcase:myCollection">
+                                            <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                                        </a>
+                                    </div>
+                                    <!-- Rest of the large images -->
+                                </div>
+                                <div class="ltn__shop-details-small-img slick-arrow-2">
+                                    {% for extra_image in proj.extra_images.all %}
+                                        <div class="single-small-img">
+                                            <a href="{{ extra_image.image.url }}" data-rel="lightcase:myCollection">
+                                                <img src="{{ extra_image.image.url }}" alt="Extra Image">
+                                            </a>
+                                        </div> 
+                                    {% endfor %}
+                                </div>
+                                <!-- Rest of the small images -->
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="modal-product-info shop-details-info pl-0">
+                                <h3>{{ proj.project_title }}</h3>
+                                <div class="product-price">
+                                    <span class="greenish">रु‎ </span><span>{{ proj.value_of_share }}</span>
+                                </div>
+                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                    <ul>
+                                        <li>
+                                            
+                                            <strong>Duration:</strong>
+                                            <span>
+                                                <a>{{ proj.duration_in_months }} months</a>
+                                            </span><br>
+                                            <strong>Posted Date:</strong>
+                                            <span>
+                                                <a>{{ proj.created_at|date:"M. d, Y" }}</a>
+                                            </span><br>                                                                                      
+                                            <strong>Return Date:</strong>
+                                            <span>
+                                                <a>{{ proj.return_date }}</a>
+                                            </span><br>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                    <ul>
+                                        <li>
+                                            <strong>Total Cost:</strong>
+                                            <span>
+                                                <a>रु‎ {{ proj.total_cost|floatformat:2|intcomma }}</a>
+                                            </span><br>
+                                            <strong>Farmer <br>Investement :</strong>
+                                            <span>
+                                                <a>रु‎{{ proj.fund_invested|floatformat:2|intcomma }}</a>
+                                            </span><br>
+                                            <strong>Demand :</strong>
+                                            <span>
+                                                <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
+                                            </span><br>
+                                            <strong>Duration:</strong>
+                                            <span>
+                                                <a>{{ proj.duration_in_months }} months</a>
+                                            </span><br>
+                                            <strong>Posted Date:</strong>
+                                            <span>
+                                                <a>{{ proj.created_at|date:"M. d, Y" }}</a>
+                                            </span><br>
+                                            <strong>Return Date:</strong>
+                                            <span>
+                                                <a>{{ proj.return_date|date:"M. d, Y" }}</a>
+                                            </span><br>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                
+                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                    <ul>
+                                        
+                                        <li>
+                                            <strong>Available Shares:</strong> 
+                                            <span class="greenish">
+                                                <b>{{ proj.total_no_shares }}</b>
+                                    </ul>
+                                </div>
+                                <div class="ltn__product-details-menu-2">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="decrease_cart" data-id="{{ proj.id }}" data-url="{% url 'ecom:decrease_cart' proj.id %}" style="margin-right: 10px;">
+                                                <img src="{% static 'ecom/img/minus.png' %}">
+                                            </a>
+                                            <label id="qty-{{proj.id}}">0</label>
+                                            <a href="#" class="add_to_cart" data-id="{{ proj.id }}" data-url="{% url 'ecom:add_to_cart' proj.id %}" style="margin-left: 10px;">
+                                                <img src="{% static 'ecom/img/plus.png' %}">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href={% url 'ecom:cart' %} class="theme-btn-1 btn btn-effect-1" title="Add to Cart"  style="height:45px">
+                                                <i class="fas fa-shopping-cart"></i>
+                                                <span>CART</span>
+                                            </a>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                                {% for item in cart_items %}
+
+                                <span id="qty-{{item.project.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
+
+                                {% endfor %} 
+                                    <div class="ltn__product-details-menu-3">
+                                        <ul>
+                                            <li>
+                                                <a href="#" class="" title="Wishlist" data-toggle="modal" data-target="#liton_wishlist_modal">
+                                                    <i class="far fa-heart"></i>
+                                                    <span>Add to Wishlist</span>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                    <div class="modal-product-meta ltn__product-details-menu-1">
+                                        <ul>
+                                            
+                                            <li>
+                                                <strong>Farmer:</strong> 
+                                                <span class="greenish">
+                                                    <b><a href="{% url 'account:vendor_detail' vendor_id=proj.vendor.id %}">{{ proj.vendor.user.user_profile.first_name }} {{ proj.vendor.user.user_profile.last_name }}</a></b>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                 
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Shop Tab Start -->
+                    <div class="ltn__shop-details-tab-inner ltn__shop-details-tab-inner-2">
+                        <div class="ltn__shop-details-tab-menu">
+                            <div class="nav">
+                                <a class="active show" data-toggle="tab" href="#liton_tab_details_1_1">Description</a>
+                                
+                                
+                            </div>
+                            <h4 class="title-2">{{proj.description_title}}</h4>
+                            
+                            <p style="text-align: justify;">{{proj.project_description}}</p>
+                        </div>
+                        
+                    </div>
+                    <!-- Shop Tab End -->
+                </div>
+                <div class="col-lg-4">
+                    <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
+                        <!-- Top Rated Product Widget -->
+                        <div class="widget ltn__top-rated-product-widget">
+                            <h4 class="ltn__widget-title ltn__widget-title-border">High Return </h4>
+                            <ul>
+                                {% for top_project in top_projects %}
+                                <li>
+                                    <div class="top-rated-product-item clearfix">
+                                        <div class="top-rated-product-img" style="width:350px; height: 100px">
+                                            <a href="{% url 'ecom:product' id=top_project.id %}">
+                                                <img src="{{ top_project.farm_image.url }}" alt="{{ top_project.project_title }}" 
+                                                style="object-fit: cover; width: 100%; height: 100%;"></a>
+                                        </div>
+                                        <div class="top-rated-product-info">
+                                            
+                                            <h6><a href="product-details.html">{{ top_project.project_title }}</a></h6>
+                                            <div class="product-price">
+                                                <span><span class="greenish">रु‎ </span>{{ top_project.value_of_share }}</span><br>
+                                                <span>{{ top_project.percent_return_after_due_date}}</span><span class="greenish"> %</span>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- SHOP DETAILS AREA END -->
+
+    <!-- PRODUCT SLIDER AREA START -->
+    <div class="ltn__product-slider-area ltn__product-gutter pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2">
+                        
+                        <h1 class="section-title">Related Products<span>.</span></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__related-product-slider-one-active slick-arrow-1">
+                {% for related_project in related_projects %}
+                <div class="col-lg-12">
+                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                        <div class="product-img" style="width: 267px; height: 250px">
+                            <a href="{% url 'ecom:product' id=related_project.id %}">
+                                <img src="{{ related_project.farm_image.url }}" alt="{{ related_project.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                            </a>
+                            
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="{% url 'ecom:product' id=related_project.id %}">{{ related_project.project_title }}</a></h2>
+                            <div class="product-price">
+                                <span><span class="greenish">रु‎ </span>{{ related_project.value_of_share }}</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    <!-- PRODUCT SLIDER AREA END -->
+{% endblock %}
+  
+
+   
+    
+
+

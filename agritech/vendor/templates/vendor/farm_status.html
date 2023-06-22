@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+{% include 'includes/alerts.html' %}
+
+<!-- Main Section Start -->
+<div class="main-section">
+    
+    {% include 'includes/cover.html' %}
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <!-- Load the sidebar here -->
+                    {% include 'includes/v_sidebar.html' %}
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <div class="row">
+
+
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h1 class="mt-4">FARM STATUS</h1>
+                                    {% for proj in project %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="modal-product-info shop-details-info pl-0">
+                                                <h3>{{ proj.project_title }}</h3>
+                                                <div class="product-price">
+                                                    <span class="greenish">रु‎ </span><span>{{ proj.value_of_share }}</span>
+                                                </div>
+                                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Duration:</strong>
+                                                            <span>
+                                                                <a>{{ proj.duration_in_months }} months</a>
+                                                            </span><br>
+                                                            <strong>Posted Date:</strong>
+                                                            <span>
+                                                                <a>{{ proj.created_at|date:"M. d, Y" }}</a>
+                                                            </span><br>                                                                                      
+                                                            <strong>Return Date:</strong>
+                                                            <span>
+                                                                <a>{{ proj.return_date }}</a>
+                                                            </span><br>
+                                                            
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Total Cost:</strong>
+                                                            <span>
+                                                                <a>रु‎ {{ proj.total_cost|floatformat:2|intcomma }}</a>
+                                                            </span><br>
+                                                            <strong>Farmer <br>Investment:</strong>
+                                                            <span>
+                                                                <a>रु‎{{ proj.fund_invested|floatformat:2|intcomma }}</a>
+                                                            </span><br>
+                                                            <strong>Demand:</strong>
+                                                            <span>
+                                                                <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
+                                                            </span><br>
+                                                            <strong>Duration:</strong>
+                                                            <span>
+                                                                <a>{{ proj.duration_in_months }} months</a>
+                                                            </span><br>
+                                                            <strong>Posted Date:</strong>
+                                                            <span>
+                                                                <a>{{ proj.created_at|date:"M. d, Y" }}</a>
+                                                            </span><br>
+                                                            <strong>Return Date:</strong>
+                                                            <span>
+                                                                <a>{{ proj.return_date|date:"M. d, Y" }}</a>
+                                                            </span><br>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Available Shares:</strong> 
+                                                            <span class="greenish">
+                                                                <b>{{ proj.total_no_shares }}</b>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="single-large-img" style="width: 300px; height: 300px">
+                                                <a href="{{ proj.farm_image.url }}" data-rel="lightcase:myCollection">
+                                                    <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                                                </a>
+                                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Required Amount:</strong>
+                                                            <span class="greenish text-right">
+                                                                <b>रु‎ {{ proj.demand }}</b>
+                                                            </span>
+                                                            <strong>Collected Amount:</strong>
+                                                    <span class="greenish text-right">
+                                                        <b>रु‎ {{ proj.collected_amount }}</b><br>
+                                                    </span>
+                                                    <strong>Amount Left:</strong>
+                                                    <span class="greenish text-right">
+                                                        <b>रु‎ {{ proj.amount_left }}</b><br>
+                                                    </span>
+                                                    <strong>Active Since:</strong>
+                                                            <span class="greenish">
+                                                                <a>{{ proj.days_since_created }} Days</a>
+                                                            </span><br>
+                                                    <div class="progress mt-10">
+                                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress_ratio }}%" aria-valuenow="{{ project.collected_amount }}" aria-valuemin="0" aria-valuemax="{{ project.demand }}"></div>
+                                                    </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                                
+
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+
+{% endblock %}

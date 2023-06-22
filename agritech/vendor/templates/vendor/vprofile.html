@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'includes/alerts.html' %}
+<!-- Main Section Start -->
+<div class="main-section" >
+
+    <div class="page-section account-header buyer-logged-in">
+        {% include 'includes/cover.html' %}
+        <div class="container">
+			
+            <div class="row">
+				
+				
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <!-- Load the sidebar here -->
+					{% include 'includes/v_sidebar.html' %}
+ 
+                </div>
+				
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <h2  style="margin-top:20px; text-align:center;"> <b>Manage Your Profile </b></h2>
+									<!-- My  Form Start -->
+									<form action="{% url 'account:vprofile' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+										<div class="form-fields-set">
+													<div class="row">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="company-info">
+															  <div class="img-holder" style="display: inline-block; vertical-align: top;">
+																<div class="drag-list" style="width: 150px; height: 150px; overflow: hidden;">
+																  <div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
+																	{% if profile.profile_picture %}
+																	<img class="thumbnail" src="{{profile.profile_picture.url}}" alt="Profile Picture">
+																	{% else %}
+																	<img class="thumbnail" src="{% static 'ecom/img/back2.jpg' %}" alt="Profile Picture">
+																	{% endif %}
+																  </div>
+																</div>
+															  </div>
+															  <div class="text-holder" style="display: inline-block;">
+																<label><b>Update Profile Picture</b></label>
+																<div class="upload-gallery">
+																  <input type="file" class="attach-button" name="profile_picture" id="profile-picture" style=" background-color: #00a474; color:white;">
+																</div>
+																<label class="labels">{{ profile_form.profile_picture.errors }}</label>
+															  </div>
+															</div>
+														  </div>
+														  
+														  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
+															<div class="company-info">
+															  <div class="img-holder" style="display: inline-block; vertical-align: top;">
+																<div class="drag-list" style="width: 150px; height: 150px; overflow: hidden;">
+																  <div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
+																	{% if profile.cover_photo %}
+																	<img class="thumbnail" src="{{profile.cover_photo.url}}" alt="Cover Photo">
+																	{% else %}
+																	<img class="thumbnail" src="{% static 'images/default-cover.png' %}" alt="Cover Photo">
+																	{% endif %}
+																  </div>
+																</div>
+															  </div>
+															  <div class="text-holder" style="display: inline-block;">
+																<label><b>Update Cover Photo</b></label>
+																<div class="upload-gallery">
+																  <input type="file" class="attach-button" name="cover_photo" id="cover-photo" accept="image/*" style=" background-color: #00a474; color:white;">
+																</div>
+																<label class="label">{{ profile_form.cover_photo.errors }}</label>
+															  </div>
+															</div>
+														  </div>
+
+
+														  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
+															<div class="company-info">
+																<div class="img-holder" style="display: inline-block; vertical-align: top;">
+																	<div class="drag-list" style="width: 150px; height: 150px; overflow: hidden;">
+																		<div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
+																			{% if profile.passport_photo %}
+																				<img class="thumbnail" src="{{ profile.passport_photo.url }}" alt="Passport Photo">
+																			{% else %}
+																				<img class="thumbnail" src="{% static 'images/default-passport.png' %}" alt="Passport">
+																			{% endif %}
+																		</div>
+																	</div>
+																</div>
+																<div class="text-holder" style="display: inline-block;">
+																	<label><b>Passport Photo</b></label>
+																	<div class="upload-gallery">
+																		<input type="file" class="attach-button" name="passport_photo" id="passport-photo" style="background-color: #00a474; color:white;">
+																	</div>
+																	<label class="label">{{ profile_form.passport_photo.errors }}</label>
+																</div>
+															</div>
+														</div>
+														
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
+															<div class="company-info">
+																<div class="img-holder" style="display: inline-block; vertical-align: top;">
+																	<div class="drag-list" style="width: 150px; height: 150px; overflow: hidden;">
+																		<div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
+																			{% if profile.citizenship_front %}
+																				<img class="thumbnail" src="{{ profile.citizenship_front.url }}" alt="Citizenship Front">
+																			{% else %}
+																				<img class="thumbnail" src="{% static 'images/default-citizenship.png' %}" alt="Citizenship">
+																			{% endif %}
+																		</div>
+																	</div>
+																</div>
+																<div class="text-holder" style="display: inline-block;">
+																	<label><b>Citizenship Front</b></label>
+																	<div class="upload-gallery">
+																		<input type="file" class="attach-button" name="citizenship_front" id="citizenship-front" style="background-color: #00a474; color:white;">
+																	</div>
+																	<label class="label">{{ profile_form.citizenship_front.errors }}</label>
+																</div>
+															</div>
+														</div>
+														
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
+															<div class="company-info" style="margin-left: -10px;">
+																<div class="img-holder" style="display: inline-block; vertical-align: top;">
+																	<div class="drag-list" style="width: 150px; height: 150px; overflow: hidden;">
+																		<div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
+																			{% if profile.citizenship_back %}
+																				<img class="thumbnail" src="{{ profile.citizenship_back.url }}" alt="Citizenship Back">
+																			{% else %}
+																				<img class="thumbnail" src="{% static 'images/default-citizenship.png' %}" alt="Citizenship">
+																			{% endif %}
+																		</div>
+																	</div>
+																</div>
+																<div class="text-holder" style="display: inline-block;">
+																	<label><b>Citizenship Back</b></label>
+																	<div class="upload-gallery">
+																		<input type="file" class="attach-button" name="citizenship_back" id="citizenship-back" style="background-color: #00a474; color:white;">
+																	</div>
+																	<label class="label">{{ profile_form.citizenship_back.errors }}</label>
+																</div>
+															</div>
+														</div>
+														
+
+
+														<div class="field-holder">
+															<label for="user_choice"><b>Do you have a company?</b></label>
+															<br>
+															<input type="radio" name="user_choice" value="yes" id="user_choice_yes"> Yes
+															<input type="radio" name="user_choice" value="no" id="user_choice_no"> No
+															<div id="additional_files_container" style="display: none;">
+																<div class="text-holder" style="display: inline-block;">
+																	<label><b>Upload Company Registration</b></label>
+																	<div class="upload-gallery">
+																		<input type="file" class="attach-button" name="company_registeration" id="company_registeration" style="background-color: #00a474; color:white;">
+																	</div>
+																	<label class="label">{{ vendor_form.company_registeration.errors }}</label>
+																</div>
+																<div class="text-holder" style="display: inline-block;">
+																	<label><b>Upload Company logo</b></label>
+																	<div class="upload-gallery">
+																		<input type="file" class="attach-button" name="vendor_logo" id="vendor_logo" style="background-color: #00a474; color:white;">
+																	</div>
+																	<label class="label">{{ vendor_form.vendor_logo.errors }}</label>
+																</div>
+															</div>
+														</div>
+													</div> 
+														<div class="row" style="margin-top:40px;">
+															<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top: 20px;">
+																<div class="field-holder">
+																	<label><b>First name *</b></label>
+																	{{ profile_form.first_name }}
+																</div>
+															</div>
+															<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top: 20px;">
+																<div class="field-holder">
+																	<label><b>Last name *</b></label>
+																	{{ profile_form.last_name }}
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="field-holder">
+																<label><b>Write about yourself *</b></label>
+																{{vendor_form.vendor_description}}
+															</div>
+														</div>
+
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="field-holder">
+																<label><b>Address *</b></label>
+																{{profile_form.address}}
+																<small class="text-muted float-right" style="color:darkblue;">powered by Google</small>
+															</div>
+														</div>
+                                                        
+
+                                                        <div class="row" style='margin-top:20px;'>
+															<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+																<div class="field-holder">
+																	<label><b>Country *</b></label>
+																	{{profile_form.country}}
+																</div>
+															</div>
+	
+															<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+																<div class="field-holder">
+																	<label><b>State *</b></label>
+																	{{profile_form.state}}
+																</div>
+															</div>
+	
+															<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+																<div class="field-holder">
+																	<label><b>City *</b></label>
+																	{{profile_form.city}}
+																</div>
+															</div>
+	
+															<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+																<div class="field-holder">
+																	<label><b>Pin Code *</b></label>
+																	{{profile_form.pin_code}}
+																</div>
+															</div>
+														  </div>
+														  <div>
+															<div class="field-holder">
+																<div class="payment-holder input-button-loader">
+																	<input class="btn theme-btn-2 btn-effect-2 rounded-pill" type="submit" value="Update Profile" style="width:170px;">
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+										</div>
+									</form>
+									<!-- My companys Form End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('input[name="user_choice"]').change(function() {
+			if ($(this).val() === 'yes') {
+				$('#additional_files_container').show();
+			} else {
+				$('#additional_files_container').hide();
+			}
+		});
+	});
+	</script>
+	
+<!-- Main Section End -->
+{% endblock %}

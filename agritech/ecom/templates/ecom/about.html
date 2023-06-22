@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+   
+{% block content %}
+{% load static %}
+     <!-- ABOUT US AREA START -->
+    <div class="ltn__about-us-area pt-120 pb-120">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 align-self-center">
+                    <div class="about-us-img-wrap about-img-left">
+                        <img src="{% static 'ecom/img/others/17.jpg' %}" alt="About Us Image">
+                    </div>
+                </div>
+                <div class="col-lg-6 align-self-center">
+                    <div class="about-us-info-wrap">
+                        <div class="section-title-area ltn__section-title-2">
+                            <h6 class="section-subtitle ltn__secondary-color"></h6>
+                            <h3 class="section-title">Working For Future<br> of Farmers and Agriculture</h3>
+                            <p>Agriculture is one of the oldest and most essential human activities, and it plays a vital role in 
+                            feeding the world's population and sustaining our economies</p>
+                        </div>
+                        <p>Our platform aims to bridge the gaps in the agricultural market by connecting all its members.
+                         As one of the most critical sectors for any country, agriculture plays a vital role in Nepal's economy. 
+                         However, in recent years, Nepal has lagged behind in this sector. Therefore,
+                         we strive to raise the agricultural industry to its optimal level through our platform.</p>
+                        <div class="about-author-info d-flex">
+                            <div class="author-name-designation  align-self-center mr-30">
+                                 <h4 class="mb-0">Arvind Shah</h4>
+                                <small> Founder</small> 
+                                
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ABOUT US AREA END -->
+
+    <!-- CALL TO ACTION START (call-to-action-4) -->
+    <div class="ltn__call-to-action-area ltn__call-to-action-4 bg-image" data-bg= "{% static 'ecom/img/bg/36c.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="call-to-action-inner call-to-action-inner-4 text-center--- pt-115 pb-120">
+                        <div class="section-title-area ltn__section-title-2">
+                            <h6 class="section-subtitle ltn__secondary-color"><a href="tel:+123456789"></a></h6>
+                            <h1 class="section-title white-color">Grow your farm with us </h1>
+                        </div>
+                        <div class="btn-wrapper">
+                            <a href={% url 'account:user_registration' %} class="theme-btn-1 btn btn-effect-1" >Register</a>
+                        </div>
+                    </div>
+                    <div class="ltn__call-to-4-img-2">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CALL TO ACTION END -->
+
+    <!-- FEATURE START -->
+    <div class="ltn__feature-area section-bg-1--- pt-120 pb-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h6 class="section-subtitle ltn__secondary-color"></h6>
+                        <h1 class="section-title">Agriculture Solutions</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-self-center">
+                <div class="col-lg-4 col-sm-6">                            
+                    <div class="ltn__feature-item ltn__feature-item-6 box-shadow-1">
+                        <div class="ltn__feature-icon">
+                            <span><img src={% static 'ecom/img/tractor.png' %}></span>
+                        </div>
+                        <div class="ltn__feature-info">
+                            <h3>Agricultural Market</h3>
+                            <p>Market for all agricultural Products and get connected with buyers faster</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">                            
+                    <div class="ltn__feature-item ltn__feature-item-6 box-shadow-1">
+                        <div class="ltn__feature-icon">
+                            <span><img src={% static 'ecom/img/investor.png' %}></span>
+                        </div>
+                        <div class="ltn__feature-info">
+                            <h3><a href={% url 'ecom:shop' %}>Investor Market</a></h3>
+                            <p>Invest in farmers and get returns on their production </p>
+                            
+                                </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">                            
+                    <div class="ltn__feature-item ltn__feature-item-6 box-shadow-1">
+                        <div class="ltn__feature-icon">
+                            <span><img src={% static 'ecom/img/support.png' %}></span>
+                        </div>
+                        <div class="ltn__feature-info">
+                            <h3>Agri-Support</h3>
+                            <p>Know the recent Agricultural Trends and conncet with Agricultral Experts</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">                            
+                    <div class="ltn__feature-item ltn__feature-item-6 box-shadow-1">
+                        <div class="ltn__feature-icon">
+                            <span><img src={% static 'ecom/img/bank.png' %}></span>
+                        </div>
+                        <div class="ltn__feature-info">
+                            <h3>FINANCE</h3>
+                            <p>We provide you with the recent banking information and connect with finance services.</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+    <!-- FEATURE END -->
+
+    <!-- VIDEO AREA START -->
+    <div class="ltn__video-popup-area ltn__video-popup-margin---">
+        <div class="ltn__video-bg-img ltn__video-popup-height-600--- bg-overlay-black-30 bg-image bg-fixed ltn__animation-pulse1" data-bg="img/bg/37b.jpg">
+            <a class="ltn__video-icon-2 ltn__video-icon-2-border---" href="https://www.youtube.com/embed/X7R-q9rsrtU?autoplay=1&showinfo=0" data-rel="lightcase:myCollection">
+                <i class="fa fa-play"></i>
+            </a>
+        </div>
+    </div>
+    <!-- VIDEO AREA END -->
+
+    <!-- TEAM AREA START (Team - 3) -->
+    <!--<div class="ltn__team-area pt-120 pb-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h6 class="section-subtitle ltn__secondary-color"></h6>
+                        <h1 class="section-title">Experts of the Month</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ltn__team-item ltn__team-item-3 ltn__team-item-3-2">
+                        <div class="team-img">
+                            <img src="img/team/1.jpg" alt="Image">
+                        </div>
+                        <div class="team-info">
+                            <h4><a href="team-details.html">Rosalina D. William</a></h4>
+                            <h6 class="ltn__secondary-color">Technology Officer</h6>
+                            <div class="ltn__social-media">
+                                <ul>
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ltn__team-item ltn__team-item-3 ltn__team-item-3-2">
+                        <div class="team-img">
+                            <img src="img/team/2.jpg" alt="Image">
+                        </div>
+                        <div class="team-info">
+                            <h4><a href="team-details.html">Kelian Anderson</a></h4>
+                            <h6 class="ltn__secondary-color">Engineering Officer</h6>
+                            <div class="ltn__social-media">
+                                <ul>
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ltn__team-item ltn__team-item-3 ltn__team-item-3-2">
+                        <div class="team-img">
+                            <img src="img/team/3.jpg" alt="Image">
+                        </div>
+                        <div class="team-info">
+                            <h4><a href="team-details.html">Miranda H. Halim</a></h4>
+                            <h6 class="ltn__secondary-color">Property Seller</h6>
+                            <div class="ltn__social-media">
+                                <ul>
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <!-- TEAM AREA END -->
+
+    <!-- CALL TO ACTION START (call-to-action-6) -->
+    <div class="ltn__call-to-action-area call-to-action-6 before-bg-bottom---" data-bg="img/1.jpg--">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="call-to-action-inner call-to-action-inner-6 ltn__secondary-bg text-center---">
+                        <div class="coll-to-info text-color-white">
+                            <h1>What are you waiting for?</h1>
+                            <h3>Start Investing in the Future<h3>
+                        </div>
+                        <div class="btn-wrapper">
+                            <a class="btn btn-effect-3 btn-white" href={% url 'ecom:shop' %}>Market</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- CALL TO ACTION END -->
+
+    <!-- TESTIMONIAL AREA START (testimonial-8) -->
+    {% comment %} <div class="ltn__testimonial-area section-bg-1--- pt-120 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h6 class="section-subtitle ltn__secondary-color"></h6>
+                        <h1 class="section-title">Testimonials</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__testimonial-slider-6-active slick-arrow-1">
+                <div class="col-lg-4">
+                    <div class="ltn__testimonial-item ltn__testimonial-item-7 ltn__testimonial-item-8">
+                        <div class="ltn__testimoni-info">
+                            <div class="ltn__testimoni-author-ratting">
+                                <div class="ltn__testimoni-info-inner">
+                                    <div class="ltn__testimoni-img">
+                                        <img src="img/testimonial/1.jpg" alt="#">
+                                    </div>
+                                    <div class="ltn__testimoni-name-designation">
+                                        <h5>Jacob William</h5>
+                                        <label>Selling Agents</label>
+                                    </div>
+                                </div>
+                                <div class="ltn__testimoni-rating">
+                                    <div class="product-ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p> 
+                                Precious ipsum dolor sit amet
+                                consectetur adipisicing elit, sed dos
+                                mod tempor incididunt ut labore et
+                                dolore magna aliqua. Ut enim ad min
+                                veniam, quis nostrud Precious ips
+                                um dolor sit amet, consecte</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="ltn__testimonial-item ltn__testimonial-item-7 ltn__testimonial-item-8">
+                        <div class="ltn__testimoni-info">
+                            <div class="ltn__testimoni-author-ratting">
+                                <div class="ltn__testimoni-info-inner">
+                                    <div class="ltn__testimoni-img">
+                                        <img src="img/testimonial/2.jpg" alt="#">
+                                    </div>
+                                    <div class="ltn__testimoni-name-designation">
+                                        <h5>Jacob William</h5>
+                                        <label>Selling Agents</label>
+                                    </div>
+                                </div>
+                                <div class="ltn__testimoni-rating">
+                                    <div class="product-ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p> 
+                                Precious ipsum dolor sit amet
+                                consectetur adipisicing elit, sed dos
+                                mod tempor incididunt ut labore et
+                                dolore magna aliqua. Ut enim ad min
+                                veniam, quis nostrud Precious ips
+                                um dolor sit amet, consecte</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="ltn__testimonial-item ltn__testimonial-item-7 ltn__testimonial-item-8">
+                        <div class="ltn__testimoni-info">
+                            <div class="ltn__testimoni-author-ratting">
+                                <div class="ltn__testimoni-info-inner">
+                                    <div class="ltn__testimoni-img">
+                                        <img src="img/testimonial/3.jpg" alt="#">
+                                    </div>
+                                    <div class="ltn__testimoni-name-designation">
+                                        <h5>Jacob William</h5>
+                                        <label>Selling Agents</label>
+                                    </div>
+                                </div>
+                                <div class="ltn__testimoni-rating">
+                                    <div class="product-ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p> 
+                                Precious ipsum dolor sit amet
+                                consectetur adipisicing elit, sed dos
+                                mod tempor incididunt ut labore et
+                                dolore magna aliqua. Ut enim ad min
+                                veniam, quis nostrud Precious ips
+                                um dolor sit amet, consecte</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="ltn__testimonial-item ltn__testimonial-item-7 ltn__testimonial-item-8">
+                        <div class="ltn__testimoni-info">
+                            <div class="ltn__testimoni-author-ratting">
+                                <div class="ltn__testimoni-info-inner">
+                                    <div class="ltn__testimoni-img">
+                                        <img src="img/testimonial/4.jpg" alt="#">
+                                    </div>
+                                    <div class="ltn__testimoni-name-designation">
+                                        <h5>Jacob William</h5>
+                                        <label>Selling Agents</label>
+                                    </div>
+                                </div>
+                                <div class="ltn__testimoni-rating">
+                                    <div class="product-ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p> 
+                                Precious ipsum dolor sit amet
+                                consectetur adipisicing elit, sed dos
+                                mod tempor incididunt ut labore et
+                                dolore magna aliqua. Ut enim ad min
+                                veniam, quis nostrud Precious ips
+                                um dolor sit amet, consecte</p>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+            </div>
+        </div>
+    </div> {% endcomment %}
+    <!-- TESTIMONIAL AREA END -->
+
+    
+
+    
+ 
+
+</div>
+<!-- Body main wrapper end -->
+
+   
+    {% endblock content %}
+
+    

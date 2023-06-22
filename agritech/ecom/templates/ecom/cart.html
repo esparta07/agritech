@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    
+
+    
+
+    <div class="ltn__utilize-overlay"></div>
+
+    
+
+    <!-- SHOPING CART AREA START -->
+    <div class="liton__shoping-cart-area mb-120 mt-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping-cart-inner">
+                        <div class="shoping-cart-table table-responsive">
+                            <table class="table">
+                                {% comment %} <thead>
+                                    <th class="cart-product-remove">Remove</th>
+                                    <th class="cart-product-image">Image</th>
+                                    <th class="cart-product-info">Product</th>
+                                    <th class="cart-product-price">Price</th>
+                                    <th class="cart-product-quantity">Quantity</th>
+                                    <th class="cart-product-subtotal">Subtotal</th>
+                                </thead>   {% endcomment %}
+                                <tbody>
+                                    {% if cart_items %}
+                                    {% for cart_item in cart_items %}
+                                    <tr  id="cart-item-{{ cart_item.id }}" >
+                                        <td>
+                                            <a href="#" class="delete_cart" data-id="{{ cart_item.id }}" data-url="{% url 'ecom:delete_cart' cart_item.id %}">
+                                                <img src="{% static 'ecom/img/delete.png' %}">
+                                            </a>
+                                        </td>
+                                        
+                                        
+                                        <td class="cart-product-image">
+                                            <a href="{% url 'ecom:product' id=cart_item.project.id %}"><img src="{{ cart_item.project.farm_image.url }}" alt="#"></a>
+                                        </td>
+                                        <td class="cart-product-info">
+                                            <h4><a href="{% url 'ecom:product' id=cart_item.project.id %}">{{ cart_item.project.project_title }}</a></h4>
+                                        </td>
+                                        <td class="cart-product-price">रु‎{{ cart_item.project.value_of_share|floatformat:2 }}</td>
+                                        <td class="cart-product-quantity">
+                                            <a href="#" class="decrease_cart" data-id="{{ cart_item.project.id }}" data-url="{% url 'ecom:decrease_cart' cart_item.project.id %}" onclick="decreaseCart(event, '{{ cart_item.project.id }}', '{% url "ecom:decrease_cart" cart_item.project.id %}')}" style="margin-right: 10px;">
+                                                <img src="{% static 'ecom/img/minus.png' %}">
+                                            </a>
+                                            <label id="qty-{{ cart_item.project.id }}">{{ cart_item.quantity }}</label>
+                                
+                                            <a href="#" class="add_to_cart" data-id="{{ cart_item.project.id }}" data-url="{% url 'ecom:add_to_cart' cart_item.project.id %}" onclick="addToCart(event, '{{ cart_item.project.id }}', '{% url "ecom:add_to_cart" cart_item.project.id %}')}" style="margin-left: 10px;">
+                                                <img src="{% static 'ecom/img/plus.png' %}">
+                                            </a>
+                                            
+                                        </td>
+                                        
+                                        {% comment %} <td class="cart-product-subtotal">
+                                            रु‎ 1000
+                                        </td> {% endcomment %}
+                                    </tr>
+                                    {% endfor %} 
+                                    {% else %}
+    <div class="empty-cart-message">
+        <h3>Cart Is Empty</h3>
+    </div>
+{% endif %}
+
+<style>
+    .empty-cart-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        width: 50%;
+        margin: 0 auto;
+        
+        text-align: center;
+    }
+
+    .empty-cart-message h3 {
+        font-size: 100px;
+        color: #357960;
+    }
+</style>
+
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="shoping-cart-total mt-50">
+                            <h4>Cart Totals</h4>
+                            <table class="table">
+                                <tbody>
+                                    
+                                    {% for key, value in tax_dict.items %}
+                                        {% for i, j in value.items %}
+                                            <tr>
+                                                <td>{{ key }} <small>({{ i }}%)</small></td>
+                                                <td>
+                                                    <span class="price ">
+                                                        <span class="currency">रु‎</span>
+                                                        <span id="tax-{{ key }}">{{ j }}</span>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                    <tr>
+                                        <td>Cart Subtotal</td>
+                                        <td><span id="subtotal">रु‎ {{ subtotal }}</span></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td><strong>Order Total</strong></td>
+                                        <td><strong>रु‎ <span id="total">{{ grand_total }}</span></strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="btn-wrapper text-right">
+                                <a href="{% url 'ecom:checkout' %}" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SHOPING CART AREA END -->
+
+   
+   
+</div>
+{% endblock content %}

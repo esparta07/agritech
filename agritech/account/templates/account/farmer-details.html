@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <div class="ltn__utilize-overlay"></div>
+
+   
+
+    <!-- TEAM DETAILS AREA START -->
+    <div class="ltn__team-details-area mb-120 mt-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="ltn__team-details-member-info text-center mb-40">
+                        <div class="team-details-img">
+                            {% if user_profile.profile_picture %}
+                                <img src="{{ user_profile.profile_picture.url }}" alt="Profile Photo" style="max-width: 275px; max-height: 275px;">
+                            {% else %}
+                                <img src="{% static 'ecom/img/def_profile.jpg' %}" alt="Default Profile Photo" style="max-width: 200px; max-height: 200px;">
+                            {% endif %}
+                        </div>
+                        
+                        <h2>
+                            {% if user_profile.first_name and user_profile.last_name %}
+                                {{ user_profile.first_name }} {{ user_profile.last_name }}
+                            {% else %}
+                                {{ vendors.vendor_name }}
+                            {% endif %}
+                        </h2>
+    
+                        <h6 class="text-uppercase ltn__secondary-color">Agripreneur</h6>
+                        <div class="ltn__social-media-3">
+                            <ul>
+                                {% if user_profile.facebook %}
+                                    <li><a href="{{ user_profile.facebook }}" title="Facebook"><img src="{% static 'ecom/img/icons/facebook.png' %}"></a></li>
+                                {% endif %}
+                                {% if user_profile.twitter %}
+                                    <li><a href="{{ user_profile.twitter }}" title="Twitter"><img src="{% static 'ecom/img/icons/twitter.png' %}"></a></li>
+                                {% endif %}
+                                {% if user_profile.linkedin %}
+                                    <li><a href="{{ user_profile.linkedin }}" title="Linkedin"><img src="{% static 'ecom/img/icons/linkedin.png' %}"></a></li>
+                                {% endif %}
+                                {% if user_profile.instagram %}
+                                    <li><a href="{{ user_profile.instagram }}" title="Instagram"><img src="{% static 'ecom/img/icons/instagram.png' %}"></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="ltn__team-details-member-info-details">
+                        <h1 class="page-title">Farmer Details</h1>
+                        {% if vendors.vendor_description %}
+                            <p>{{ vendors.vendor_description }}</p>
+                        {% else %}
+                            <p class="greenish">Hi Investors<br>Please do explore my farms and invest in them to get high returns.<br>Thank You!</p>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="ltn__team-details-member-about">
+                                    <ul>
+                                        <li><strong>Projects:</strong><span class="greenish">{{ project_count }}</span></li>
+                                        <li><strong>Location:</strong><span class="greenish">{{user_profile.address}}</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="ltn__team-details-member-about">
+                                    <ul>
+                                        <li><strong>Email:</strong><span class="greenish">{{user_profile.email}}</span></li>
+                                        <li><strong>Phone:</strong><span class="greenish">{{user_profile.user.phone_number}}</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                       
+                    </div>
+                        
+                    </div>
+                    <h1><i class="fas fa-circle" style="color: #5ad539;font-size: 12px; position: relative; top: -8px;"></i> Active Farms</h1>
+                    <div class="row  justify-content-start">
+                        {% for project in vendor.project_set.all %}
+                            {% if project.is_approved %}                                
+                                    <div class="ltn__feature-item ltn__feature-item-6 text-center m-1">
+                                        <div class="ltn__feature-icon">
+                                            <a href="{% url 'ecom:product' id=project.id %}">
+                                                <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
+                                            </a>                                    
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4><a href="service.html">{{ project.project_title }}</a></h4>
+                                            <span class="greenish">रु‎ {{project.value_of_share}}</span><br>
+                                        </div>
+                                    </div>            
+                            {% if forloop.counter|divisibleby:4 or forloop.last %}
+                                </div>
+                                {% if not forloop.last %}
+                                    <div class="row ltn__custom-gutter mt-50 mb-20">
+                                {% endif %}
+                            {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            
+                <div class="row mt-10 mb-10 justify-content-start">
+                    <div class="col-lg-12">
+                        <h1>Completed Projects</h1>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    {% for project in vendor.project_set.all %}
+                        {% if project.is_completed %}   
+                            <div class="ltn__feature-item ltn__feature-item-6 text-center m-1">
+                                <div class="ltn__feature-icon">
+                                    <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
+                                </div>
+                                <div class="ltn__feature-info">
+                                    <h4><a href="service.html">{{ project.project_title }}</a></h4>
+                                    <span class="greenish">रु‎ {{project.value_of_share}}</span><br>
+                                </div>
+                            </div>            
+                        {% if forloop.counter|divisibleby:4 or forloop.last %}
+                            </div>
+                            {% if not forloop.last %}
+                                <div class="row ltn__custom-gutter mt-50 mb-20">
+                            {% endif %}
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+                
+                
+        </div>
+            
+        </div>
+    </div>
+    <!-- TEAM DETAILS AREA END -->
+
+    
+{% endblock content %}
