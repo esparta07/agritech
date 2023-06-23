@@ -303,7 +303,7 @@ def reset_password(request):
 
 
 @login_required
-def change_password(request):
+def customer_change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -314,8 +314,21 @@ def change_password(request):
             return redirect('index')  
     else:
         form = PasswordChangeForm(user=request.user)  # Pass user=request.user to initialize the form with the user's data
-    return render(request, 'account/change_password.html', {'form': form})
+    return render(request, 'account/customer_change_password.html', {'form': form})
 
+@login_required
+def vendor_change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Update session
+            messages.success(request, 'Your password was successfully updated!')
+            logout(request)  # Log out the user
+            return redirect('index')  
+    else:
+        form = PasswordChangeForm(user=request.user)  # Pass user=request.user to initialize the form with the user's data
+    return render(request, 'account/vendor_change_password.html', {'form': form})
 
 def vendor_detail(request, vendor_id):
     vendor = get_object_or_404(User, id=vendor_id)

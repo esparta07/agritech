@@ -1,3 +1,4 @@
+from datetime import timezone
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http.response import JsonResponse
@@ -237,3 +238,20 @@ def checkout_view(request):
 
 
 
+def popup_message(request):
+    return render(request, 'popup_message.html')
+
+
+def project_details(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+    remaining_days = (project.return_date - timezone.now().date()).days
+
+    # Check if the user is a vendor
+    if request.user.role == User.VENDOR:
+        if remaining_days < 15 and request.session.get('show_popup', False):
+            # Clear the session variable to prevent displaying the pop-up on subsequent requests
+            request.session['show_popup'] = False
+            return render(request, 'popup_message.html', {'project': project})
+
+    # If the user is not a vendor or the remaining days are not less than 15, continue with normal project details view
+    return render(request, 'project_notification.html', {'project': project})
