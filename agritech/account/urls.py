@@ -18,7 +18,8 @@ urlpatterns =[
 
     path('custdashboard/',views.custdashboard, name='custdashboard'),
     path('vendordashboard/',views.vendordashboard, name='vendordashboard'),
-    path('change_password/', views.change_password, name='change_password'),
+    path('customer_change_password/', views.customer_change_password, name='customer_change_password'),
+    path('vendor_change_password/', views.vendor_change_password, name='vendor_change_password'),
 
     
     path('forgot_password/', views.forgot_password, name='forgot_password'),

@@ -1,4 +1,36 @@
-
+{% comment %} 
+<div class="user-account-nav user-account-sidebar" style="background-color: #357960; width: 280px; border-radius:10px;">
+    <div class="user-nav-list mt-100 pd-10">
+        <ul>
+            <li class="{% if '/custdashboard/' == request.path or '/customer/' == request.path %}active{% endif %} active show" style="padding-top:15px;">
+                <a href="{% url 'account:customer' %}" style="color: #ffffff;">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
+            <li class="{% if '/profile/' in request.path %}active{% endif %} active show">
+                <a href="{% url 'account:cprofile' %}" style="color: #ffffff;">
+                    <i class="fas fa-user"></i> My Profile
+                </a>
+            </li>
+            <li class="{% if '/my_orders/' in request.path %}active{% endif %} active show">
+                <a href="{% url 'account:customer_my_orders' %}" style="color: #ffffff;">
+                    <i class="fas fa-shopping-cart"></i> My Orders
+                </a>
+            </li>
+            <li class="{% if '/change_password/' in request.path %}active{% endif %} active show">
+                <a href="{% url 'account:change_password' %}" style="color: #ffffff;">
+                    <i class="fas fa-lock"></i> Security
+                </a>
+            </li>
+         
+            <li style="padding-bottom:15px;">
+                <a class="logout-btn" href="{% url 'account:logout' %}" style="color: #ffffff; ">
+                    <i class="fas fa-sign-out-alt"></i> Signout
+                </a>
+            </li>
+        </ul>
+    </div>
+</div> {% endcomment %}
 <div class="user-account-nav user-account-sidebar" style="background-color: #357960; width: 280px; border-radius:10px;">
     <div class="user-nav-list mt-100 pd-10">
         <ul>
@@ -18,6 +50,12 @@
                         <i class="fas fa-shopping-cart"></i> My Orders
                     </a>
                 </li>
+
+                <li class="{% if '/my_investment/' in request.path %}active{% endif %} active show">
+                    <a href="{% url 'account:my_investment' user.id %}" style="color: #ffffff;">
+                        <i class="fas fa-briefcase"></i> My Investments
+                    </a>
+                </li>
                 
             {% else %}
                 <li class="{% if '/profile/' in request.path %}active{% endif %} active show">
@@ -26,8 +64,8 @@
                     </a>
                 </li>
             {% endif %}
-            <li class="{% if '/change_password/' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:change_password' %}" style="color: #ffffff;">
+            <li class="{% if '/customer_change_password/' in request.path %}active{% endif %} active show">
+                <a href="{% url 'account:customer_change_password' %}" style="color: #ffffff;">
                     <i class="fas fa-lock"></i> Security
                 </a>
             </li>

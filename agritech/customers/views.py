@@ -5,8 +5,9 @@ from account.forms import UserInfoForm, UserProfileForm
 from account.models import UserProfile
 from django.contrib import messages
 from orders.models import Order, FarmOrder
-
-import simplejson as json
+from account.models import User
+from ecom.models import Project
+import json
 
 
 @login_required(login_url='login')
@@ -70,5 +71,42 @@ def order_detail(request, order_number):
     return render(request, 'customers/order_detail.html', context)
 
     
-    
-    
+def my_investment(request, customer_id):
+    # Assuming customer_id is the ID of the customer user
+
+    # Retrieve the customer user object
+    customer = User.objects.get(id=customer_id, role=User.CUSTOMER)
+
+    # Retrieve the ordered projects by the customer
+    ordered_projects = Project.objects.filter(farmorder__user=customer).distinct()
+
+    # Create a dictionary to store project details, quantity, and price paid
+    project_details = {}
+
+    # Iterate over the ordered projects
+    for project in ordered_projects:
+        # Retrieve the FarmOrder objects for the project and customer
+        farm_orders = FarmOrder.objects.filter(user=customer, project=project)
+
+        # Initialize variables to store the total quantity and price paid for the project
+        total_quantity = 0
+        # total_price_paid = 0
+
+        # Iterate over the FarmOrder objects
+        for farm_order in farm_orders:
+            # Get the quantity and price paid for each FarmOrder
+            quantity_ordered = farm_order.quantity
+            # price_paid = farm_order.amount
+
+            # Increment the total quantity and price paid
+            total_quantity += quantity_ordered
+            # total_price_paid += price_paid
+
+        # Store the project details, total quantity, and total price paid in the dictionary
+        project_details[project] = {
+            'quantity_ordered': total_quantity,
+            # 'price_paid': total_price_paid,
+        }
+
+    # Pass the project details dictionary to the template
+    return render(request, 'customers/my_investment.html', {'project_details': project_details})

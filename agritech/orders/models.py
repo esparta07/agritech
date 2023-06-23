@@ -25,10 +25,13 @@ class Order(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     vendors = models.ManyToManyField(Vendor, blank=True)
+
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
     order_number = models.CharField(max_length=20)
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+
     phone = models.CharField(max_length=15, blank=True)
     email = models.EmailField(max_length=50)
     address = models.CharField(max_length=200)
@@ -36,10 +39,12 @@ class Order(models.Model):
     state = models.CharField(max_length=25, blank=True)
     city = models.CharField(max_length=50)
     pin_code = models.CharField(max_length=10,blank=True)
+
     total = models.FloatField()
     tax_data = models.JSONField(blank=True, help_text = "Data format: {'tax_type':{'tax_percentage':'tax_amount'}}")
     total_tax = models.FloatField()
     total_data = models.JSONField(blank=True, null=True)
+
     payment_method = models.CharField(max_length=25)
     status = models.CharField(max_length=15, choices=STATUS, default='New')
     is_ordered = models.BooleanField(default=False)
@@ -57,9 +62,6 @@ class Order(models.Model):
     
     def __str__(self):
         return f"Order {self.order_number} - Placed to: {self.order_placed_to()}"
-
-    
-    
 
     def get_total_by_vendor(self, vendor):
         subtotal = 0
@@ -104,10 +106,6 @@ class Order(models.Model):
         else:
             return f"Order {self.order_number} - Placed by: {self.user.userprofile.first_name} {self.user.userprofile.last_name}"
 
-
-
-
-    
  
 class FarmOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
