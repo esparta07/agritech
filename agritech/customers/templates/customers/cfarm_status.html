@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <!-- Load the sidebar here -->
-                    {% include 'includes/v_sidebar.html' %}
+                    {% include 'includes/c_sidebar.html' %}
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
@@ -68,18 +68,15 @@
                                                             <span>
                                                                 <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
                                                             </span><br>
+                                                            <strong>Profit:</strong>
+                                                            <span>
+                                                                <a>{{ proj.percent_return_after_due_date }} %</a>
+                                                            </span><br>
                                                             <strong>Duration:</strong>
                                                             <span>
                                                                 <a>{{ proj.duration_in_months }} months</a>
                                                             </span><br>
-                                                            <strong>Posted Date:</strong>
-                                                            <span>
-                                                                <a>{{ proj.created_at|date:"M. d, Y" }}</a>
-                                                            </span><br>
-                                                            <strong>Return Date:</strong>
-                                                            <span>
-                                                                <a>{{ proj.return_date|date:"M. d, Y" }}</a>
-                                                            </span><br>
+                                                            
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -105,33 +102,18 @@
                                                 <div class="modal-product-meta ltn__product-details-menu-1">
                                                     <ul>
                                                         <li>
-                                                            <strong>Required Amount:</strong>
-                                                            <span class="greenish text-right">
-                                                                <b>रु‎ {{ proj.demand }}</b>
-                                                            </span>
-                                                            <br>
-                                                            <strong>Collected Amount:</strong>
-                                                    <span class="greenish text-right">
-                                                        <b>रु‎ {{ proj.collected_amount }}</b><br>
-                                                    </span>
-                                                    <strong>Amount Left:</strong>
-                                                    <span class="greenish text-right">
-                                                        <b>रु‎ {{ proj.amount_left }}</b><br>
-                                                    </span>
                                                     <strong>Active Since:</strong>
                                                             <span class="greenish">
                                                                 <a>{{ proj.days_since_created }} Days</a>
                                                             </span><br>
-                                                    <div class="progress mt-10">
-                                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress_ratio }}%" aria-valuenow="{{ project.collected_amount }}" aria-valuemin="0" aria-valuemax="{{ project.demand }}"></div>
-                                                    </div>
+                                                    
                                                         </li>
                                                     </ul>
                                                 </div>
    
                                             </div>
                                         </div>
-                                        <h1>Farm Status</h1>    
+                                        <h1>My Farm Status</h1>    
                                         
                                         <div id="progress-bar-container">
                                           <ul class="status-list">
@@ -208,7 +190,7 @@
                                           list-style: none;
                                           width: 20%;
                                           text-align: center;
-                                          color: #E8A22B;
+                                          color: #aaa;
                                           text-transform: uppercase;
                                           font-size: 11px;
                                           cursor: pointer;
@@ -358,7 +340,7 @@ h1 {
 #progress-bar-container li.active:before, #progress-bar-container li:hover:before {
 	border:solid 2px #fff;
        	 
-	background: linear-gradient(to right, #E8A22B 0%,#fff 100%); 
+	background: linear-gradient(to right, #E91E63 0%,#fff 100%); 
 }
 
 #progress-bar-container li {
@@ -385,7 +367,7 @@ h1 {
 }
 
 #progress-bar-container li.active, #progress-bar-container li:hover {
-	color:#E8A22B;
+	color:#444;
 }
 
 #progress-bar-container li:after {
@@ -428,8 +410,8 @@ h1 {
 	content:" ";
 	width:3%;
 	height:100%;
-	background: #357960;	 
-	
+	background: #207893;	 
+	background: linear-gradient(to right, #207893 0%,#2ea3b7 100%); 
 	position:absolute;
 	z-index:2;
 	border-radius:50px;
@@ -439,7 +421,7 @@ h1 {
 #progress-content-section {
 	width:90%;
 	margin: auto;
-	background: #E8A22B;
+	background: #f3f3f3;
 	border-radius: 4px;
 }
 
@@ -449,7 +431,7 @@ h1 {
 }
 
 #progress-content-section .section-content h2 {
-	font-size:27px;
+	font-size:17px;
 	text-transform:uppercase;
 	color:#333;
 	letter-spacing:1px;

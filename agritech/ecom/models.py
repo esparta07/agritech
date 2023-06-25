@@ -11,6 +11,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseForbidden
 
+
 class Category(models.Model):
     
     category_name = models.CharField(max_length=50)
@@ -31,8 +32,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name
-from django.db import models
-from django.utils import timezone
+
 
 
 class Project(models.Model):
@@ -52,6 +52,7 @@ class Project(models.Model):
     
     farm_image = models.ImageField(upload_to='media/farmimages/', default='', blank=True)
     descrption_title = models.CharField(max_length=100,blank=True)
+    
 
     is_available = models.BooleanField(default=True)
     is_approved = models.BooleanField(default=False)
@@ -140,7 +141,21 @@ class ExtraImage(models.Model):
         self.full_clean()
         super().save(*args, **kwargs)
 
-    
+
+
+class ProjectStatus(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='statuses')
+    title = models.CharField(max_length=100 ,default='Status Update',blank=True,null=True)
+    status = models.CharField(max_length=100)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Status '{self.status}' for Project '{self.project.project_title}'"
+
+    class Meta:
+        verbose_name = 'project status'
+        verbose_name_plural = 'project statuses'
+
 
 
 class Cart(models.Model):
