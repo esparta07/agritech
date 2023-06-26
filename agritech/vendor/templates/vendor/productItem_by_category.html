@@ -19,6 +19,7 @@
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
                             <h5 class="text-uppercase">Add your Project.</h5>
+                            <a href="{% url 'account:add_product' %}" class="btn btn-success float-right mt-100"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a>
 							<hr>
                             <button class="btn btn-secondary" onclick="history.back()"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</button>
                             <br><br>
@@ -51,9 +52,9 @@
                               </table>
                             {% else %}
                               <h5 class="text-center">No product items found.</h5>
-                              <div class="text-center">
+                              {% comment %} <div class="text-center">
                                 <a href="{% url 'account:add_product' %}" class="btn btn-success float-right m-1"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a>
-                              </div>
+                              </div> {% endcomment %}
 
                             {% endif %}
                         </div>

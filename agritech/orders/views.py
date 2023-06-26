@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from urllib import response
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from account.views import check_role_customer
 from ecom.models import Cart, Tax
 from ecom.context_processors import get_cart_amounts
 from ecom.models import Project
@@ -12,7 +13,7 @@ from .models import Order, FarmOrder, Payment
 import json
 from .utils import generate_order_number, order_total_by_vendor
 from account.utils import send_notification
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required , user_passes_test
 import requests
 from datetime import timedelta
 from django.utils import timezone
@@ -28,6 +29,7 @@ from django.contrib.sites.shortcuts import get_current_site
 
 
 @login_required(login_url='login')
+@user_passes_test(check_role_customer)
 def place_order(request):
     cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
     cart_count = cart_items.count()
@@ -103,6 +105,7 @@ def place_order(request):
 
 
 @login_required(login_url='login')
+@user_passes_test(check_role_customer)
 def payments(request):
     order_form_data = request.session.get('order_form_data')
     order_number = request.session.get('order_number')

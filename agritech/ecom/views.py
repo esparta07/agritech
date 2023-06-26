@@ -4,9 +4,10 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.http.response import JsonResponse
 from django.urls import reverse
 from account.models import User
+from account.views import check_role_customer
 from ecom.models import Category,Project
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required , user_passes_test
 from .models import Cart,UserProfile,UserProfile, User, is_project_approved
 from .context_processors import get_cart_counter , get_cart_amounts
 from orders.forms import OrderForm
@@ -58,10 +59,6 @@ def shop_view(request):
 
         projects = projects.filter(Q(id__in=project_ids) | Q(vendor_id__in=vendor_ids))
 
-    # Exclude projects posted by the logged-in vendor
-    if request.user.is_authenticated and request.user.role == User.VENDOR:
-        projects = projects.exclude(vendor=request.user)
-
     paginator = Paginator(projects, 6)
     project_page = paginator.get_page(page)
 
@@ -83,8 +80,6 @@ def prod_view(request, id):
     project = get_object_or_404(Project, id=id)
     
     # Check if the logged-in user is the vendor of the project
-    if request.user == project.vendor:
-        return render(request,'403.html' )
     
     top_projects = Project.objects.order_by('-percent_return_after_due_date')[:3]
     related_projects = Project.objects.filter(project_type=project.project_type).exclude(id=project.id)[:5]
@@ -110,7 +105,7 @@ def prod_view(request, id):
 
 
 
-
+@user_passes_test(check_role_customer)
 def add_to_cart(request, project_id):
     if request.user.is_authenticated:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -196,7 +191,8 @@ def delete_cart(request, cart_id):
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
     else:
         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
-
+    
+@user_passes_test(check_role_customer)
 @login_required(login_url = 'account:login')
 def cart_view(request):
     
@@ -208,7 +204,7 @@ def cart_view(request):
 
 
 
-
+@user_passes_test(check_role_customer)
 @login_required(login_url='account:login')
 def checkout_view(request):
     
@@ -237,21 +233,3 @@ def checkout_view(request):
     return render(request,'ecom/checkout.html',context )
 
 
-
-def popup_message(request):
-    return render(request, 'popup_message.html')
-
-
-def project_details(request, project_id):
-    project = get_object_or_404(Project, id=project_id)
-    remaining_days = (project.return_date - timezone.now().date()).days
-
-    # Check if the user is a vendor
-    if request.user.role == User.VENDOR:
-        if remaining_days < 15 and request.session.get('show_popup', False):
-            # Clear the session variable to prevent displaying the pop-up on subsequent requests
-            request.session['show_popup'] = False
-            return render(request, 'popup_message.html', {'project': project})
-
-    # If the user is not a vendor or the remaining days are not less than 15, continue with normal project details view
-    return render(request, 'project_notification.html', {'project': project})

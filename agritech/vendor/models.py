@@ -30,7 +30,7 @@ class Vendor(models.Model):
     def is_vendor_approved(self):
             return self.is_approved
     
-    def _str_(self):
+    def __str__(self):
         return self.vendor_name
 
     def save(self, *args, **kwargs):

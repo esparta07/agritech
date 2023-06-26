@@ -1,7 +1,7 @@
 from django import forms
 
 from account.validators import allow_only_images_validator
-from .models import Category, Project
+from .models import Category, Project ,ProjectStatus
 from django.utils.translation import gettext_lazy as _
 
 
@@ -30,3 +30,5 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ['project_title', 'project_type', 'project_description', 'total_cost', 'farm_image', 'extra_images', 'is_available',
                    'value_of_share', 'max_shares_per_user', 'return_date', 'percent_return_after_due_date']
+
+

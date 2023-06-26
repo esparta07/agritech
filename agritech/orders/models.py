@@ -99,7 +99,7 @@ class Order(models.Model):
 
         return context
 
-    def _str_(self):
+    def __str__(self):
         vendor_names = ', '.join([vendor.vendor_name or f"{vendor.user.userprofile.first_name} {vendor.user.userprofile.last_name}" for vendor in self.vendors.all()])
         if vendor_names:
             return f"Order {self.order_number} - Placed to: {vendor_names}"
