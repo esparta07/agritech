@@ -27,16 +27,20 @@
                             <table class="table table-hover table-borderless">
                                 
                                 <tbody>
-                                {% for cat in categories %}
-                                  <tr>
-                                    <td class="text-left">{{ forloop.counter }}</td>
-                                    <td class="text-left">
-                                        <a href="{% url 'account:productItem_by_category' cat.id %}"><p class="mb-0 font-weight-bold">{{ cat }}</p>
-                                        <small class="text-muted">{{cat.description}}</small></a>
-                                    </td>
-                                   
-                                  </tr>
+                                    {% for cat in categories %}
+                                    <tr>
+                                        <td class="text-left">{{ forloop.counter }}</td>
+                                        <td class="text-left">
+                                            <a href="{% url 'account:productItem_by_category' cat.id %}">
+                                                <p class="mb-0 font-weight-bold">{{ cat }}</p>
+                                                <small class="text-muted">{{ cat.description }}</small>
+                                            </a>
+                                        </td>
+                                        <td class="text-left"> <span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom: 10px; left: -5px;">{{ cat.num_projects }}</span></td>
+                                        
+                                    </tr>
                                 {% endfor %}
+                                
                                 </tbody>
                               </table>
                             {% else %}

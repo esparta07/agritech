@@ -10,18 +10,17 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseForbidden
-
+from django.db.models import Count
 
 class Category(models.Model):
-    
     category_name = models.CharField(max_length=50)
-   
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = 'categories'
+
     def clean(self):
         self.category_name = self.category_name.capitalize()
         existing_categories = Category.objects.filter(category_name=self.category_name)
@@ -32,6 +31,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name
+
+    def num_projects(self):
+        return self.project_set.count()
+
 
 
 

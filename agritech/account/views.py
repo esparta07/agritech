@@ -2,7 +2,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http.response import HttpResponse
 from django.utils.http import urlsafe_base64_decode
 from django.http import HttpResponseRedirect
-from ecom.models import is_project_approved
+from ecom.models import Project, is_project_approved
 from orders.models import Order
 from django.urls import reverse
 from .models import User,UserProfile
@@ -23,6 +23,8 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 import datetime
+from django.db.models import Sum
+
 
 
 # Restrict the vendor from accessing the customer page
@@ -200,18 +202,16 @@ def vendordashboard(request):
     orders = Order.objects.filter(vendors__user=request.user, is_ordered=True).order_by('created_at')
     recent_orders = orders[:10]
 
-    # current month's revenue
+   # Filter current month orders
     current_month = datetime.datetime.now().month
-    current_month_orders = orders.filter(created_at__month=current_month)
+    current_month_orders = Order.objects.filter(vendors__user=request.user, is_ordered=True, created_at__month=current_month)
 
-    current_month_revenue = 0
-    for order in current_month_orders:
-        current_month_revenue += order.get_total_by_vendor(vendor)['grand_total']
+    # Calculate current month revenue
+    current_month_revenue = current_month_orders.aggregate(total_revenue=Sum('total'))['total_revenue'] or 0
 
-    # total revenue
-    total_revenue = 0
-    for order in orders:
-        total_revenue += order.get_total_by_vendor(vendor)['grand_total']
+    # Calculate total revenue
+    total_revenue = Order.objects.filter(vendors__user=request.user, is_ordered=True).aggregate(total_revenue=Sum('total'))['total_revenue'] or 0
+
 
     context = {
         'orders': orders,
@@ -219,9 +219,26 @@ def vendordashboard(request):
         'recent_orders': recent_orders,
         'total_revenue': total_revenue,
         'current_month_revenue': current_month_revenue,
+        'show_popup': False,
     }
 
+    if request.user.role == User.VENDOR:
+        projects = Project.objects.filter(vendor=request.user, return_date__lt=datetime.date.today() + datetime.timedelta(days=15))
+        context['projects'] = projects
+
+        for project in projects:
+            remaining_days = (project.return_date - datetime.date.today()).days
+            if remaining_days < 15 and 'modals_hidden' not in request.session:
+                context['show_popup'] = True
+                request.session['modals_hidden'] = True  # Update session variable
+
+    # Set session expiry
+    if request.user.is_authenticated and 'modals_hidden' not in request.session:
+        request.session.set_expiry(0)
+        request.session['modals_hidden'] = True
+
     return render(request, 'account/vendordashboard.html', context)
+
 
     
     

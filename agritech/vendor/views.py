@@ -22,6 +22,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from orders.models import Order, FarmOrder
 import datetime
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db.models import Count
 # Create your views here.
 
 # def vprofile(request):
@@ -68,11 +69,12 @@ def get_vendor(request):
 @user_passes_test(check_role_vendor)
 def menu_builder(request):
     vendor = get_vendor(request)
-    categories = Category.objects.order_by('created_at')
+    categories = Category.objects.annotate(num_projects=Count('project')).order_by('created_at')
     context = {
         'categories': categories,
     }
     return render(request, 'vendor/menu_builder.html', context)
+
 
 
 @login_required(login_url='login')
@@ -178,7 +180,7 @@ def order_detail(request, order_number):
         context = {
             'order': order,
             'ordered_product': ordered_product,
-            'subtotal': order.get_total_by_vendor(vendor)['subtotal'],
+            'subtotal': order.total - order.total_tax,
             'tax_data': order.get_total_by_vendor(vendor)['tax_dict'],
             'grand_total': order.get_total_by_vendor(vendor)['grand_total'],
         }
