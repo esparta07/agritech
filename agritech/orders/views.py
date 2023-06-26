@@ -160,8 +160,7 @@ def payments(request):
 
                 project = Project.objects.get(pk=item.project.pk)
                 if project.total_no_shares == 0:
-                    project.is_approved = False
-                    project.is_completed = True
+                    project.is_soldout = True
                     project.save()
  
 
@@ -172,8 +171,7 @@ def payments(request):
 
 def verify(request):
     pidx = request.GET.get('pidx')
-    # Retrieve the necessary payment details from the query parameters
-    # and perform the verification process
+    
     
     data = {
         "pidx": pidx

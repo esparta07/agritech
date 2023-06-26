@@ -57,6 +57,7 @@ class Project(models.Model):
     is_available = models.BooleanField(default=True)
     is_approved = models.BooleanField(default=False)
     is_completed= models.BooleanField(default=False)
+    is_soldout=models.BooleanField(default=False)
 
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)

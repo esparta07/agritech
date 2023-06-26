@@ -28,7 +28,7 @@ def supplier(request):
 
 def shop_view(request):
     categories = Category.objects.all()
-    projects = Project.objects.filter(is_approved=True)  # Filter approved projects
+    projects = Project.objects.filter(is_approved=True,is_soldout=False)  # Filter approved projects
     page = request.GET.get('page')
     search_query = request.GET.get('search_query')
     selected_category = request.GET.get('category')  # Get the selected category from the dropdown
