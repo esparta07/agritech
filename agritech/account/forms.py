@@ -3,10 +3,12 @@ from .models import User , UserProfile
 from account.validators import allow_only_images_validator
 from django.utils.safestring import mark_safe
 
-# UserRegisterations
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    role = forms.ChoiceField(choices=User.ROLE_CHOICES, widget=forms.RadioSelect)
+    role = forms.ChoiceField(
+        choices=User.ROLE_CHOICES,
+        widget=forms.RadioSelect(attrs={'class': 'radio-inline'})
+    )
 
     class Meta:
         model = User
@@ -17,13 +19,21 @@ class UserRegistrationForm(forms.ModelForm):
         self.initial['phone_number'] = '+977'
         self.fields['phone_number'].widget.attrs.update({
             'class': 'custom-class',
-            'style': 'width: 100%; max-width: 470px; height: 53px;',  # Increase the max-width value as desired
-            'value': '+977'  # Set the value attribute to '+977'
+            'value': '+977'
         })
         self.fields['phone_number'].label = mark_safe('<label style="font-weight: bold;">Phone Number</label>')
         self.fields['password'].label = mark_safe('<label style="font-weight: bold;">Password</label>')
-        self.fields['role'].label = mark_safe('<label style="font-weight: bold; margin-top:-40px;">Role</label>')
+        self.fields['role'].label = mark_safe('<label style="font-weight: bold; margin-bottom: 5px;">Role</label>')
 
+        # Add wrapper div with styles for each form item
+        self.fields['phone_number'].widget = forms.TextInput(attrs={'style': 'width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px;'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'style': 'width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px;'})
+         # Adjust styles for the radio buttons
+        self.fields['role'].widget.attrs.update({
+            'style': 'display: inline-block; vertical-align: middle; margin-left: 5px;',
+        })
+
+        
 
 
     
