@@ -163,7 +163,20 @@ $(document).ready(function() {
         }
     }
 });
+/* --------------------------------------------------------
+        Mobile Phone Entry
+    -------------------------------------------------------- */
+    const submitEmailElement = document.querySelector('.submit-email');
 
+    if (submitEmailElement) {
+      submitEmailElement.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        document.querySelector('.subscription').classList.add('done');
+      });
+    } else {
+      console.error('Element with class "submit-email" not found.');
+    }
+    
 // GOOGLE API PART
 let autocomplete;
 
@@ -237,91 +250,3 @@ function onPlaceChanged (){
     }
 
 }
-/* --------------------------------------------------------
-        Status Update Modal
-    -------------------------------------------------------- */
-
-    $(document).ready(function() {
-      // Event listener for the update status button
-      $('.update_status_button').click(function() {
-        var projectId = $(this).data('project-id');
-        var projectTitle = $(this).data('project-title');
-  
-        // Set the project title in the modal
-        $('#projectTitle').text(projectTitle);
-  
-        // Set the project ID as a data attribute in the form
-        $('#statusForm').data('project-id', projectId);
-  
-        // Display the modal
-        $('#myModal').css('display', 'block');
-      });
-  
-      // Event listener for the close button
-      $('#closeModal').click(function() {
-        // Hide the modal
-        $('#myModal').css('display', 'none');
-      });
-  
-      // Event listener for the form submission
-      $('#statusForm').submit(function(event) {
-        event.preventDefault(); // Prevent the default form submission
-  
-        // Get the form action URL
-        var formAction = $(this).attr('action');
-  
-        // Get the CSRF token
-        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-  
-        // Get the project ID from the data attribute in the form
-        var projectId = $(this).data('project-id');
-  
-        // Get the status from the textarea field
-        var status = $('#statusForm textarea[name="status"]').val();
-  
-        // Create the form data object
-        var formData = new FormData();
-        formData.append('csrfmiddlewaretoken', csrfToken);
-        formData.append('project_id', projectId);
-        formData.append('status', status);
-  
-        // Perform the AJAX request
-        $.ajax({
-          url: formAction,
-          method: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(response) {
-            console.log(response); // Display the response in the console
-            if (response.message) {
-              alert(response.message); // Show a success message
-              $('#myModal').css('display', 'none'); // Close the modal
-            } else if (response.error) {
-              alert(response.error); // Show an error message
-            }
-          },
-          error: function(xhr, status, error) {
-            console.log(xhr.responseText); // Display the error in the console
-            alert('An error occurred. Please try again.'); // Show a generic error message
-          }
-        });
-      });
-    });
- 
-/* --------------------------------------------------------
-        Status VIEW
-    -------------------------------------------------------- */
-
-    
-    
-
-
-
-
-
-
-
-
-
-  

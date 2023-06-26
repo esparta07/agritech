@@ -34,7 +34,6 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!--Jquerry-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Include the PayPal JavaScript SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=INR"></script>
     <!--Khalti-->
@@ -607,47 +606,6 @@
         </div>
         {% endfor %}
       </div>
-      <div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h1 style="padding-left: 290px; color:black;">Update Status</h1>
-        
-        <form id="statusForm" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <select id="projectSelect" name="project_id" class="form-control" required>
-                    <option value="">Select Project</option>
-                    {% for project in active_projects %}
-                        <option value="{{ project.id }}">{{ project.project_title }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <br>
-            <br>
-            <!-- Add title input field -->
-            <div class="form-group">
-                <input type="text" id="statusTitle" name="title" placeholder="Enter status title" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <textarea id="statusUpdate" rows="4" cols="50" placeholder="Enter your status update" name="status" class="form-control" required></textarea>
-            </div>
-            
-            <!-- Display form errors -->
-            {% if form.errors %}
-                <div class="form-errors">
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <p class="error">{{ error }}</p>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            
-            <button type="submit" id="saveStatusButton" class="update_status_button">Save</button>
-        </form>
-    </div>
-</div>
-
       <!-- MODAL AREA END -->
     <!-- FOOTER AREA START -->
 <footer class="ltn__footer-area  ">
@@ -783,7 +741,6 @@
         </div>
     </div>
 </footer>
-
 <!-- FOOTER AREA END -->
 </body>
 </html>

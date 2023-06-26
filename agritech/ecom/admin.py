@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Project, Tax, ExtraImage,ProjectStatus
+from .models import Category, Project, Tax, ExtraImage
 from .models import Cart
 from decimal import Decimal
 
@@ -38,4 +38,3 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Tax, TaxAdmin)
 admin.site.register(Category)
 admin.site.register(Project, ProjectAdmin)
-admin.site.register(ProjectStatus)

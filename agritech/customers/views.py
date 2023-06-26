@@ -110,23 +110,3 @@ def my_investment(request, customer_id):
 
     # Pass the project details dictionary to the template
     return render(request, 'customers/my_investment.html', {'project_details': project_details})
-
-from django.db.models import F
-from ecom.models import ProjectStatus
-
-@login_required(login_url='account:login')
-def cfarm_status(request, id):
-    project = get_object_or_404(Project, id=id)
-    progress_ratio = (project.collected_amount / project.demand) * 100
-    
-    # Retrieve the status messages for the specific project ID
-    status_messages = ProjectStatus.objects.filter(project_id=id).order_by('created_at')
-    
-    
-    context = {
-        'project': [project],
-        'progress_ratio': progress_ratio,
-        'status_messages': status_messages,
-    }
-    
-    return render(request, 'customers/cfarm_status.html', context)
