@@ -1,50 +1,51 @@
-<div class="user-account-nav user-account-sidebar" style="background-color: #357960; width: 280px;  margin-left:-100px;">
-    <div class="user-nav-list mt-100 pd-10">
-        <ul>
+<div class="user-account-nav user-account-sidebar mb-50 mt-0" style="background-color: #ECF9FF; width: 280px;  margin-left:-160px;">
+    <div class="user-nav-list mt-50 mb-50 pd-10">
+        <ul style="list-style: none;
+        padding: 0;">
             {% if user.is_verified %}
             <li class="{% if '/vendordashboard/' == request.path or '/vendor/' == request.path %}active{% endif %} active show" style="padding-top:15px;">
-                <a href="{% url 'account:vendordashboard' %}" style="color: #ffffff;">
+                <a href="{% url 'account:vendordashboard' %}" style="color:black;">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
             </li>
             <li class="{% if 'profile' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:vprofile' %}" style="color: #ffffff;">
+                <a href="{% url 'account:vprofile' %}" style="color:black;">
                     <i class="fas fa-user"></i> My Profile
                 </a>
             </li>
             <li class="{% if 'menu-builder' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:menu_builder' %}" style="color: #ffffff;">
+                <a href="{% url 'account:menu_builder' %}" style="color:black;">
                     <i class="fas fa-plus"></i> Add Product
                 </a>
             </li>
             <li class="{% if 'active_farms' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:active farms' %}" style="color: #ffffff;">
+                <a href="{% url 'account:active farms' %}" style="color:black;">
                     <i class="fas fa-circle" style="color: #5ad539;font-size: 8px; position: relative; top: -3px;"></i> Active Farm
             </li>
             <li class="{% if '/my_orders/' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:vendor_my_orders' %}" style="color: #ffffff;">
+                <a href="{% url 'account:vendor_my_orders' %}" style="color:black;">
                     <i class="fas fa-file-invoice"></i> Order
                 </a>
             </li>
             <li class="{% if '/vendor_detail/' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:vendor_detail' user.id %}" style="color: #ffffff;">
+                <a href="{% url 'account:vendor_detail' user.id %}" style="color:black;">
                     <i class="fas fa-user"></i> My Details
                 </a>
             </li>
             {% else %}
             <li class="{% if 'profile' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:vprofile' %}" style="color: #ffffff;">
+                <a href="{% url 'account:vprofile' %}" style="color:black;">
                     <i class="fas fa-user"></i> My Profile
                 </a>
             </li>
             {% endif %}
             <li class="{% if '/change_password/' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:vendor_change_password' %}" style="color: #ffffff;">
+                <a href="{% url 'account:vendor_change_password' %}" style="color:black;">
                     <i class="fas fa-lock"></i> Security
                 </a>
             </li>
             <li style="padding-bottom:15px;">
-                <a class="logout-btn" href="{% url 'account:logout' %}" style="color: #ffffff; ">
+                <a class="logout-btn" href="{% url 'account:logout' %}" style="color:black; ">
                     <i class="fas fa-sign-out-alt"></i> Signout
                 </a>
             </li>

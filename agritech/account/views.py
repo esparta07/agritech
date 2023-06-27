@@ -122,7 +122,7 @@ def send_sms_otp(phone_number, otp):
     
     url = "http://api.sparrowsms.com/v2/sms/"
     data = {
-        'token': 'v2_4Bg0gTIExiCMGTN1GDd9bsUEytF.wHW1',
+        'token': 'v2_4Bg0gTIExiCMGTN1GDd9bsUEytF.wHW',
         'from': 'Demo',
         'to': extracted_number,
         'text': f'Your OTP is: {otp}',
