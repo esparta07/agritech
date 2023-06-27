@@ -211,7 +211,7 @@ def vendordashboard(request):
 
     # Calculate total revenue
     total_revenue = Order.objects.filter(vendors__user=request.user, is_ordered=True).aggregate(total_revenue=Sum('total'))['total_revenue'] or 0
-
+    project_count = Project.objects.filter(vendor=vendor.user).count()
 
     context = {
         'orders': orders,
@@ -220,6 +220,7 @@ def vendordashboard(request):
         'total_revenue': total_revenue,
         'current_month_revenue': current_month_revenue,
         'show_popup': False,
+        'project_count': project_count,
     }
 
     if request.user.role == User.VENDOR:

@@ -205,7 +205,7 @@
                     <div class="ltn__product-tab-area">
                         <div class="container">
                             <div class="row">
-                                <div class="col-lg-4 " style="margin-top:-40px;">
+                                <div class="col-lg-2" style="margin-top:-40px;">
                                    
                                        {% include 'includes/v_sidebar.html' %}
                                 </div>
@@ -222,13 +222,11 @@
                                                                     <div class="user-dashboard loader-holder">
                                                                         <div class="user-holder">
                                                                             <br>
-                                                                            <h5 class="text-uppercase">Overview</h5>
-                                                                            <p class="text-right">Logged in as: <b>{{ user.user_name }}</b></p>
                                                                             <div class="row" style="width: calc(100% + 300px)" >
                                                                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                                                     <div class="card">
                                                                                         <div class="card-header">
-                                                                                            <strong>Farms </strong>
+                                                                                            <strong>Total Orders</strong>
                                                                                         </div>
                                                                                         <div class="card-body text-center">
                                                                                             <a href="#"><h5 class="card-title">{{ orders_count }}</h5></a>
@@ -255,11 +253,21 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                                    <div class="card">
+                                                                                        <div class="card-header">
+                                                                                            <strong> Active Farms </strong>
+                                                                                        </div>
+                                                                                        <div class="card-body text-center">
+                                                                                            <a href="#"><h5 class="card-title">{{ project_count }}</h5></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                             <br>
                                                                             <br>
                                                                             
-                                                                            <h5 class="text-uppercase">  Recent Orders </h5>
+                                                                            {% comment %} <h5 class="text-uppercase">  Recent Orders </h5>
                                                                             <div class="row" style="width:700px">
                                                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                     <div class="user-orders-list">
@@ -291,7 +299,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div> {% endcomment %}
                                                                             
                                                                             
                                                                         </div>
