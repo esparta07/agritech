@@ -19,16 +19,19 @@ class UserRegistrationForm(forms.ModelForm):
         self.initial['phone_number'] = '+977'
         self.fields['phone_number'].widget.attrs.update({
             'class': 'custom-class',
-            'value': '+977'
+            'value': '+977',
+            'placeholder': 'Phone Number'
         })
-        self.fields['phone_number'].label = mark_safe('<label style="font-weight: bold;">Phone Number</label>')
-        self.fields['password'].label = mark_safe('<label style="font-weight: bold;">Password</label>')
+        self.fields['password'].widget.attrs.update({
+            'placeholder': 'Password'
+        })
         self.fields['role'].label = mark_safe('<label style="font-weight: bold; margin-bottom: 5px;">Role</label>')
 
         # Add wrapper div with styles for each form item
-        self.fields['phone_number'].widget = forms.TextInput(attrs={'style': 'width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px;'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'style': 'width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px;'})
-         # Adjust styles for the radio buttons
+        self.fields['phone_number'].widget = forms.TextInput(attrs={'style': 'width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px; border: none; border-bottom: 1px solid black;'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'style': 'width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px; outline: none; border: none; border-bottom: 1px solid black;'})
+
+        # Adjust styles for the radio buttons
         self.fields['role'].widget.attrs.update({
             'style': 'display: inline-block; vertical-align: middle; margin-left: 5px;',
         })

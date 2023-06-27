@@ -1,74 +1,39 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-danger">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-  {% comment %} <div class="container h-100 mb-20">
-    <div class="row d-flex justify-content-center align-items-center mb-20" style="height: 750px;">
-        <div class="card-body">
-            <div class="row" style="border: 1px solid black;">
-                <div class="col-md-9 col-lg-6 col-xl-4">
-                    <h2 class="text-center">REGISTER</h2>
-                    <form method="post" action="{% url 'account:user_registration' %}">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        {% if otp_required %}
-                            <div class="form-group">
-                                <label for="id_otp">OTP:</label>
-                                <input type="text" id="id_otp" name="otp" class="form-control" required style="width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px;">
-                            </div>
-                            <button type="submit" class="btn theme-btn-2 rounded-pill mt-20">Verify OTP</button>
-                        {% else %}
-                            <button type="submit" class="btn theme-btn-2 rounded-pill">Generate OTP</button>
-                        {% endif %}
-                    </form>
-                </div>
-                <div class="col-md-10 col-lg-6 col-xl-7 d-flex justify-content-end align-items-end order-1 order-lg-3">
-                    <img src="{% static 'ecom/img/register.jpg' %}" class="img-fluid fit-content" alt="Sample image" style="max-width: 100%; border-radius: 10px; width: 97%; height: 98%;">
-                </div>
-            </div>
-        </div>
-    </div>
-</div> {% endcomment %}
 
-<section class="vh-100" style="background-color: #eee;">
-  <h1 class="text-center">REGISTER USER</h1>
-  <div class="container h-100" style="margin-top:-100px;">
+<section class="vh-100" style="background-image: url('{% static 'ecom/img/nicee2.png' %}');background-size: cover;
+background-position: center;">
+  <div class="container h-100" style="margin-top: -100px;">
     <div class="row d-flex align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
-        <div class="card text-black">
-          <div class="card-body p-1">
-            <div class="row ">
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                <form method="post" action="{% url 'account:user_registration' %}" class="p-4">
-                  {% csrf_token %}
-                  {{ form.as_p }}
-                  {% if otp_required %}
-                  <div class="form-group">
-                    <label for="id_otp">OTP:</label>
-                    <input type="text" id="id_otp" name="otp" class="form-control" required style="width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px;">
+      <div class="card mt-100 mb-100" style="width: 70%; margin: 0 auto;">
+        <div class="card-body p-1">
+          <b><h1 class="text-center">REGISTER</h1></b>
+          <div class="row">
+            <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-1">
+              <form method="post" action="{% url 'account:user_registration' %}" class="p-4">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if otp_required %}
+                <div class="form-group">
+                  <label for="id_otp">OTP:</label>
+                  <input type="text" id="id_otp" name="otp" class="form-control" required style="width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px; outline: none; border: none; border-bottom: 1px solid black;">
+                </div>
+                <button type="submit" class="btn theme-btn-1 rounded-pill mt-20">Verify OTP</button>
+                {% else %}
+                <button type="submit" class="btn theme-btn-1 rounded-pill">Generate OTP</button>
+                {% endif %}
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <!-- Load message -->
+                    {% include 'includes/alerts.html' %}
                   </div>
-                  <button type="submit" class="btn theme-btn-2 rounded-pill mt-20">Verify OTP</button>
-                  {% else %}
-                  <button type="submit" class="btn theme-btn-2 rounded-pill">Generate OTP</button>
-                  {% endif %}
-                  <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <!-- Load message -->
-                      {% include 'includes/alerts.html' %}
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="col-md-10 col-lg-6 col-xl-7 order-1 order-lg-2">
-                <img src="{% static 'ecom/img/register.jpg' %}" class="img-fluid" alt="Sample image" style="width: 100%; height: 100%; border-radius: 10px;">
-              </div>
+                </div>
+              </form>
             </div>
-            
-            
+            <div class="col-md-10 col-lg-6 col-xl-7 order-1 order-lg-2">
+              <img src="{% static 'ecom/img/login.jpg' %}" class="img-fluid" alt="Sample image" style="width: 100%; height: 100%; border-radius: 10px; ">
+            </div>
           </div>
         </div>
       </div>
@@ -76,6 +41,11 @@
   </div>
 </section>
 
+{% if messages %}
+{% for message in messages %}
+  <div class="alert alert-danger">{{ message }}</div>
+{% endfor %}
+{% endif %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
   $(document).ready(function() {
