@@ -6,16 +6,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <!-- Main Section Start -->
+
+<h1 class="text-center pt-10 pb-10 h-60"style="background: linear-gradient(to left, #E8A22B 0%,#fff 100%); margin-top:0px;">FARM STATUS</h1>
 <div class="main-section">
     
-    {% include 'includes/cover.html' %}
+    
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <!-- Load the sidebar here -->
+                
                     {% include 'includes/c_sidebar.html' %}
-                </div>
+                
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
@@ -23,7 +24,7 @@
 
 
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-left:40px;"> 
                                     <h1 class="mt-4"></h1>
                                     {% for proj in project %}
                                     <div class="row">
@@ -68,10 +69,6 @@
                                                             <span>
                                                                 <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
                                                             </span><br>
-                                                            <strong>Profit:</strong>
-                                                            <span>
-                                                                <a>{{ proj.percent_return_after_due_date }} %</a>
-                                                            </span><br>
                                                             <strong>Duration:</strong>
                                                             <span>
                                                                 <a>{{ proj.duration_in_months }} months</a>
@@ -101,20 +98,52 @@
                                                 </a>
                                                 <div class="modal-product-meta ltn__product-details-menu-1">
                                                     <ul>
+                                                      {% if not proj.is_completed %}
                                                         <li>
-                                                    <strong>Active Since:</strong>
+                                                            <strong>Active Since:</strong>
                                                             <span class="greenish">
                                                                 <a>{{ proj.days_since_created }} Days</a>
                                                             </span><br>
                                                     
+                                                        </li>
+                                                        {% endif %}
+                                                        <li>
+                                                          <strong>Invested Amount:</strong>
+                                                          <span class="greenish">
+                                                              <a>रु‎ {{ invested_amount }} </a>
+                                                          </span><br>
+                                                  
+                                                        </li>
+                                                        <li>
+                                                          <strong>Profit %:</strong>
+                                                          <span class="greenish">
+                                                              <a>{{ proj.percent_return_after_due_date }} % </a>
+                                                          </span><br>
+                                                  
+                                                        </li>
+                                                        <li>
+                                                          {% if proj.is_completed %}
+                                                          <strong>Profit Gained:</strong>
+                                                          {% else %}
+                                                          <strong>Expected Profit:</strong>
+                                                          {% endif %}
+                                                          <span class="greenish">
+                                                              <a>रु‎ {{ return_amount }} </a>
+                                                          </span><br>
+                                                  
                                                         </li>
                                                     </ul>
                                                 </div>
    
                                             </div>
                                         </div>
-                                        <h1>My Farm Status</h1>    
-                                        
+                                        <h1 style="margin-left:10px; margin-top:10px;">Farm Status:
+                                          {% if proj.is_completed %}
+                                          <span style="color:green;">COMPLETED<span>
+                                          {% endif %}
+                                        </h1>
+                                           
+                                        {% if not proj.is_completed%}
                                         <div id="progress-bar-container">
                                           <ul class="status-list">
                                             {% if status_messages %}
@@ -146,6 +175,7 @@
                                                   <p>{{ status.created_at }}</p>
                                                 </div>
                                                 {% endfor %}
+                                                
                                               {% else %}
                                                 <div class="section-content swiper-slide active">
                                                   <h2>No status available</h2>
@@ -156,8 +186,7 @@
                                            
                                           </div>
                                         </div>
-                                        
-                                        
+                                        {% endif %}
                                         
                                         <style>
                                           .process-wrapper {

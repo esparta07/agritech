@@ -4307,7 +4307,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   padding: 20px 10px;
   display: inline-block;
   white-space: nowrap;
-  color: var(--ltn__heading-color);
+  color: white;
   font-weight: 600;
   font-family: var(--ltn__body-font); }
 

@@ -7,27 +7,24 @@
 <!-- Main Section Start -->
 <div class="main-section">
     
-    {% include 'customers/cover.html' %}
+    
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <!-- Load the sidebar here -->
+                
                     {% include 'includes/c_sidebar.html' %}
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style ="margin-top:30px; margin-bottom:30px;">
+                
+                
                     <div class="user-dashboard loader-holder">
-                        <div class="user-holder">
-                            
-                            <h5 class="text-uppercase">My Investments</h5>
+                            <h2 class="text-uppercase mt-10" style="margin-left:20px;">My Investments</h2>
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-left:20px;" >
                                     <div class="user-orders-list">
                                         <div class="row ltn__custom-gutter mt-10 mb-10 justify-content-start">
                                             {% for project, details in project_details.items %}
-                                                {% if project.is_approved %}
-                                                    <div class="col-lg-4 col-md-6 col-sm-6" style="margin-bottom: 30px;">
-                                                        <div class="ltn__feature-item ltn__feature-item-6 text-center">
+                                                {% if not project.is_completed %}
+                                                    
+                                                        <div class="ltn__feature-item ltn__feature-item-6 text-center" style="margin-right:2px">
                                                             <div class="ltn__feature-icon">
                                                                 <a href="{% url 'account:cfarm_status' project.id %}">
                                                                     <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
@@ -36,27 +33,72 @@
                                                             <div class="ltn__feature-info">
                                                                 <h4><a href="{% url 'ecom:product' id=project.id %}">{{ project.project_title }}</a></h4>
                                                                 <span class="greenish">रु‎ {{ project.value_of_share }}</span><br>
-                                                                Quantity Ordered: {{ details.quantity_ordered }}<br>
+                                                                Share Owned: {{ details.quantity_ordered }}<br>
+                                                                {% if project.is_completed %}
+                                                                <span class="badge badge-success rounded-pill" >Completed</span>
+                                                                 {% elif project.is_soldout%}
+                                                                <span class="badge badge-danger rounded-pill" > Soldout</span>
+                                                                 {% else %}
+                                                                <span class="badge badge-primary rounded-pill" >Active</span>
+                                                                  {% endif %}
                                                                 {% comment %} Price Paid: {{ details.total_price_paid }} {% endcomment %}
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    
                                                 {% endif %}
 
-                                                {% if forloop.counter|divisibleby:3 or forloop.last %}
+                                                {% if forloop.counter|divisibleby:5 or forloop.last %}
                                                     </div>
                                                     {% if not forloop.last %}
                                                         <div class="row ltn__custom-gutter mt-50 mb-20">
                                                     {% endif %}
                                                 {% endif %}
-                                        {% endfor %}											
+                                        {% endfor %}
+                                        											
                                     </div>
+                                    <h2>COMPLETED PROJECTS</h2>
+                                    <div class="row ltn__custom-gutter mt-10 mb-10 justify-content-start">
+                                        {% for project, details in project_details.items %}
+                                            {% if project.is_completed %}
+                                                
+                                                    <div class="ltn__feature-item ltn__feature-item-6 text-center" style="margin-right:2px">
+                                                        <div class="ltn__feature-icon">
+                                                            <a href="{% url 'account:cfarm_status' project.id %}">
+                                                                <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
+                                                            </a>                                    
+                                                        </div>
+                                                        <div class="ltn__feature-info">
+                                                            <h4><a href="{% url 'ecom:product' id=project.id %}">{{ project.project_title }}</a></h4>
+                                                            <span class="greenish">रु‎ {{ project.value_of_share }}</span><br>
+                                                            Share Owned: {{ details.quantity_ordered }}<br>
+                                                            {% if project.is_completed %}
+                                                            <span class="badge badge-success rounded-pill" >Completed</span>
+                                                             {% elif project.is_soldout%}
+                                                            <span class="badge badge-danger rounded-pill" > Soldout</span>
+                                                             {% else %}
+                                                            <span class="badge badge-primary rounded-pill" >Active</span>
+                                                              {% endif %}
+                                                            {% comment %} Price Paid: {{ details.total_price_paid }} {% endcomment %}
+                                                        </div>
+                                                    </div>
+                                                
+                                            {% endif %}
+
+                                            {% if forloop.counter|divisibleby:5 or forloop.last %}
+                                                </div>
+                                                {% if not forloop.last %}
+                                                    <div class="row ltn__custom-gutter mt-50 mb-20">
+                                                {% endif %}
+                                            {% endif %}
+                                    {% endfor %}
+                                                                                
+                                </div>
                                 </div>
                             </div>
                             
-                        </div>
+                        
                     </div>
-                </div>
+                
             </div>
         </div>
     </div>

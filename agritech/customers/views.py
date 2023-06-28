@@ -1,14 +1,15 @@
-from django.http import HttpResponse
+
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from account.forms import UserInfoForm, UserProfileForm
+from account.forms import UserProfileForm
 from account.models import UserProfile
 from django.contrib import messages
 from orders.models import Order, FarmOrder
 from account.models import User
 from ecom.models import Project
 import json
-
+from ecom.models import ProjectStatus
+from django.db.models import Sum
 
 @login_required(login_url='login')
 def cprofile(request):
@@ -111,22 +112,25 @@ def my_investment(request, customer_id):
     # Pass the project details dictionary to the template
     return render(request, 'customers/my_investment.html', {'project_details': project_details})
 
-from django.db.models import F
-from ecom.models import ProjectStatus
-
 @login_required(login_url='account:login')
 def cfarm_status(request, id):
     project = get_object_or_404(Project, id=id)
-    progress_ratio = (project.collected_amount / project.demand) * 100
     
     # Retrieve the status messages for the specific project ID
     status_messages = ProjectStatus.objects.filter(project_id=id).order_by('created_at')
     
+    # Calculate the invested amount for the current user and project
+    invested_amount = FarmOrder.objects.filter(project=project, user=request.user).aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    # Calculate the return amount for the current user and project
+    return_amount = FarmOrder.objects.filter(project=project, user=request.user).aggregate(Sum('return_amount'))['return_amount__sum'] or 0
     
     context = {
         'project': [project],
-        'progress_ratio': progress_ratio,
         'status_messages': status_messages,
+        'invested_amount': invested_amount,
+        'return_amount': return_amount,
     }
     
     return render(request, 'customers/cfarm_status.html', context)
+

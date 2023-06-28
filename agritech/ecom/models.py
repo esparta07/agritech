@@ -10,7 +10,7 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseForbidden
-from django.db.models import Count
+from django.db.models import Count 
 
 class Category(models.Model):
     category_name = models.CharField(max_length=50)
@@ -84,7 +84,7 @@ class Project(models.Model):
         self.total_no_shares = num_shares  # Save the value to the field
         self.save()  # Save the model instance
         return num_shares
-
+     
     def calculate_duration(self):
         duration = self.return_date.month - self.created_at.month
         if self.return_date.year > self.created_at.year:

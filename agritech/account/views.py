@@ -18,7 +18,7 @@ from django.contrib import messages
 import random
 import requests
 from django.contrib.auth import get_user_model
-
+from datetime import date, timedelta
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -179,20 +179,53 @@ def myAccount(request):
     redirectUrl = detectUser(user)
     return redirect(redirectUrl)
     
+
+
+from django.db.models import Sum, F
+from django.utils import timezone
+
 @login_required(login_url='account:login')
 @user_passes_test(check_role_customer)
-#Customer Daashboard
 def custdashboard(request):
     orders = Order.objects.filter(user=request.user, is_ordered=True)
     recent_orders = orders[:10]
-
+    
+    # Calculate the sum of all amounts of farm orders
+    total_investment = orders.aggregate(Sum('farmorder__amount'))['farmorder__amount__sum'] or 0
+    return_amount = orders.aggregate(Sum('farmorder__return_amount'))['farmorder__return_amount__sum'] or 0
+    
+    # Get projects invested by the user with return date within the next 15 days
+    today = timezone.now().date()
+    return_date_limit = today + timedelta(days=15)
+    projects_due_soon = Project.objects.filter(farmorder__order__in=orders, return_date__lte=return_date_limit, farmorder__user=request.user).distinct()
+    
+    # Get projects invested by the user with the total investment
+    invested_projects = Project.objects.filter(farmorder__order__in=orders, farmorder__user=request.user).annotate(total_investment=Sum('farmorder__amount')).annotate(total_quantity=Sum('farmorder__quantity')).annotate(return_amount=Sum('farmorder__return_amount'))
+    
+    # Calculate the sum of return_amount for completed farm orders
+    profit_gained = orders.filter(farmorder__project__is_completed=True).aggregate(total_return_amount=Sum(F('farmorder__return_amount')))['total_return_amount'] or 0
+    
+    limit = 10
+    invested_projects = invested_projects[:limit]
+    
     context = {
         'orders': orders,
         'orders_count': orders.count(),
         'recent_orders': recent_orders,
+        'total_investment': total_investment,
+        'return_amount': return_amount,
+        'projects_due_soon': projects_due_soon,
+        'invested_projects': invested_projects,
+        'profit_gained': profit_gained,
     }
     return render(request, 'account/custdashboard.html', context)
-    
+
+
+
+
+
+
+
     
 
 @login_required(login_url='login')
