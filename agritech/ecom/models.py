@@ -162,22 +162,13 @@ class ProjectStatus(models.Model):
 
 
 
+
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def save(self, *args, **kwargs):
-        max_shares_per_user = self.project.max_shares_per_user
-        total_shares = self.project.total_no_shares
-        # Check if the quantity exceeds the maximum shares per user
-        if self.quantity > max_shares_per_user:
-            raise ValidationError("Quantity exceeds the maximum shares per user")
-        if self.quantity > total_shares:
-            raise ValidationError("Quantity exceeds the available shares")
-        super().save(*args, **kwargs)
 
     def clean(self):
         max_shares_per_user = self.project.max_shares_per_user
@@ -187,10 +178,47 @@ class Cart(models.Model):
             raise ValidationError("Quantity exceeds the maximum shares per user")
         # Check if the quantity exceeds the available shares
         if self.quantity > total_shares:
-            raise ValidationError("Quantity exceeds the available shares")
+            raise ValidationError("No more shares available")
+        existing_cart = Cart.objects.filter(user=self.user).exclude(pk=self.pk).first()
+        if existing_cart:
+            raise ValidationError("Only one project is allowed per user in the cart.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.user)
+
+# class Cart(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+#     quantity = models.PositiveIntegerField()
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def save(self, *args, **kwargs):
+#         max_shares_per_user = self.project.max_shares_per_user
+#         total_shares = self.project.total_no_shares
+#         # Check if the quantity exceeds the maximum shares per user
+#         if self.quantity > max_shares_per_user:
+#             raise ValidationError("Quantity exceeds the maximum shares per user")
+#         if self.quantity > total_shares:
+#             raise ValidationError("Quantity exceeds the available shares")
+#         super().save(*args, **kwargs)
+
+#     def clean(self):
+#         max_shares_per_user = self.project.max_shares_per_user
+#         total_shares = self.project.total_no_shares
+#         # Check if the quantity exceeds the maximum shares per user
+#         if self.quantity > max_shares_per_user:
+#             raise ValidationError("Quantity exceeds the maximum shares per user")
+#         # Check if the quantity exceeds the available shares
+#         if self.quantity > total_shares:
+#             raise ValidationError("Quantity exceeds the available shares")
+
+#     def __str__(self):
+#         return str(self.user)
 
 
 

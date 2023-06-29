@@ -94,7 +94,8 @@ class UserRegistrationView(View):
             phone_number = str(form.cleaned_data['phone_number'])
 
             if 'otp' in request.POST:
-                return OTPVerificationView.as_view()(request)
+                return HttpResponseRedirect(reverse('account:otp_verification'))
+
             else:
                 password = form.cleaned_data['password']
                 otp = generate_otp()
