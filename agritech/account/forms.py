@@ -43,11 +43,11 @@ class UserRegistrationForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Start typing...', 'required': 'required'}))
     profile_picture = forms.ImageField(widget=forms.FileInput(attrs={'class': 'btn btn-info'}), required=False)
-    cover_photo = forms.ImageField(widget=forms.FileInput(attrs={'class': 'btn btn-info'}), required=False)
+   
     
     class Meta:
         model = UserProfile
-        fields = ['first_name', 'last_name', 'profile_picture', 'cover_photo', 'address', 'country', 'state', 'city', 'pin_code', 'passport_photo', 'citizenship_front', 'citizenship_back']
+        fields = ['first_name', 'last_name', 'profile_picture', 'address', 'country', 'state', 'city', 'pin_code', 'passport_photo', 'citizenship_front', 'citizenship_back']
 
 
 

@@ -5,7 +5,7 @@ from account.views import check_role_vendor
 from django.shortcuts import get_object_or_404, redirect, render
 from account.forms import UserProfileForm
 from django.template.defaultfilters import slugify
-from account.models import UserProfile
+from account.models import User, UserProfile
 from ecom.models import ExtraImage, ProjectStatus
 from .models import Vendor
 from .forms import ProjectStatusForm, VendorForm
@@ -256,6 +256,22 @@ def save_status(request, project_id):
 from django.db.models import F
 from ecom.models import ProjectStatus
 
+# @login_required(login_url='account:login')
+# def farm_status(request, id):
+#     project = get_object_or_404(Project, id=id)
+#     progress_ratio = (project.collected_amount / project.demand) * 100
+    
+#     # Retrieve the status messages for the specific project ID
+#     status_messages = ProjectStatus.objects.filter(project_id=id).order_by('created_at')
+   
+    
+#     context = {
+#         'project': [project],
+#         'progress_ratio': progress_ratio,
+#         'status_messages': status_messages,
+#     }
+    
+#     return render(request, 'vendor/farm_status.html', context)
 @login_required(login_url='account:login')
 def farm_status(request, id):
     project = get_object_or_404(Project, id=id)
@@ -263,17 +279,24 @@ def farm_status(request, id):
     
     # Retrieve the status messages for the specific project ID
     status_messages = ProjectStatus.objects.filter(project_id=id).order_by('created_at')
-   
     
+    # Retrieve the users who have ordered the specific farm
+    ordered_users = User.objects.filter(farmorder__project=project).distinct()
+    
+    # Retrieve the corresponding FarmOrder objects for each user
+    farm_orders = FarmOrder.objects.filter(user__in=ordered_users, project=project)
+    for order in farm_orders:
+        print(order)
+  
+
     context = {
         'project': [project],
         'progress_ratio': progress_ratio,
         'status_messages': status_messages,
+        'farm_orders': farm_orders,
     }
     
     return render(request, 'vendor/farm_status.html', context)
-
-
 
 
 

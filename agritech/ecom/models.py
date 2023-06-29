@@ -1,7 +1,6 @@
 from tabnanny import verbose
 from django.db import models
 from django.shortcuts import get_object_or_404
-from vendor.models import Vendor
 from django.utils import timezone
 from account.models import UserProfile ,User
 from vendor.models import Vendor
@@ -42,7 +41,7 @@ class Project(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,limit_choices_to={'role': User.VENDOR} ) # Limit choices to vendor users
     project_title = models.CharField(max_length=100)
     project_type = models.ForeignKey(Category, on_delete=models.CASCADE)
-    project_description = models.TextField(max_length=500)
+    project_description = models.TextField(max_length=2000)
     
     total_cost = models.DecimalField(max_digits=10, decimal_places=2)
     total_no_shares = models.DecimalField(max_digits=10, decimal_places=0, default=0)
@@ -54,8 +53,6 @@ class Project(models.Model):
     percent_return_after_due_date = models.DecimalField(max_digits=5, decimal_places=2)
     
     farm_image = models.ImageField(upload_to='media/farmimages/', default='', blank=True)
-    descrption_title = models.CharField(max_length=100,blank=True)
-    
 
     is_available = models.BooleanField(default=True)
     is_approved = models.BooleanField(default=False)
@@ -103,6 +100,7 @@ class Project(models.Model):
        return_date = self.return_date
        duration = return_date.year * 12 + return_date.month - (start_date.year * 12 + start_date.month)
        return duration
+
     
     def __str__(self):
         return f"{self.pk} - Shares Available: {self.num_shares_available}"

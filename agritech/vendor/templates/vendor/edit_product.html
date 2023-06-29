@@ -8,14 +8,11 @@
 
 <!-- Main Section Start -->
 <div class="main-section">
-    {% include 'includes/cover.html' %}
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <!-- Load the sidebar here -->
-                    {% include 'includes/v_sidebar.html' %}
-                </div>
+                {% include 'includes/v_sidebar.html' %}
+                
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
@@ -72,45 +69,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            
                                         
-                                            {% comment %} <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="total_cost">Total Cost</label>
-                                                    <br>
-                                                    {{form.total_cost}}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="value_of_share">Value of Share</label>
-                                                    <br>
-                                                    {{form.value_of_share}}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="max_shares_per_user">Maximum Share per User</label>
-                                                    <br>
-                                                    {{form.max_shares_per_user}}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="percent_return_after_due_date">Return Percentage</label>
-                                                    <br>
-                                                    {{form.percent_return_after_due_date}}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="return_date">Return Date</label>
-                                                    <br>
-                                                    <div style="width: 200px;">{{form.return_date}}</div>
-                                                </div>
-                                            </div> {% endcomment %}
-                                           
                                             <div class="col-lg-6 col-md-6 col-sm-12">
                                                 <div class="field-holder">
                                                     <label for="is_available">Is Available?</label>

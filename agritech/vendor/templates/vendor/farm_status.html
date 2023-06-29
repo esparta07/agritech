@@ -7,8 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <!-- Main Section Start -->
 <div class="main-section">
-    
-    {% include 'includes/cover.html' %}
+
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
             <div class="row">
@@ -131,6 +130,59 @@
    
                                             </div>
                                         </div>
+                                        <div class="table-responsive">
+                                        <table class=" bg-white" id="myOrdersTable">
+                                          <thead class="bg-light">
+                                            <tr>
+                                              <th scope="col">Investor Name</th>
+                                              <th scope="col">Applied Share</th>
+                                              <th scope="col">Return Percentage</th>
+                                              <th scope="col">Expected Return</th>
+                                              <th scope="col">Applied Date</th>
+                                              <th scope="col">Return Date</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {% for farm_order in farm_orders %}
+                                              <tr>
+                                                <td>
+                                                  <div class="d-flex align-items-center">
+                                                    <img
+                                                      src="{{ farm_order.user.userprofile.profile_picture.url }}"
+                                                      alt=""
+                                                      style="width: 45px; height: 45px"
+                                                      class="rounded-circle"
+                                                    />
+                                                    <div class="ms-3 pl-2">
+                                                      <p class="fw-bold mb-1">{{ farm_order.user.userprofile.full_name }}</p>
+                                                      <p class="text-muted mb-0">{{ farm_order.user.email }}</p>
+                                                    </div>
+                                                  </div>
+                                                </td>
+                                                <td>
+                                                  <p class="fw-normal mb-1">{{ farm_order.quantity }}</p>
+                                                </td>
+                                                <td>
+                                                  <span>{{ proj.percent_return_after_due_date }}%</span>
+                                                </td>
+                                                <td>
+                                                  <span>{{ farm_order.amount }}</span>
+                                                </td>
+                                                <td>
+                                                  <span>{{ farm_order.created_at }}</span>
+                                                </td>
+                                                <td>
+                                                  <span>{{ proj.return_date }}</span>
+                                                </td>
+                                              </tr>
+                                            {% endfor %}
+                                          </tbody>
+                                          
+                                          
+                                        </table>
+                                        </div>
+                                        
+                                        
                                         <h1>Farm Status</h1>    
                                         
                                         <div id="progress-bar-container">
@@ -489,33 +541,7 @@ h1 {
     </style>
     
     
-    <script>
-        $(document).ready(function() {
-            var totalSteps = {{ status_messages|length }};
-            var currentStep = 1;
-            
-            function updateProgress() {
-                var progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-                $("#line-progress").css("width", progress + "%");
-            }
-            
-            function showSectionContent() {
-                $(".section-content").removeClass("active");
-                $(".section-content").eq(currentStep - 1).addClass("active");
-            }
-            
-            $(".step").click(function() {
-                currentStep = $(this).index() + 1;
-                updateProgress();
-                showSectionContent();
-            });
-            
-            updateProgress();
-            showSectionContent();
-        });
-    </script>
-    
-        
+  
                             </div>
                             
                         </div>
@@ -526,6 +552,34 @@ h1 {
     </div>
 </div>
 <!-- Main Section End -->
+<script>
+  $(document).ready(function() {
+      var totalSteps = {{ status_messages|length }};
+      var currentStep = 1;
+      
+      function updateProgress() {
+          var progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+          $("#line-progress").css("width", progress + "%");
+      }
+      
+      function showSectionContent() {
+          $(".section-content").removeClass("active");
+          $(".section-content").eq(currentStep - 1).addClass("active");
+      }
+      
+      $(".step").click(function() {
+          currentStep = $(this).index() + 1;
+          updateProgress();
+          showSectionContent();
+      });
+      
+      updateProgress();
+      showSectionContent();
+  });
+ 
+</script>
+
+  
 
 
 {% endblock %}

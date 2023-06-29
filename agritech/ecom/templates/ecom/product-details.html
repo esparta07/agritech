@@ -55,6 +55,14 @@
                                             <span>
                                                 <a>{{ proj.return_date }}</a>
                                             </span><br>
+                                            <strong>Return Percentage:</strong>
+                                            <span>
+                                                <a>{{ proj.percent_return_after_due_date }} %</a>
+                                            </span><br>
+                                            <strong>Max share per User:</strong>
+                                            <span>
+                                                <a>{{ proj.max_shares_per_user }} units</a>
+                                            </span><br>
                                         </li>
                                     </ul>
                                 </div>
@@ -73,8 +81,7 @@
                                             <strong>Demand :</strong>
                                             <span>
                                                 <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
-                                            </span><br>
-                                            
+
                                         </li>
                                     </ul>
                                 </div>

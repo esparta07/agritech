@@ -228,7 +228,6 @@ def custdashboard(request):
 
 
     
-
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vendordashboard(request):
@@ -236,7 +235,7 @@ def vendordashboard(request):
     orders = Order.objects.filter(vendors__user=request.user, is_ordered=True).order_by('created_at')
     recent_orders = orders[:10]
 
-   # Filter current month orders
+    # Filter current month orders
     current_month = datetime.datetime.now().month
     current_month_orders = Order.objects.filter(vendors__user=request.user, is_ordered=True, created_at__month=current_month)
 
@@ -247,6 +246,8 @@ def vendordashboard(request):
     total_revenue = Order.objects.filter(vendors__user=request.user, is_ordered=True).aggregate(total_revenue=Sum('total'))['total_revenue'] or 0
     project_count = Project.objects.filter(vendor=vendor.user).count()
 
+    projects = Project.objects.filter(vendor=vendor.user)
+
     context = {
         'orders': orders,
         'orders_count': orders.count(),
@@ -255,14 +256,15 @@ def vendordashboard(request):
         'current_month_revenue': current_month_revenue,
         'show_popup': False,
         'project_count': project_count,
+        'projects': projects,
     }
 
     if request.user.role == User.VENDOR:
-        projects = Project.objects.filter(vendor=request.user, return_date__lt=datetime.date.today() + datetime.timedelta(days=15))
-        context['projects'] = projects
+        project = Project.objects.filter(vendor=request.user, return_date__lt=datetime.date.today() + datetime.timedelta(days=15))
+        context['project'] = project
 
-        for project in projects:
-            remaining_days = (project.return_date - datetime.date.today()).days
+        for proj in project:
+            remaining_days = (proj.return_date - datetime.date.today()).days
             if remaining_days < 15 and 'modals_hidden' not in request.session:
                 context['show_popup'] = True
                 request.session['modals_hidden'] = True  # Update session variable
@@ -273,6 +275,8 @@ def vendordashboard(request):
         request.session['modals_hidden'] = True
 
     return render(request, 'account/vendordashboard.html', context)
+
+
 
 
     
