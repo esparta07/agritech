@@ -41,10 +41,8 @@
     <!--Khalti-->
     <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-
-
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     
 
 </head>
@@ -58,10 +56,12 @@
 
 <!-- Body main wrapper start -->
 <div class="body-wrapper">
-        <!-- ltn__header-middle-area start -->
 
+  
+        <!-- ltn__header-middle-area start -->
+        <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky" style="background-color:#2b3d51;">
             <div class="container">
-                <div class="row text-white">
+                <div class="row">
                     <div class="col">
                         <div class="site-logo-wrap">
                             <div class="site-logo">
@@ -73,7 +73,7 @@
                     <div class="col header-menu-column">
                         <div class="header-menu d-none d-xl-block">
                             <nav>
-                                <div class="ltn__main-menu text-white">
+                                <div class="ltn__main-menu">
                                     <ul>
                                         <li class="menu-icon"><a href="{% url 'index' %}">Home</a>
                                             
@@ -87,16 +87,6 @@
                                           </ul>
                                       </li>
                                         <li class="menu-icon"><a href="{% url 'ecom:shop' %}">Market</a>
-                                            {% comment %} <ul>
-                                                
-                                                <li><a href="{% url 'ecom:shop' %}">Investor Market</a></li>
-                                                 <li><a href="{% url 'account:registerUser' %}">user</a></li>
-                                                <li><a href="{% url 'account:registerVendor' %}">farm</a></li> 
-                                            </ul>
-                                        </li>
-                                        <li class="menu-icon"><a href="{% url 'blog' %}">Agri-Support</a>
-                                            
-                                        </li>  {% endcomment %}
                                         <li class="menu-icon"><a href="{% url 'contact' %}">Contact</a>
                                             
                                           
@@ -773,17 +763,17 @@
         </div>
     </div>
 </footer>
-
+<script>
+  $(document).ready( function () {
+    $('#myOrdersTable').DataTable();
+  } );
+</script>
 <!-- FOOTER AREA END -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- DataTables JavaScript -->
   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#myOrdersTable').DataTable();
-    });
-  </script>
 </body>
+
 </html>
  {% comment %} <!-- preloader area start -->
  <div class="preloader" id="preloader">

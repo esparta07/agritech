@@ -46,7 +46,7 @@
                                                     <td>{{ order.created_at }}</td>
                                                     <!-- template.html -->
 
-                                                    <td><a href="{% url 'account:customer_order_detail' order.order_number %}" class="btn btn-danger">Details</a></td>
+                                                    <td><a href="{% url 'account:customer_order_detail' order.order_number %}" class="btn btn rounded-lg" style="background-color:#2B3D51;color:white;">Details</a></td>
 
                                                   </tr>
                                                   {% endfor %}
