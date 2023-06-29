@@ -1,31 +1,23 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
 {% block content %}
 {% include 'includes/alerts.html' %}
-
 <!-- Main Section Start -->
 <div class="main-section">
-    {% include 'includes/cover.html' %}
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <!-- Load the sidebar here -->
-                    {% include 'includes/v_sidebar.html' %}
-                </div>
+                <!-- Load the sidebar here -->
+               {% include 'includes/v_sidebar.html' %}
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
                             <h5 class="text-uppercase">Add your Project.</h5>
-                            <a href="{% url 'account:add_product' %}" class="btn btn-success float-right mt-100"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a>
+                            <a href="{% url 'account:add_product' %}" class="btn btn-success float-right mt-100 rounded-lg"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a>
 							<hr>
-                            <button class="btn btn-secondary" onclick="history.back()"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</button>
+                            <button class="btn btn-secondary rounded-lg" onclick="history.back()"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</button>
                             <br><br>
                             <h6>Category: <span class="text-uppercase text-success">{{category}}</span></h6>
-                            
-
                             {% if productItem %}
                             <table class="table table-hover table-borderless">
                                 
@@ -52,10 +44,6 @@
                               </table>
                             {% else %}
                               <h5 class="text-center">No product items found.</h5>
-                              {% comment %} <div class="text-center">
-                                <a href="{% url 'account:add_product' %}" class="btn btn-success float-right m-1"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a>
-                              </div> {% endcomment %}
-
                             {% endif %}
                         </div>
                     </div>

@@ -7,14 +7,11 @@
 
 <!-- Main Section Start -->
 <div class="main-section">
-    {% include 'includes/cover.html' %}
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <!-- Load the sidebar here -->
-                    {% include 'includes/v_sidebar.html' %}
-                </div>
+                {% include 'includes/v_sidebar.html' %}
+               
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
@@ -54,14 +51,7 @@
                                                     <label class="label" style="color: red;">{{ form.farm_image.errors }}</label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="farm_image">Extra Image</label>
-                                                    <br>
-                                                    <div style="width: 300px; background-color:none;">{{form.extra_images}}</div>
-                                                    <label class="label" style="color: red;">{{ form.extra_images.errors }}</label>
-                                                </div>
-                                            </div>
+                                
     
                                             <div class="col-lg-6 col-md-6 col-sm-12">
                                                 <div class="field-holder">

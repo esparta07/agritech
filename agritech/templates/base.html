@@ -41,13 +41,11 @@
     <!--Khalti-->
     <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
-    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script>
-      $(document).ready( function () {
-        $('#myOrdersTable').DataTable();
-      } );
-    </script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+
+    
 
 </head>
 
@@ -60,12 +58,10 @@
 
 <!-- Body main wrapper start -->
 <div class="body-wrapper">
-
-  
         <!-- ltn__header-middle-area start -->
-        <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white">
+        <div class="ltn__header-middle-area ltn__header-sticky " style="background: #F7F8FA;">
             <div class="container">
-                <div class="row">
+                <div class="row text-white">
                     <div class="col">
                         <div class="site-logo-wrap">
                             <div class="site-logo">
@@ -77,7 +73,7 @@
                     <div class="col header-menu-column">
                         <div class="header-menu d-none d-xl-block">
                             <nav>
-                                <div class="ltn__main-menu">
+                                <div class="ltn__main-menu text-white">
                                     <ul>
                                         <li class="menu-icon"><a href="{% url 'index' %}">Home</a>
                                             
@@ -779,6 +775,14 @@
 </footer>
 
 <!-- FOOTER AREA END -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- DataTables JavaScript -->
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#myOrdersTable').DataTable();
+    });
+  </script>
 </body>
 </html>
  {% comment %} <!-- preloader area start -->

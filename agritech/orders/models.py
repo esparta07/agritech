@@ -27,6 +27,8 @@ class Order(models.Model):
     vendors = models.ManyToManyField(Vendor, blank=True)
 
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, blank=True, null=True)
+
     order_number = models.CharField(max_length=20)
 
     first_name = models.CharField(max_length=50)

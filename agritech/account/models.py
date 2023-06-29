@@ -107,6 +107,9 @@ class UserProfile(models.Model):
     def __str__(self):
         return str(self.user.phone_number)
 
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
     
     
     from django.db.models.signals import post_save, pre_save

@@ -12,9 +12,7 @@ class CategoryForm(forms.ModelForm):
 
 
 class ProjectForm(forms.ModelForm):
-    farm_image = forms.FileField(widget=forms.FileInput(attrs={'class': 'btn btn-info w-100'}), validators=[allow_only_images_validator])
-    extra_images = forms.FileField(widget=forms.ClearableFileInput(attrs={'class': 'btn btn-info w-100', 'multiple': True}), validators=[allow_only_images_validator], required=False)
-
+    farm_image = forms.FileField(widget=forms.ClearableFileInput(attrs={'class': 'btn btn-info w-100', 'multiple': True}), validators=[allow_only_images_validator], required=False)
     return_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
 
     def clean_extra_images(self):
@@ -28,7 +26,7 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['project_title', 'project_type', 'project_description', 'total_cost', 'farm_image', 'extra_images', 'is_available',
+        fields = ['project_title', 'project_type', 'project_description', 'total_cost', 'farm_image', 'is_available',
                    'value_of_share', 'max_shares_per_user', 'return_date', 'percent_return_after_due_date']
 
 
