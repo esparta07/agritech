@@ -57,9 +57,10 @@
                                     </div>
                                     <div class="product-info">
                                         <h2 class="product-title"><a href="{% url 'ecom:product' id=proj.id %}">{{ proj.project_title }}</a></h2>
-                                        <div class="product-price">
+                                         <div class="product-price">
                                             <span>रु‎ {{ proj.value_of_share }}</span>
                                         </div>
+                                        {% comment %}
                                         <div class="greenish">
                                             <span>Duration: <b>{{ proj.duration_in_months }} months</b></span>
                                         </div>
@@ -71,20 +72,39 @@
                                         </div>
                                         <div class="greenish">
                                             <span>Return Date: <b>{{ proj.return_date }}</b></span>
-                                        </div>
-                                        <div class="product-brief mt-2">
-                                            <p>{{ proj.project_description }}</p>
-                                        </div>
-                                        <div class="product-hover-action">
-                                            <ul>
-                                                {% comment %} <li>
-                                                    <a href="#" title="Quick View" data-toggle="modal" data-target="#quick_view_modal_{{ project.id }}">
-                                                        <i class="far fa-eye"></i>
-                                                    </a>
-                                                </li> {% endcomment %}
-                                                
-                                            </ul>
-                                        </div>
+                                        </div> {% endcomment %}
+                                        <ul style="list-style: none;">
+                                            <li>
+                                                <strong>Duration:</strong>
+                                                <span class="greenish">
+                                                    <a>{{ proj.duration_in_months }} Months</a>
+                                                </span><br>
+                                        
+                                            </li>
+                                            <li>
+                                                <strong>Available shares: </strong>
+                                                <span class="greenish">
+                                                    <a>{{ proj.total_no_shares }}</a>
+                                                </span><br>
+                                        
+                                            </li>
+                                            <li>
+                                                <strong>Return %: </strong>
+                                                <span class="greenish">
+                                                    <a>{{ proj.percent_return_after_due_date}}</a>
+                                                </span><br>
+                                        
+                                            </li>
+                                            <li>
+                                                <strong>Return Date: </strong>
+                                                <span class="greenish">
+                                                    <a>{{  proj.return_date  }}</a>
+                                                </span><br>
+                                        
+                                            </li>
+                                        </ul>
+                                        <br>
+                                        <br>
                                         <span style="color: black;">Posted By:</span>
                                         <b><a href="{% url 'account:vendor_detail' vendor_id=proj.vendor.id %}">{{ proj.vendor.user.user_profile.first_name }} {{ proj.vendor.user.user_profile.last_name }}</a></b>
                                         <img src="{% static 'ecom/img/verified.png' %}">

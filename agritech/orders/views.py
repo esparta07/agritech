@@ -154,6 +154,7 @@ def payments(request):
                 ordered_product.quantity = item.quantity
                 ordered_product.price = item.project.value_of_share
                 ordered_product.amount = item.project.value_of_share * item.quantity
+                ordered_product.update_return_amount()
                 ordered_product.save()
 
                 Project.objects.filter(pk=item.project.pk).update(

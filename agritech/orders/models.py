@@ -4,6 +4,8 @@ from account.models import User
 from orders import request_object
 from ecom.models import Project
 from vendor.models import Vendor
+from decimal import Decimal
+
 # Create your models here.
 import logging
 class Payment(models.Model):
@@ -117,9 +119,11 @@ class FarmOrder(models.Model):
     quantity = models.IntegerField()
     price = models.FloatField()
     amount = models.FloatField()
+    
+    return_amount = models.FloatField(default=0)
     reservation_expiration = models.DateTimeField(null=True, blank=True)
     vendors = models.ManyToManyField(Vendor, blank=True)
-
+  
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -128,5 +132,11 @@ class FarmOrder(models.Model):
 
     def __str__(self):
         return self.project.project_title
+    
+    def update_return_amount(self):
+        percent_return = self.project.percent_return_after_due_date / Decimal('100')
+        self.return_amount = round(percent_return * Decimal(str(self.amount)), 2)
+        self.save()
+
 
     

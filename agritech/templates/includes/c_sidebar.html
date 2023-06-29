@@ -1,80 +1,45 @@
-{% comment %} 
-<div class="user-account-nav user-account-sidebar" style="background-color: #357960; width: 280px; border-radius:10px;">
-    <div class="user-nav-list mt-100 pd-10">
-        <ul>
-            <li class="{% if '/custdashboard/' == request.path or '/customer/' == request.path %}active{% endif %} active show" style="padding-top:15px;">
-                <a href="{% url 'account:customer' %}" style="color: #ffffff;">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
-            </li>
-            <li class="{% if '/profile/' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:cprofile' %}" style="color: #ffffff;">
-                    <i class="fas fa-user"></i> My Profile
-                </a>
-            </li>
-            <li class="{% if '/my_orders/' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:customer_my_orders' %}" style="color: #ffffff;">
-                    <i class="fas fa-shopping-cart"></i> My Orders
-                </a>
-            </li>
-            <li class="{% if '/change_password/' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:change_password' %}" style="color: #ffffff;">
-                    <i class="fas fa-lock"></i> Security
-                </a>
-            </li>
-         
-            <li style="padding-bottom:15px;">
-                <a class="logout-btn" href="{% url 'account:logout' %}" style="color: #ffffff; ">
-                    <i class="fas fa-sign-out-alt"></i> Signout
-                </a>
-            </li>
-        </ul>
-    </div>
-</div> {% endcomment %}
-<div class="user-account-nav user-account-sidebar" style="background-color: #357960; width: 280px; border-radius:10px;">
-    <div class="user-nav-list mt-100 pd-10">
-        <ul>
+
+<div class="user-account-nav user-account-sidebar mb-50 mt-0" style="background-color: #F7F8FA; width: 280px; margin-left: -170px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+    <div class="user-nav-list mt-0 pd-10" style="padding-left: 20px;">
+        <ul style="list-style: none; padding: 0;">
             {% if user.is_verified %}
-                <li class="{% if '/custdashboard/' == request.path or '/customer/' == request.path %}active{% endif %} active show" style="padding-top:15px;">
-                    <a href="{% url 'account:customer' %}" style="color: #ffffff;">
+                <li class="{% if '/custdashboard/' == request.path or '/customer/' == request.path %}active{% endif %} active show" style="padding-top: 15px; border-bottom: 1px solid #ccc;">
+                    <a href="{% url 'account:customer' %}" style="color: black;">
                         <i class="fas fa-home"></i> Dashboard
                     </a>
                 </li>
-                <li class="{% if '/profile/' in request.path %}active{% endif %} active show">
-                    <a href="{% url 'account:cprofile' %}" style="color: #ffffff;">
+                <li class="{% if '/profile/' in request.path %}active{% endif %} active show" style="border-bottom: 1px solid #ccc;">
+                    <a href="{% url 'account:cprofile' %}" style="color: black;">
                         <i class="fas fa-user"></i> My Profile
                     </a>
                 </li>
-                <li class="{% if '/my_orders/' in request.path %}active{% endif %} active show">
-                    <a href="{% url 'account:customer_my_orders' %}" style="color: #ffffff;">
+                <li class="{% if '/my_orders/' in request.path %}active{% endif %} active show" style="border-bottom: 1px solid #ccc;">
+                    <a href="{% url 'account:customer_my_orders' %}" style="color: black;">
                         <i class="fas fa-shopping-cart"></i> My Orders
                     </a>
                 </li>
-
-                <li class="{% if '/my_investment/' in request.path %}active{% endif %} active show">
-                    <a href="{% url 'account:my_investment' user.id %}" style="color: #ffffff;">
+                <li class="{% if '/my_investment/' in request.path %}active{% endif %} active show" style="border-bottom: 1px solid #ccc;">
+                    <a href="{% url 'account:my_investment' user.id %}" style="color: black;">
                         <i class="fas fa-briefcase"></i> My Investments
                     </a>
                 </li>
-                
             {% else %}
-                <li class="{% if '/profile/' in request.path %}active{% endif %} active show">
-                    <a href="{% url 'account:cprofile' %}" style="color: #ffffff;">
+                <li class="{% if '/profile/' in request.path %}active{% endif %} active show" style="border-bottom: 1px solid #ccc;">
+                    <a href="{% url 'account:cprofile' %}" style="color: black;">
                         <i class="fas fa-user"></i> My Profile
                     </a>
                 </li>
             {% endif %}
-            <li class="{% if '/customer_change_password/' in request.path %}active{% endif %} active show">
-                <a href="{% url 'account:customer_change_password' %}" style="color: #ffffff;">
+            <li class="{% if '/customer_change_password/' in request.path %}active{% endif %} active show" style="border-bottom: 1px solid #ccc;">
+                <a href="{% url 'account:customer_change_password' %}" style="color: black;">
                     <i class="fas fa-lock"></i> Security
                 </a>
             </li>
-            <li style="padding-bottom:15px;">
-                <a class="logout-btn" href="{% url 'account:logout' %}" style="color: #ffffff; ">
+            <li style="padding-bottom: 15px;">
+                <a class="logout-btn" href="{% url 'account:logout' %}" style="color: black; ">
                     <i class="fas fa-sign-out-alt"></i> Signout
                 </a>
             </li>
         </ul>
     </div>
 </div>
-
