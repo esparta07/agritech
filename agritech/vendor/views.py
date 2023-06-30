@@ -23,6 +23,7 @@ from orders.models import Order, FarmOrder
 import datetime
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Count
+from django.db.models import Sum
 # Create your views here.
 
 # def vprofile(request):
@@ -274,6 +275,7 @@ from ecom.models import ProjectStatus
 #     return render(request, 'vendor/farm_status.html', context)
 @login_required(login_url='account:login')
 def farm_status(request, id):
+    orders = Order.objects.filter(user=request.user, is_ordered=True)
     project = get_object_or_404(Project, id=id)
     progress_ratio = (project.collected_amount / project.demand) * 100
     
@@ -282,18 +284,23 @@ def farm_status(request, id):
     
     # Retrieve the users who have ordered the specific farm
     ordered_users = User.objects.filter(farmorder__project=project).distinct()
+
+    # Calculate the invested amount for the current user and project
+    invested_amount = FarmOrder.objects.filter(project=project, user=request.user).aggregate(Sum('amount'))['amount__sum'] or 0
     
+    # Calculate the return amount for the current user and project
+    return_amount = FarmOrder.objects.filter(project=project, user=request.user).aggregate(Sum('return_amount'))['return_amount__sum'] or 0
+
     # Retrieve the corresponding FarmOrder objects for each user
     farm_orders = FarmOrder.objects.filter(user__in=ordered_users, project=project)
-    for order in farm_orders:
-        print(order)
-  
-
+    
     context = {
         'project': [project],
         'progress_ratio': progress_ratio,
         'status_messages': status_messages,
         'farm_orders': farm_orders,
+        'invested_amount': invested_amount,
+        'return_amount' : return_amount,
     }
     
     return render(request, 'vendor/farm_status.html', context)
