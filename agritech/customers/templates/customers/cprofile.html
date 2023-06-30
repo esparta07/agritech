@@ -4,25 +4,18 @@
 
 {% include 'includes/alerts.html' %}
 <!-- Main Section Start -->
+<!-- Main Section Start -->
 <div class="main-section" >
 
     <div class="page-section account-header buyer-logged-in">
-        
         <div class="container">
 			
-            <div class="row">
-				
-				
-                
-                    
-					{% include 'includes/c_sidebar.html' %}
- 
-                
-				
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="row pl-2">
+				{% include 'includes/v_sidebar.html' %}
+
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 p-5">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
-							
                             <h2  style="margin-top:20px; text-align:center;"> <b>Manage Your Profile </b></h2>
 							<br>
 							{% if not user.is_verified %}
@@ -33,7 +26,7 @@
                                         {% csrf_token %}
 										<div class="form-fields-set">
 													<div class="row">
-														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													
 															<div class="restaurant-info">
 															  <div class="img-holder" style="display: inline-block; vertical-align: top;">
 																<div class="drag-list" style="width: 100px; height: 100px; overflow: hidden;">
@@ -56,79 +49,107 @@
 															</div>
 														  </div>
 														  
-														 
-
-														  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
-															<div class="restaurant-info">
-																<div class="img-holder" style="display: inline-block; vertical-align: top;">
-																	<div class="drag-list" style="width: 100px; height: 100px; overflow: hidden;">
-																		<div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
+														  
+														  <div class=>
+															<b>Choose Document</b> <br>
+															<div>
+															  <div>
+																<label for="passportRadio">
+																  <input type="radio" name="identification" id="passportRadio" value="passport" onchange="toggleIdentificationContent(this)">
+																  Passport
+																</label>
+															  </div>
+															  <div>
+																<!-- Content for Passport radio button goes here -->
+																<div id="passportContentCustomer" class="identification-content">
+																  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
+																	<div class="company-info">
+																	  <div class="img-holder" style="display: inline-block; vertical-align: top;">
+																		<div class="drag-list" style="width: 150px; height: 150px; overflow: hidden;">
+																		  <div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
 																			{% if profile.passport_photo %}
-																				<img class="thumbnail" src="{{profile.passport_photo.url}}" alt="Passport Photo">
+																			<img class="thumbnail" src="{{ profile.passport_photo.url }}" alt="Passport Photo">
 																			{% else %}
-																				<img class="thumbnail" src="{% static 'ecom/img/passport.jpg' %}" alt=" Passport ">
+																			<img class="thumbnail" src="{% static 'images/default-passport.png' %}" alt="Passport">
 																			{% endif %}
+																		  </div>
 																		</div>
+																	  </div>
+																	  <div class="text-holder" style="display: inline-block;">
+																		<label><b>Passport Photo</b></label>
+																		<div class="upload-gallery">
+																		  <input type="file" class="attach-button" name="passport_photo" id="passport-photo" style="background-color: #00a474; color:white;">
+																		</div>
+																		<label class="label">{{ profile_form.passport_photo.errors }}</label>
+																	  </div>
 																	</div>
+																  </div>
 																</div>
-																<div class="text-holder" style="display: inline-block;">
-																	<label><b>Update Passport Photo</b></label>
-																	<div class="upload-gallery">
-																		<input type="file" class="attach-button" name="passport_photo" id="passport-photo" style=" background-color: #00a474; color:white;">
-																	</div>
-																	<label class="label">{{ profile_form.passport_photo.errors }}</label>
-																</div>
+															  </div>
 															</div>
-														</div>
-														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
-															<div class="restaurant-info">
-																<div class="img-holder" style="display: inline-block; vertical-align: top;">
-																	<div class="drag-list" style="width: 100px; height: 100px; overflow: hidden;">
-																		<div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
+															
+															<div>
+															  <div>
+																<label for="nidRadio">
+																  <input type="radio" name="identification" id="nidRadio" value="nid" onchange="toggleIdentificationContent(this)">
+																  NID
+																</label>
+															  </div>
+															  <div>
+																<!-- Content for NID radio button goes here -->
+																<div id="nidContentCustomer" class="identification-content">
+																  <!-- NID content here -->
+																  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
+																	<div class="company-info">
+																	  <div class="img-holder" style="display: inline-block; vertical-align: top;">
+																		<div class="drag-list" style="width: 150px; height: 150px; overflow: hidden;">
+																		  <div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
 																			{% if profile.citizenship_front %}
-																				<img class="thumbnail" src="{{profile.citizenship_front.url}}" alt="Citizenship Front">
+																			<img class="thumbnail" src="{{ profile.citizenship_front.url }}" alt="Citizenship Front">
 																			{% else %}
-																				<img class="thumbnail" src="{% static 'ecom/img/citizenship_front.jpg' %}" alt=" Citizenship ">
+																			<img class="thumbnail" src="{% static 'images/default-citizenship.png' %}" alt="Citizenship">
 																			{% endif %}
+																		  </div>
 																		</div>
+																	  </div>
+																	  <div class="text-holder" style="display: inline-block;">
+																		<label><b>Citizenship Front</b></label>
+																		<div class="upload-gallery">
+																		  <input type="file" class="attach-button" name="citizenship_front" id="citizenship-front" style="background-color: #00a474; color:white;">
+																		</div>
+																		<label class="label">{{ profile_form.citizenship_front.errors }}</label>
+																	  </div>
 																	</div>
-																</div>
-																<div class="text-holder" style="display: inline-block;">
-																	<label><b>Update Citizenship Front</b></label>
-																	<div class="upload-gallery">
-																		<input type="file" class="attach-button" name="citizenship_front" id="citizenship-front" style=" background-color: #00a474; color:white;">
-																	</div>
-																	</div>
-																	<label class="label">{{ profile_form.citizenship_front.errors }}</label>
-																</div>
-															</div>
-														</div>
-														
-														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
-															<div class="restaurant-info">
-																<div class="img-holder" style="display: inline-block; vertical-align: top;">
-																	<div class="drag-list" style="width: 100px; height: 100px; overflow: hidden;">
-																		<div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
+																  </div>
+																  
+																  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50">
+																	<div class="company-info" style="margin-left: -10px;">
+																	  <div class="img-holder" style="display: inline-block; vertical-align: top;">
+																		<div class="drag-list" style="width: 150px; height: 150px; overflow: hidden;">
+																		  <div class="item-thumb" style="width: 100%; height: 100%; object-fit: cover;">
 																			{% if profile.citizenship_back %}
-																				<img class="thumbnail" src="{{profile.citizenship_back.url}}" alt="Citizenship Back">
+																			<img class="thumbnail" src="{{ profile.citizenship_back.url }}" alt="Citizenship Back">
 																			{% else %}
-																				<img class="thumbnail" src="{% static 'ecom/img/citizenship_back.jpg' %}" alt=" Citizenship ">
+																			<img class="thumbnail" src="{% static 'images/default-citizenship.png' %}" alt="Citizenship">
 																			{% endif %}
+																		  </div>
 																		</div>
+																	  </div>
+																	  <div class="text-holder" style="display: inline-block;">
+																		<label><b>Citizenship Back</b></label>
+																		<div class="upload-gallery">
+																		  <input type="file" class="attach-button" name="citizenship_back" id="citizenship-back" style="background-color: #00a474; color:white;">
+																		</div>
+																		<label class="label">{{ profile_form.citizenship_back.errors }}</label>
+																	  </div>
 																	</div>
+																  </div>
 																</div>
-																<div class="text-holder" style="display: inline-block;">
-																	<label><b>Update Citizenship Back</b></label>
-																	<div class="upload-gallery">
-																		<input type="file" class="attach-button" name="citizenship_back" id="citizenship-back" style=" background-color: #00a474; color:white;">
-																	</div>
-																	</div>
-																	<label class="label">{{ profile_form.citizenship_back.errors }}</label>
-																</div>
+															  </div>
 															</div>
-														</div>
-														
-														<div class="row">
+														  </div>
+														  
+														<div class="row mt-5">
 															<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 																<div class="field-holder">
 																	<label>First Name *</label>
@@ -225,7 +246,18 @@
 </div>
 
 <!-- Include jQuery library -->
-
-
+<script>
+	function toggleIdentificationContent(radio) {
+	  var passportContent = document.getElementById("passportContentCustomer");
+	  var nidContent = document.getElementById("nidContentCustomer");
+	  
+	  passportContent.style.display = radio.value === "passport" ? "block" : "none";
+	  nidContent.style.display = radio.value === "nid" ? "block" : "none";
+	}
+	
+	// Initially hide the content
+	document.getElementById("passportContentCustomer").style.display = "none";
+	document.getElementById("nidContentCustomer").style.display = "none";
+  </script>
 <!-- Main Section End -->
 {% endblock %}
