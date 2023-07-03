@@ -219,14 +219,14 @@ def active_farms(request):
     active_projects = user.project_set.filter(is_approved=True, is_available=True)
 
     # Search functionality
-    search_query = request.GET.get('search', '')  # Retrieve the search query from the GET parameters
+    search_query = request.GET.get('search', '')  # the search query from the GET parameters
     if search_query:
         active_projects = active_projects.filter(project_title__icontains=search_query)
 
     if request.method == 'POST':
         form = ProjectStatusForm(request.POST)
         if form.is_valid():
-            project_id = request.POST.get('project_id')  # Retrieve the project ID from the POST data
+            project_id = request.POST.get('project_id')  # the project ID from the POST data
             form.instance.project_id = project_id  # Assign the project ID to the form instance
             form.save()
             message = 'Status update successful'
@@ -246,7 +246,7 @@ def completed_farms(request):
     completed_projects = user.project_set.filter(is_approved=True, is_completed=True)
 
     # Search functionality
-    search_query = request.GET.get('search', '')  # Retrieve the search query from the GET parameters
+    search_query = request.GET.get('search', '')  # the search query from the GET parameters
     if search_query:
         completed_projects = completed_projects.filter(project_title__icontains=search_query)
 
@@ -272,35 +272,43 @@ def save_status(request, project_id):
 from django.db.models import F
 from ecom.models import ProjectStatus
 
-
 @login_required(login_url='account:login')
 def farm_status(request, id):
     orders = Order.objects.filter(user=request.user, is_ordered=True)
     project = get_object_or_404(Project, id=id)
     progress_ratio = (project.collected_amount / project.demand) * 100
     
-    # Retrieve the status messages for the specific project ID
+    # status messages for the specific project ID
     status_messages = ProjectStatus.objects.filter(project_id=id).order_by('created_at')
     
-    # Retrieve the users who have ordered the specific farm
+    # the users who have ordered the specific farm
     ordered_users = User.objects.filter(farmorder__project=project).distinct()
-
-    # Calculate the invested amount for the current user and project
-    invested_amount = FarmOrder.objects.filter(project=project, user=request.user).aggregate(Sum('amount'))['amount__sum'] or 0
     
-    # Calculate the return amount for the current user and project
-    return_amount = FarmOrder.objects.filter(project=project, user=request.user).aggregate(Sum('return_amount'))['return_amount__sum'] or 0
 
-    # Retrieve the corresponding FarmOrder objects for each user
-    farm_orders = FarmOrder.objects.filter(user__in=ordered_users, project=project)
+        # Retrieve the FarmOrder data for the specific project and calculate the sum of quantity and return_amount for each user
+    invested_projects = FarmOrder.objects.filter(project=project).values('user').annotate(
+        total_quantity=Sum('quantity'),
+        total_return_amount=Sum('return_amount'),
+        invested_amount = Sum('amount')
+    )
+
+    combined_farm_orders = []
+    for user in ordered_users:
+        quantity_sum = FarmOrder.objects.filter(user=user, project=project).aggregate(Sum('quantity'))['quantity__sum'] or 0
+        farm_orders = FarmOrder.objects.filter(user=user, project=project)
+        combined_farm_orders.append({'user': user, 'quantity': quantity_sum})
+        
+    quantity = combined_farm_orders[0]['quantity'] if combined_farm_orders else 0
+
+   
 
     context = {
         'project': [project],
         'progress_ratio': progress_ratio,
         'status_messages': status_messages,
-        'farm_orders': farm_orders,
-        'invested_amount': invested_amount,
-        'return_amount' : return_amount,
+        'farm_orders': combined_farm_orders,
+        'combined_farm_orders': quantity,
+        'invested_projects' : invested_projects
     }
     
     return render(request, 'vendor/farm_status.html', context)
