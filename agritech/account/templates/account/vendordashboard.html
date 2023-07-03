@@ -276,12 +276,12 @@
                       </td>
                         <td>
                           {% if project.is_approved %}
-                            {% if project.is_available %}
-                                <span class="badge badge-success mb-20">Active</span>
+                            {% if project.is_completed %}
+                            <span class="badge badge-success mb-20">Completed</span>
                               {% elif project.is_soldout %}
-                                <span class="badge badge-primary">Sold Out</span>
+                                <span class="badge badge-danger mb-20">Sold Out</span>
                               {% else %}
-                                <span class="badge badge-danger">Not Available</span>
+                                <span class="badge badge-primary mb-20">Active</span>
                             {% endif %}
                           {% endif %}
                         </td>

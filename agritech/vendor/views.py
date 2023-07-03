@@ -1,33 +1,22 @@
-from django.http import HttpResponseForbidden
-from django.shortcuts import render
+
 from django.contrib.auth.decorators import login_required, user_passes_test
-from account.views import check_role_vendor
 from django.shortcuts import get_object_or_404, redirect, render
 from account.forms import UserProfileForm
-from django.template.defaultfilters import slugify
 from account.models import User, UserProfile
 from ecom.models import ExtraImage, ProjectStatus
 from .models import Vendor
 from .forms import ProjectStatusForm, VendorForm
 from django.http import JsonResponse
 from django.contrib import messages
-
+from ecom.models import ProjectStatus,Category, Project
 from account.views import check_role_vendor
-from ecom.models import Category, Project
-from ecom.forms import CategoryForm, ProjectForm
+from ecom.forms import ProjectForm
 from django.template.defaultfilters import slugify
-from django.http import HttpResponse
-from django.core.exceptions import ObjectDoesNotExist
-
 from orders.models import Order, FarmOrder
-import datetime
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.db.models import Count
-from django.db.models import Sum
+from django.db.models import Count,Sum
 # Create your views here.
 
-# def vprofile(request):
-#     return render(request, 'vendor/vprofile.html')
 
 @login_required(login_url='account:login')
 @user_passes_test(check_role_vendor)
@@ -207,14 +196,17 @@ def my_orders(request):
 
 
 
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.shortcuts import render
+
 
 @login_required(login_url='account:login')
 def active_farms(request):
     user = request.user
     active_projects = user.project_set.filter(is_approved=True, is_available=True)
+
+    # Search functionality
+    search_query = request.GET.get('search', '')  # Retrieve the search query from the GET parameters
+    if search_query:
+        active_projects = active_projects.filter(project_title__icontains=search_query)
 
     if request.method == 'POST':
         form = ProjectStatusForm(request.POST)
@@ -222,7 +214,7 @@ def active_farms(request):
             project_id = request.POST.get('project_id')  # Retrieve the project ID from the POST data
             form.instance.project_id = project_id  # Assign the project ID to the form instance
             form.save()
-            message = 'Status update successfully'
+            message = 'Status update successful'
             messages.success(request, message)  # Add success message
             return JsonResponse({'message': message})
         else:
@@ -230,10 +222,23 @@ def active_farms(request):
     else:
         form = ProjectStatusForm()
 
-    context = {'active_projects': active_projects, 'form': form}
+    context = {'active_projects': active_projects, 'form': form, 'search_query': search_query}
     return render(request, 'vendor/active_farms.html', context)
 
-from django.contrib import messages
+@login_required(login_url='account:login')
+def completed_farms(request):
+    user = request.user
+    completed_projects = user.project_set.filter(is_approved=True, is_completed=True)
+
+    # Search functionality
+    search_query = request.GET.get('search', '')  # Retrieve the search query from the GET parameters
+    if search_query:
+        completed_projects = completed_projects.filter(project_title__icontains=search_query)
+
+    context = {'completed_projects': completed_projects,  
+               'search_query': search_query}
+    return render(request, 'vendor/completed_farms.html', context)
+
 
 def save_status(request, project_id):
     print(project_id)  # Print the project_id variable
@@ -246,33 +251,7 @@ def save_status(request, project_id):
         else:
             print(form.errors)  # Print form errors to the console for debugging
             return JsonResponse({'error': 'Form data is invalid'})
-    
 
-
-
-
-
-
-
-from django.db.models import F
-from ecom.models import ProjectStatus
-
-# @login_required(login_url='account:login')
-# def farm_status(request, id):
-#     project = get_object_or_404(Project, id=id)
-#     progress_ratio = (project.collected_amount / project.demand) * 100
-    
-#     # Retrieve the status messages for the specific project ID
-#     status_messages = ProjectStatus.objects.filter(project_id=id).order_by('created_at')
-   
-    
-#     context = {
-#         'project': [project],
-#         'progress_ratio': progress_ratio,
-#         'status_messages': status_messages,
-#     }
-    
-#     return render(request, 'vendor/farm_status.html', context)
 @login_required(login_url='account:login')
 def farm_status(request, id):
     orders = Order.objects.filter(user=request.user, is_ordered=True)

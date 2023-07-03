@@ -6,52 +6,74 @@
 
 <!-- Main Section Start -->
 <div class="main-section">
+    
+    
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
-            <div class="row pl-2">
-                    <!-- Load the sidebar here -->
+            <div class="row">
+                
                     {% include 'includes/v_sidebar.html' %}
-
+                
                 
                     <div class="user-dashboard loader-holder">
-                        <div class="user-holder">
+                        <a class="btn theme-btn-1" href="{% url 'account:completed_farms' %}" style="margin-top: 10px; margin-bottom:0px;margin-left:900px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;background-color:#a4de02;">Completed Farms</a>   
+                        
+                            <h2 class="text-uppercase mt-10" style="margin-left:40px;">Active Farms</h2>
+                            <div class="ltn__grid-list-tab-menu" style="margin:40px;">
+                                <div class="ltn__search-widget">
+                                    <form action="" method="GET">
+                                        <input type="text" name="search" value="{{ search_query }}" placeholder="Search by project title">
+                                    <button type="submit">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+                              
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <h1 class="mt-4">ACTIVE FARMS</h1>
-                                    <div class="row ltn__custom-gutter mt-10 mb-10 mr-4">
-                                        {% for project in active_projects %}
-                                            <div class="col-xl-4 col-sm-6 col-12 p-2" style="margin-bottom: 30px;">
-                                                <div class="ltn__feature-item ltn__feature-item-6 text-center">
-                                                    <div class="ltn__feature-icon">
-                                                        <a href="{% url 'account:farm_status' project.id %}">
-                                                            <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="ltn__feature-info">
-                                                        <h4><a href="#">{{ project.project_title }}</a></h4>
-                                                        <button class="update_status_button" data-project-id="{{ project.id }}" data-project-title="{{ project.project_title }}">Update Status</button>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-left:20px;" >
+                                    <div class="user-orders-list">
+                                        <div class="row ltn__custom-gutter mt-10 mb-10 justify-content-start">
+                                            {% for project in active_projects %}
+                                            {% if not project.is_completed %}
+                                                    
+                                                        <div class="ltn__feature-item ltn__feature-item-6 text-center" style="margin-right:2px">
+                                                            <div class="ltn__feature-icon">
+                                                                <a href="{% url 'account:farm_status' project.id %}">
+                                                                    <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
+                                                                </a>                                    
+                                                            </div>
+                                                            <div class="ltn__feature-info">
+                                                                <h4><a href="{% url 'ecom:product' id=project.id %}">{{ project.project_title }}</a></h4>
+                                                                <span class="greenish">रु‎ {{ project.value_of_share }}</span><br>
+                                                                <button class="update_status_button" data-project-id="{{ project.id }}" data-project-title="{{ project.project_title }}">Update Status</button>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                {% endif %}
 
+                                                {% if forloop.counter|divisibleby:4 or forloop.last %}
                                                     </div>
-                                                </div>
-                                            </div>
-                                            {% if forloop.counter|divisibleby:3 or forloop.last %}
-                                            </div>
-                                            {% if not forloop.last %}
-                                            <div class="row ltn__custom-gutter mt-50 mb-20">
-                                            {% endif %}
-                                            {% endif %}
+                                                    {% if not forloop.last %}
+                                                        <div class="row ltn__custom-gutter mt-50 mb-20">
+                                                    {% endif %}
+                                                {% endif %}
                                         {% endfor %}
-                                    </div>  
+                                        											
+                                    </div>
+                                    
                                 </div>
                             </div>
                             
-                        </div>
+                        
                     </div>
                 
             </div>
         </div>
     </div>
 </div>
+<!-- Main Section End -->
+
+
+
 <!-- Main Section End -->
 
 <!-- STATUS MODAL -->
