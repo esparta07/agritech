@@ -127,11 +127,13 @@ def is_project_approved(view_func):
         return view_func(request, *args, **kwargs)
     return wrapper
 
-    
 def validate_extra_images_count(value):
     if value.count() > 5:
         raise ValidationError(_('Only up to 5 extra images are allowed.'))
 
+from django.forms import inlineformset_factory
+
+# Update ExtraImage model
 class ExtraImage(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='extra_images')
     image = models.ImageField(upload_to='extra_images/')
