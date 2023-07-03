@@ -13,20 +13,17 @@
         <div class="container">
             <div class="row">
                 
-                    <!-- Load the sidebar here -->
-                    {% include 'includes/v_sidebar.html' %}
+                 <!-- Load the sidebar here -->
+                {% include 'includes/v_sidebar.html' %}
                 
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
                             <div class="row">
-
-
-
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-left:40px;">
                                     <h1 class="mt-4"></h1>
                                     {% for proj in project %}
-                                    <div class="row">
+                                    <div class="row"> 
                                         <div class="col-md-6">
                                             <div class="modal-product-info shop-details-info pl-0">
                                                 <h3>{{ proj.project_title }}</h3>
@@ -52,10 +49,9 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                
                                                 <div class="modal-product-meta ltn__product-details-menu-1">
                                                     <ul>
-                                                        <li>
+                                                       <li>
                                                             <strong>Total Cost:</strong>
                                                             <span>
                                                                 <a>रु‎ {{ proj.total_cost|floatformat:2|intcomma }}</a>
@@ -96,7 +92,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col-md-6">
                                             <div class="single-large-img" style="width: 300px; height: 300px">
                                                 <a href="{{ proj.farm_image.url }}" data-rel="lightcase:myCollection">
@@ -132,65 +127,49 @@
                                             </div>
                                         </div>
                                         <div class="table-responsive">
-                                        <table class=" bg-white" id="myOrdersTable">
-                                          <thead class="bg-light">
-                                            <tr>
-                                              <th scope="col">Investor Name</th>
-                                              <th scope="col">Applied Share</th>
-                                              <th scope="col">Return Percentage</th>
-                                              <th scope="col">Expected Return</th>
-                                              <th scope="col">Applied Date</th>
-                                              <th scope="col">Return Date</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            {% for farm_order in farm_orders %}
+                                          <table class="bg-white" id="myOrdersTable">
+                                            <thead class="bg-light">
+                                              <tr>
+                                                <th scope="col">Investor Name</th>
+                                                <th scope="col">Applied Share</th>
+                                                <th scope="col">Invested Amount</th>
+                                                <th scope="col">Expected Return</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for farm_order in farm_orders %}
                                               <tr>
                                                 <td>
                                                   <div class="d-flex align-items-center">
-                                                    {% if farm_order.user.userprofile.profile_picture %}
-                                                      <img
-                                                        src="{{ farm_order.user.userprofile.profile_picture.url }}"
-                                                        alt=""
-                                                        style="width: 45px; height: 45px"
-                                                        class="rounded-circle"
-                                                      />
+                                                    {% if user.userprofile.profile_picture %}
+                                                    <img src="{{ user.userprofile.profile_picture.url }}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                                                     {% else %}
-                                                    <img
-                                                        src="{% static 'ecom/img/icons/user.png' %}"
-                                                        alt=""
-                                                        style="width: 45px; height: 45px"
-                                                        class="rounded-circle"
-                                                      />
-
+                                                    <img src="{% static 'ecom/img/icons/user.png' %}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                                                     {% endif %}
                                                     <div class="ms-3 pl-2">
-                                                      <p class="fw-bold mb-1">{{ farm_order.user.userprofile.full_name }}</p>
-                                                      <p class="text-muted mb-0">{{ farm_order.user.email }}</p>
+                                                      <p class="fw-bold mb-1">{{ user.userprofile.full_name }}</p>
+                                                      <p class="text-muted mb-0">{{ user.email }}</p>
                                                     </div>
                                                   </div>
                                                 </td>
                                                 <td>
-                                                  <p class="fw-normal mb-1">{{ farm_order.quantity }}</p>
+                                                 <b> <p class="fw-normal mb-1">{{ combined_farm_orders }}</p></b>
                                                 </td>
                                                 <td>
-                                                  <span>{{ proj.percent_return_after_due_date }}%</span>
-                                                </td>
+                                                  {% for invested_project in invested_projects %}
+                                                <span>रु‎{{ invested_project.invested_amount }}</span>
+                                                {% endfor %}
+                                                 </td>
                                                 <td>
-                                                  <span> रु‎{{ farm_order.return_amount }}</span>
-                                                </td>
-                                                <td>
-                                                  <span>{{ farm_order.created_at }}</span>
-                                                </td>
-                                                <td>
-                                                  <span>{{ proj.return_date }}</span>
-                                                </td>
+                                                  {% for invested_project in invested_projects %}
+                                                <span>रु‎{{ invested_project.total_return_amount }}</span>
+                                                {% endfor %}
+                                                 </td>
                                               </tr>
-                                            {% endfor %}
-                                          </tbody>
+                                              {% endfor %}
+                                            </tbody>
+                                          </table>
                                           
-                                          
-                                        </table>
                                         </div>
                                         
                                         
