@@ -2,7 +2,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http.response import HttpResponse
 from django.utils.http import urlsafe_base64_decode
 from django.http import HttpResponseRedirect
-from ecom.models import Project, is_project_approved
+from ecom.models import Project
 from orders.models import Order
 from django.urls import reverse
 from .models import User,UserProfile
@@ -18,13 +18,13 @@ from django.contrib import messages
 import random
 import requests
 from django.contrib.auth import get_user_model
-from datetime import date, timedelta
+from datetime import timedelta
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 import datetime
-from django.db.models import Sum
-
+from django.db.models import Sum, F
+from django.utils import timezone
 
 
 # Restrict the vendor from accessing the customer page
@@ -182,8 +182,7 @@ def myAccount(request):
     
 
 
-from django.db.models import Sum, F
-from django.utils import timezone
+
 
 @login_required(login_url='account:login')
 @user_passes_test(check_role_customer)
@@ -198,7 +197,8 @@ def custdashboard(request):
     # Get projects invested by the user with return date within the next 15 days
     today = timezone.now().date()
     return_date_limit = today + timedelta(days=15)
-    projects_due_soon = Project.objects.filter(farmorder__order__in=orders, return_date__lte=return_date_limit, farmorder__user=request.user).distinct()
+    projects_due_soon = Project.objects.filter(farmorder__order__in=orders, return_date__lte=return_date_limit, return_date__gte=today, farmorder__user=request.user).distinct()
+    # Exclude projects where today's date has crossed the return_date
     
     # Get projects invested by the user with the total investment
     invested_projects = Project.objects.filter(farmorder__order__in=orders, farmorder__user=request.user).annotate(total_investment=Sum('farmorder__amount')).annotate(total_quantity=Sum('farmorder__quantity')).annotate(return_amount=Sum('farmorder__return_amount'))
@@ -220,6 +220,7 @@ def custdashboard(request):
         'profit_gained': profit_gained,
     }
     return render(request, 'account/custdashboard.html', context)
+
 
 
 
