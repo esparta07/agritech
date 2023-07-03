@@ -11,10 +11,12 @@ from .models import Vendor
 from .forms import ProjectStatusForm, VendorForm
 from django.http import JsonResponse
 from django.contrib import messages
+from django.forms.models import inlineformset_factory
+
 
 from account.views import check_role_vendor
 from ecom.models import Category, Project
-from ecom.forms import CategoryForm, ProjectForm
+from ecom.forms import EditProjectForm, ProjectForm 
 from django.template.defaultfilters import slugify
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
@@ -133,33 +135,39 @@ def add_product(request):
     }
     return render(request, 'vendor/add_product.html', context)
 
-
-
-
 @login_required(login_url='account:login')
 @user_passes_test(check_role_vendor)
 def edit_product(request, pk=None):
     product = get_object_or_404(Project, pk=pk)
+
     if request.method == 'POST':
-        form = ProjectForm(request.POST, request.FILES, instance=product)
+        form = EditProjectForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
-            product_title = form.cleaned_data['project_title']
-            product = form.save(commit=False)
-            product.vendor = request.user  # Assign the current user to the vendor field
-            product.slug = slugify(product_title)
             form.save()
+
+            # Process extra images
+            extra_images = request.FILES.getlist('extra_images')
+            product.extra_images.all().delete()  # Remove existing extra images
+            for extra_image in extra_images:
+                extra_image_instance = ExtraImage(project=product, image=extra_image)
+                extra_image_instance.save()
+
             messages.success(request, 'Product updated successfully!')
             return redirect('account:productItem_by_category', product.project_type.id)
         else:
+            messages.error(request, 'Error updating product. Please correct the form errors.')
             print(form.errors)
     else:
-        form = ProjectForm(instance=product)
+        form = EditProjectForm(instance=product)
 
     context = {
         'form': form,
         'product': product,
     }
     return render(request, 'vendor/edit_product.html', context)
+
+
+
 
 
 
@@ -257,22 +265,7 @@ def save_status(request, project_id):
 from django.db.models import F
 from ecom.models import ProjectStatus
 
-# @login_required(login_url='account:login')
-# def farm_status(request, id):
-#     project = get_object_or_404(Project, id=id)
-#     progress_ratio = (project.collected_amount / project.demand) * 100
-    
-#     # Retrieve the status messages for the specific project ID
-#     status_messages = ProjectStatus.objects.filter(project_id=id).order_by('created_at')
-   
-    
-#     context = {
-#         'project': [project],
-#         'progress_ratio': progress_ratio,
-#         'status_messages': status_messages,
-#     }
-    
-#     return render(request, 'vendor/farm_status.html', context)
+
 @login_required(login_url='account:login')
 def farm_status(request, id):
     orders = Order.objects.filter(user=request.user, is_ordered=True)
@@ -293,7 +286,7 @@ def farm_status(request, id):
 
     # Retrieve the corresponding FarmOrder objects for each user
     farm_orders = FarmOrder.objects.filter(user__in=ordered_users, project=project)
-    
+
     context = {
         'project': [project],
         'progress_ratio': progress_ratio,
