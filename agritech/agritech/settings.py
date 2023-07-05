@@ -78,7 +78,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'account.context_processors.get_vendor',
-                'account.context_processors.get_paypal_client_id',
                 'ecom.context_processors.get_cart_counter',
                 'ecom.context_processors.get_cart_amounts',
                 'account.context_processors.get_user_profile',
@@ -178,7 +177,6 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
 
-PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
 
 KHALTI_SECRET_KEY = config('KHALTI_SECRET_KEY')
 

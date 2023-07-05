@@ -240,6 +240,8 @@ def active_farms(request):
     context = {'active_projects': active_projects, 'form': form, 'search_query': search_query}
     return render(request, 'vendor/active_farms.html', context)
 
+
+
 @login_required(login_url='account:login')
 def completed_farms(request):
     user = request.user
