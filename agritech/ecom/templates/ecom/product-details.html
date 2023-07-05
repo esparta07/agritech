@@ -20,15 +20,16 @@
                                     </div>
                                     <!-- Rest of the large images -->
                                 </div>
-                                <div class="ltn__shop-details-small-img slick-arrow-2">
+                                <div class="ltn__shop-details-small-img slick-arrow-2" style="display: flex;">
                                     {% for extra_image in proj.extra_images.all %}
-                                        <div class="single-small-img">
+                                        <div class="single-small-img" style="width: 20%; padding: 5px;">
                                             <a href="{{ extra_image.image.url }}" data-rel="lightcase:myCollection">
-                                                <img src="{{ extra_image.image.url }}" alt="Extra Image">
+                                                <img class="equal-image" src="{{ extra_image.image.url }}" alt="Extra Image" style="width: 100px; height: 80px;">
                                             </a>
                                         </div> 
                                     {% endfor %}
                                 </div>
+                                
                                 <!-- Rest of the small images -->
                             </div>
                         </div>

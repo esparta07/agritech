@@ -81,6 +81,11 @@ def my_investment(request, customer_id):
     # Retrieve the ordered projects by the customer
     ordered_projects = Project.objects.filter(farmorder__user=customer).distinct()
 
+    # Search functionality
+    search_query = request.GET.get('search', '')  # the search query from the GET parameters
+    if search_query:
+        ordered_projects = ordered_projects.filter(project_title__icontains=search_query)
+
     # Create a dictionary to store project details, quantity, and price paid
     project_details = {}
 
