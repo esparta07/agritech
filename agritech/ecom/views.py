@@ -102,7 +102,6 @@ def prod_view(request, id):
 
 
 
-
 @user_passes_test(check_role_customer)
 def add_to_cart(request, project_id):
     if request.user.is_authenticated:
@@ -126,19 +125,17 @@ def add_to_cart(request, project_id):
                     if project.max_shares_per_user > 0:
                         if project.total_no_shares > 0:
                             chkCart = Cart.objects.create(user=request.user, project=project, quantity=1)
-                            return JsonResponse({'status': 'Success', 'message': 'Added the project to the cart', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
-                        else:
-                            return JsonResponse({'status': 'Failed', 'message': 'No more shares available for this project!'})
-                    else:
                         return JsonResponse({'status': 'Failed', 'message': 'Maximum share limit reached'})
             except Project.DoesNotExist:
                 return JsonResponse({'status': 'Failed', 'message': 'This project does not exist!'})
+            except ValidationError as e:
+                error_message = ' '.join(e.messages)
+                return JsonResponse({'status': 'Failed', 'message': error_message})
         else:
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
-        
+
     else:
         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
-
 
 def decrease_cart(request, project_id):
     if request.user.is_authenticated:

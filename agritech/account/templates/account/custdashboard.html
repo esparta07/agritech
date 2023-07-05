@@ -72,16 +72,15 @@
                                                                                           {% endfor %}
                                                                                       </div>
                                                                                   </div>
-                                                                              </div>
-                                                                              
-                                                                              
+                                                                              </div> 
                                                                             </div>
-                                                                            <h5>
-                                                                              <span class="greenish">For more info </span>
-                                                                              <a href="{% url 'account:my_investment' user.id %}">My Investments</a>
-                                                                          </h5>
+                                                                            {% if invested_projects%}
+                                                                                <h5>
+                                                                                <span class="greenish">For more info </span>
+                                                                                <a href="{% url 'account:my_investment' user.id %}">My Investments</a>
+                                                                                </h5>
                                                                           
-                                                                          <table class="table align-middle mb-0 bg-white mt-0">
+                                                                            <table class="table align-middle mb-0 bg-white mt-0">
                                                                                 <thead class="bg-light">
                                                                                   <tr>
                                                                                     <th>Farm</th>
@@ -108,18 +107,15 @@
                                                                                               </div>
                                                                                           </a>
                                                                                       </td>
-                                                                                      
-                                                                                          
-                                                                                          <td style="padding:40px;">
-                                                                                            {% if proj.is_completed %}
-                                                                                            <span class="badge badge-success rounded-pill" >Completed</span>
-                                                                                            {% elif proj.is_soldout%}
-                                                                                            <span class="badge badge-danger rounded-pill" > Soldout</span>
-                                                                                            {% else %}
-                                                                                            <span class="badge badge-primary rounded-pill" >Active</span>
-                                                                                            {% endif %}
-                                                                                              
-                                                                                          </td>
+                                                                                        <td style="padding:40px;">
+                                                                                        {% if proj.is_completed %}
+                                                                                        <span class="badge badge-success rounded-pill" >Completed</span>
+                                                                                        {% elif proj.is_soldout%}
+                                                                                        <span class="badge badge-danger rounded-pill" > Soldout</span>
+                                                                                        {% else %}
+                                                                                        <span class="badge badge-primary rounded-pill" >Active</span>
+                                                                                        {% endif %}  
+                                                                                        </td>
                                                                                           <td style="padding:40px;">रु‎{{proj.value_of_share|floatformat:2|intcomma}}</td>
                                                                                           <td style="padding:50px;" >
                                                                                             <p style="margin-top: -10px; color: black;">{{proj.percent_return_after_due_date}}%</p>
@@ -127,24 +123,23 @@
                                                                                             </td>
                                                                                           <td style="padding: 0 50px;">
                                                                                             <h4 style="margin-top: 40px; color: black;">रु‎{{ proj.total_investment|floatformat:2|intcomma}}</h4>
-
-                                                                                            
                                                                                           </td >
                                                                                           <td style="padding:0 70px;">
                                                                                             <p style="margin-top: 40px; color: black;">{{ proj.total_quantity }}</p>
-                                                                                            
                                                                                           </td>
-                                                                                         
                                                                                           <td style="padding:0 70px;">
                                                                                             <p style="margin-top: 40px; color: black;">रु‎{{proj.return_amount|floatformat:2|intcomma}}</p> 
                                                                                             
                                                                                           </td>
                                                                                       </tr>
                                                                                   {% endfor %}
-
-                                                                                  
                                                                                 </tbody>
                                                                             </table>
+                                                                            {% else %}
+                                                                            <div class="text-center">
+                                                                            <h1> No Invested Projects Yet</h1>
+                                                                            </div>
+                                                                            {% endif %}
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -295,8 +295,9 @@ def farm_status(request, id):
     combined_farm_orders = []
     for user in ordered_users:
         quantity_sum = FarmOrder.objects.filter(user=user, project=project).aggregate(Sum('quantity'))['quantity__sum'] or 0
-        farm_orders = FarmOrder.objects.filter(user=user, project=project)
-        combined_farm_orders.append({'user': user, 'quantity': quantity_sum})
+        invested_projects = FarmOrder.objects.filter(project=project).values('user').annotate(total_quantity=Sum('quantity'),
+        total_return_amount=Sum('return_amount'),invested_amount = Sum('amount'))
+        combined_farm_orders.append({'user': user, 'quantity': quantity_sum , 'invested_projects':invested_projects})
         
     quantity = combined_farm_orders[0]['quantity'] if combined_farm_orders else 0
 

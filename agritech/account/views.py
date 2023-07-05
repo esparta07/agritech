@@ -222,13 +222,7 @@ def custdashboard(request):
     return render(request, 'account/custdashboard.html', context)
 
 
-
-
-
-
-
-
-    
+ 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vendordashboard(request):
@@ -239,9 +233,6 @@ def vendordashboard(request):
     # Filter current month orders
     current_month = datetime.datetime.now().month
     current_month_orders = Order.objects.filter(vendors__user=request.user, is_ordered=True, created_at__month=current_month)
-
-    # Calculate current month revenue
-    current_month_revenue = current_month_orders.aggregate(total_revenue=Sum('total'))['total_revenue'] or 0
 
     # Calculate total revenue
     total_revenue = Order.objects.filter(vendors__user=request.user, is_ordered=True).aggregate(total_revenue=Sum('total'))['total_revenue'] or 0
@@ -254,7 +245,6 @@ def vendordashboard(request):
         'orders_count': orders.count(),
         'recent_orders': recent_orders,
         'total_revenue': total_revenue,
-        'current_month_revenue': current_month_revenue,
         'show_popup': False,
         'project_count': project_count,
         'projects': projects,

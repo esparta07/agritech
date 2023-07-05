@@ -35,8 +35,6 @@ class Category(models.Model):
         return self.project_set.count()
 
 
-
-
 class Project(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,limit_choices_to={'role': User.VENDOR} ) # Limit choices to vendor users
     project_title = models.CharField(max_length=100)
@@ -189,38 +187,6 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.user)
-
-# class Cart(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-#     quantity = models.PositiveIntegerField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     def save(self, *args, **kwargs):
-#         max_shares_per_user = self.project.max_shares_per_user
-#         total_shares = self.project.total_no_shares
-#         # Check if the quantity exceeds the maximum shares per user
-#         if self.quantity > max_shares_per_user:
-#             raise ValidationError("Quantity exceeds the maximum shares per user")
-#         if self.quantity > total_shares:
-#             raise ValidationError("Quantity exceeds the available shares")
-#         super().save(*args, **kwargs)
-
-#     def clean(self):
-#         max_shares_per_user = self.project.max_shares_per_user
-#         total_shares = self.project.total_no_shares
-#         # Check if the quantity exceeds the maximum shares per user
-#         if self.quantity > max_shares_per_user:
-#             raise ValidationError("Quantity exceeds the maximum shares per user")
-#         # Check if the quantity exceeds the available shares
-#         if self.quantity > total_shares:
-#             raise ValidationError("Quantity exceeds the available shares")
-
-#     def __str__(self):
-#         return str(self.user)
-
-
 
 class Tax(models.Model):
     tax_type = models.CharField(max_length=20, unique=True)

@@ -253,7 +253,7 @@
                     </div>
                   </div>
                 </div>
-                
+                {% if projects %}
                 <div class="col-lg-12 responsive-table bg-color-red" style="margin-top: 30px; margin-bottom: 30px; width: calc(100% + 200px);">
                   <table class="table-hover pd-2 " id="myOrdersTable" >
                     <thead class="bg-light">
@@ -303,6 +303,13 @@
                     </tbody>
                   </table>
                 <div>
+                  {% else %}
+                  <br>
+                  <br>
+                  <div class="text-center">
+                  <h1> No Projects Yet</h1>
+                  </div>
+                  {% endif %}
      
             </div>
         </div>
@@ -317,11 +324,11 @@
       {% include 'includes/alerts.html' %}
     </div>
   </div>
-  <div style="width: 1000px; position: fixed; overflow-y: auto; max-height: 80vh;">
+  <div style="width: 1000px; max-height: 200px; overflow-y: auto; position: fixed;">
     {% if show_popup %}
         <div class="modal" id="form" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="display: flex;">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content" style="width: 100%;">
+            <div class="modal-dialog modal-dialog-centered " style="width: 120%;" >
+                <div class="modal-content" style="width: 120%;  height:500px;  margin-top:-100px;">
                     <div class="notification-header">
                         <h3 class="d-inline-block">
                             <i class="fas fa-bell" style="color: red;"></i>&nbsp;&nbsp;REMINDER
