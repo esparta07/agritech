@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 <!-- PRODUCT DETAILS AREA START -->
-<img src="{% static 'ecom/img/31b.jpg' %}" alt="" style="width: 100%; height: 300px; object-fit: cover;">   
+<img src="{% static 'ecom/img/banner2.jpg' %}" alt="" style="width: 100%; height: 300px; object-fit: cover;">   
 <div class="ltn__product-area ltn__product-gutter mb-100" >
     <div class="container">
         <div class="row">
@@ -48,7 +48,7 @@
                             {% for proj in project_page %}
                             <div class="col-lg-6" >
                                 <div class="ltn__product-item ltn__product-item-3 border border-light">
-                                    <div class="product-img" style="width: 300px; height: 300px; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                                    <div class="product-img mt-30" style="width: 300px; height: 200px; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);margin-left:10px">
                                         <a href="{% url 'ecom:product' id=proj.id %}"><img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;"></a>
                                     </div>
                                     <div class="product-info">
@@ -57,48 +57,37 @@
                                             <span>रु‎ {{ proj.value_of_share }}</span>
                                         </div>
                                         <ul style="list-style: none;">
-                                            {% comment %} <li>
-                                                <strong>Duration:</strong>
-                                                <span class="greenish">
-                                                    <a>{{ proj.duration_in_months }} Months</a>
-                                                </span><br>
-                                        
-                                            </li> {% endcomment %}
                                             <li>
                                                 <strong>Available shares: </strong>
                                                 <span class="greenish">
-                                                    <a>{{ proj.total_no_shares }}</a>
+                                                    <a><b>{{ proj.total_no_shares }}</b></a>
                                                 </span><br>
                                         
                                             </li>
                                             <li>
                                                 <strong>Return %: </strong>
                                                 <span class="greenish">
-                                                    <a>{{ proj.percent_return_after_due_date}}</a>
+                                                    <a><b>{{ proj.percent_return_after_due_date}}</b></a>
                                                 </span><br>
                                         
                                             </li>
-                                            {% comment %} <li>
-                                                <strong>Return Date: </strong>
-                                                <span class="greenish">
-                                                    <a>{{  proj.return_date  }}</a>
-                                                </span><br>
-                                        
-                                            </li> {% endcomment %}
+                                          
                                             <li>
-                                            <span style="color: black;">Posted By:</span>
-                                            <b><a href="{% url 'account:vendor_detail' vendor_id=proj.vendor.id %}">{{ proj.vendor.user.user_profile.first_name }} {{ proj.vendor.user.user_profile.last_name }}</a></b>
-                                            <img src="{% static 'ecom/img/verified.png' %}">
-                                            </li>
+                                            
                                             <li>
-                                            <button class=" btn-primary rounded-pill p-2"> <a href="{% url 'ecom:product' id=proj.id %}" style="color: white; font-size: small;">View Details</a></button>
-                                            <li>
+                                            {% comment %} <button class=" btn-primary rounded-pill p-2"> <a href="{% url 'ecom:product' id=proj.id %}" style="color: white; font-size: small;">View Details</a></button>
+                                            <li> {% endcomment %}
                                         </ul>
                                         
                                     </div>
-                                        
+                                     <div style="float:right;">
+                                    
+                                    <b><a href="{% url 'account:vendor_detail' vendor_id=proj.vendor.id %}">{{ proj.vendor.user.user_profile.first_name }} {{ proj.vendor.user.user_profile.last_name }}</a></b>
+                                    <img src="{% static 'ecom/img/verified.png' %}">
+                                    </div>  
 
                                 </div>
+                                
                             </div>
                             {% endfor %}
                             {% else %}
