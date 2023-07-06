@@ -103,38 +103,30 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                </div>
-            
-                <div class="row mt-10 mb-10 justify-content-start">
-                    <div class="col-lg-12">
-                        <h1>Completed Projects</h1>
+
+                    <h1>Completed Projects</h1>
+                    <div class="row">
+                        {% for project in vendor.project_set.all %}
+                            {% if project.is_completed %}   
+                                <div class="ltn__feature-item ltn__feature-item-6 text-center m-1">
+                                    <div class="ltn__feature-icon">
+                                        <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
+                                    </div>
+                                    <div class="ltn__feature-info">
+                                        <h4><a href="service.html">{{ project.project_title }}</a></h4>
+                                        <span class="greenish">रु‎ {{project.value_of_share}}</span><br>
+                                    </div>
+                                </div>            
+                            {% if forloop.counter|divisibleby:4 or forloop.last %}
+                                </div>
+                                {% if not forloop.last %}
+                                    <div class="row ltn__custom-gutter mt-50 mb-20">
+                                {% endif %}
+                            {% endif %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
-                
-                <div class="row">
-                    {% for project in vendor.project_set.all %}
-                        {% if project.is_completed %}   
-                            <div class="ltn__feature-item ltn__feature-item-6 text-center m-1">
-                                <div class="ltn__feature-icon">
-                                    <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
-                                </div>
-                                <div class="ltn__feature-info">
-                                    <h4><a href="service.html">{{ project.project_title }}</a></h4>
-                                    <span class="greenish">रु‎ {{project.value_of_share}}</span><br>
-                                </div>
-                            </div>            
-                        {% if forloop.counter|divisibleby:4 or forloop.last %}
-                            </div>
-                            {% if not forloop.last %}
-                                <div class="row ltn__custom-gutter mt-50 mb-20">
-                            {% endif %}
-                        {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                
-                
-                
         </div>
             
         </div>
