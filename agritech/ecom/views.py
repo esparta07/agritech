@@ -57,7 +57,7 @@ def shop_view(request):
 
         projects = projects.filter(Q(id__in=project_ids) | Q(vendor_id__in=vendor_ids))
 
-    paginator = Paginator(projects, 8)
+    paginator = Paginator(projects, 6)
     project_page = paginator.get_page(page)
 
     context = {
@@ -79,7 +79,7 @@ def prod_view(request, id):
     
     # Check if the logged-in user is the vendor of the project
     
-    top_projects = Project.objects.order_by('-percent_return_after_due_date')[:3]
+    top_projects = Project.objects.filter(is_approved=True).order_by('-percent_return_after_due_date')[:3]
     related_projects = Project.objects.filter(project_type=project.project_type).exclude(id=project.id)[:5]
     
     if related_projects.count() < 5:
@@ -99,6 +99,7 @@ def prod_view(request, id):
     }
     
     return render(request, 'ecom/product-details.html', context)
+
 
 
 
@@ -125,17 +126,19 @@ def add_to_cart(request, project_id):
                     if project.max_shares_per_user > 0:
                         if project.total_no_shares > 0:
                             chkCart = Cart.objects.create(user=request.user, project=project, quantity=1)
+                            return JsonResponse({'status': 'Success', 'message': 'Added the project to the cart', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
+                        else:
+                            return JsonResponse({'status': 'Failed', 'message': 'No more shares available for this project!'})
+                    else:
                         return JsonResponse({'status': 'Failed', 'message': 'Maximum share limit reached'})
             except Project.DoesNotExist:
                 return JsonResponse({'status': 'Failed', 'message': 'This project does not exist!'})
-            except ValidationError as e:
-                error_message = ' '.join(e.messages)
-                return JsonResponse({'status': 'Failed', 'message': error_message})
         else:
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
-
+        
     else:
         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
+
 
 def decrease_cart(request, project_id):
     if request.user.is_authenticated:
