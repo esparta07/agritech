@@ -17,7 +17,7 @@ urlpatterns = [
     # # Prod CRUD
     path('menu-builder/product/add/', views.add_product, name='add_product'),
     path('menu-builder/product/edit/<int:pk>/', views.edit_product, name='edit_product'),
-    path('menu-builder/product/delete/<int:pk>/', views.delete_product, name='delete_product'),
+    # path('menu-builder/product/delete/<int:pk>/', views.delete_product, name='delete_product'),
 
     # path('order_detail/<int:order_number>/', views.order_detail, name='vendor_order_detail'),
     path('vendor_order_detail/<int:order_number>/', views.order_detail, name='vendor_order_detail'),

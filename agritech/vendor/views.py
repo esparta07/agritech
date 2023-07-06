@@ -143,7 +143,7 @@ def edit_product(request, pk=None):
 
             # Process extra images
             extra_images = request.FILES.getlist('extra_images')
-            product.extra_images.all().delete()  # Remove existing extra images
+            # product.extra_images.all().delete()  # Remove existing extra images
             for extra_image in extra_images:
                 extra_image_instance = ExtraImage(project=product, image=extra_image)
                 extra_image_instance.save()
@@ -164,16 +164,13 @@ def edit_product(request, pk=None):
 
 
 
-
-
-
-@login_required(login_url='account:login')
-@user_passes_test(check_role_vendor)
-def delete_product(request, pk=None):
-    product = get_object_or_404(Project, pk=pk)
-    product.delete()
-    messages.success(request, 'Product has been deleted successfully!')
-    return redirect('account:productItem_by_category', product.project_type.id)
+# @login_required(login_url='account:login')
+# @user_passes_test(check_role_vendor)
+# def delete_product(request, pk=None):
+#     product = get_object_or_404(Project, pk=pk)
+#     product.delete()
+#     messages.success(request, 'Product has been deleted successfully!')
+#     return redirect('account:productItem_by_category', product.project_type.id)
 
 
 def order_detail(request, order_number):

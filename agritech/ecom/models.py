@@ -1,3 +1,4 @@
+import os
 from tabnanny import verbose
 from django.db import models
 from django.shortcuts import get_object_or_404
@@ -10,6 +11,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseForbidden
 from django.db.models import Count 
+
 
 class Category(models.Model):
     category_name = models.CharField(max_length=50)
@@ -35,11 +37,21 @@ class Category(models.Model):
         return self.project_set.count()
 
 
+from django.core.validators import FileExtensionValidator
+
+def validate_file_extension(value):
+    valid_extensions = ['.pdf', '.doc', '.docx']
+    extension = os.path.splitext(value.name)[1]
+    if extension.lower() not in valid_extensions:
+        raise ValidationError("Only PDF and DOC files are allowed.")
+
+
 class Project(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,limit_choices_to={'role': User.VENDOR} ) # Limit choices to vendor users
     project_title = models.CharField(max_length=100)
     project_type = models.ForeignKey(Category, on_delete=models.CASCADE)
     project_description = models.TextField(max_length=2000)
+    project_documents = models.FileField(upload_to='media/Project/documents/', blank=True, null=True ,validators=[FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx']), validate_file_extension])
     
     total_cost = models.DecimalField(max_digits=10, decimal_places=2)
     total_no_shares = models.DecimalField(max_digits=10, decimal_places=0, default=0)
@@ -116,6 +128,12 @@ class Project(models.Model):
     def save(self, *args, **kwargs):
         self.project_title = self.project_title.title()
         super(Project, self).save(*args, **kwargs)
+
+
+
+
+
+
 
 def is_project_approved(view_func):
     def wrapper(request, *args, **kwargs):

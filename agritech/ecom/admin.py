@@ -12,7 +12,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ['project_title', 'display_duration', 'total_no_shares', 'project_type', 'return_date', 'value_of_share', 'percent_return_after_due_date', 'is_approved','is_completed']
     list_editable = ['is_approved']
     search_fields = ['project_title', 'project_type__category_name']
-    inlines = [ExtraImageInline]  # Include the ExtraImageInline inlines
+    
 
     
     def display_duration(self, obj):
