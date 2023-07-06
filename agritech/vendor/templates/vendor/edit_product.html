@@ -23,19 +23,6 @@
                                 {% csrf_token %}
                                 <div class="form-fields-set">
                                     <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12">
-                                            <div class="field-holder">
-                                                <label>Project Title *</label>
-                                                {{ form.project_title }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12 col-sm-12">
-                                            <div class="field-holder">
-                                                <label><b>Category *</b></label><br>
-                                                {{ form.project_type }}
-                                            </div>
-                                            <br>
-                                        </div>
                                         <br>
                                         <div class="col-lg-12 col-md-12 col-sm-12 mb-10">
                                             <div class="field-holder">
@@ -43,10 +30,19 @@
                                                 {{ form.project_description }}
                                             </div>
                                         </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 mb-10">
+                                            <div class="field-holder">
+                                                <label>Documents</label>
+                                                {{ form.project_documents }}
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 mb-10">
                                             <div class="field-holder">
                                                 <label for="farm_image">Farm Image</label>
                                                 <br>
+                                                {% if form.farm_image.value %}
+                                                    <img src="{{ form.farm_image.value.url }}" alt="Farm Image">
+                                                {% endif %}
                                                 {{ form.farm_image }}
                                                 {{ form.farm_image.errors }}
                                             </div>
@@ -59,54 +55,11 @@
                                                 {{ form.extra_images.errors }}
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 mb-10">
-                                            <div class="field-holder">
-                                                <label for="total_cost">Total Cost</label>
-                                                <br>
-                                                {{ form.total_cost }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 mb-10">
-                                            <div class="field-holder">
-                                                <label for="value_of_share">Value of Share</label>
-                                                <br>
-                                                {{ form.value_of_share }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <div class="field-holder">
-                                                <label for="max_shares_per_user">Maximum Share per User</label>
-                                                <br>
-                                                {{ form.max_shares_per_user }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <div class="field-holder">
-                                                <label for="percent_return_after_due_date">Return Percentage</label>
-                                                <br>
-                                                {{ form.percent_return_after_due_date }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <div class="field-holder">
-                                                <label for="return_date">Return Date</label>
-                                                <br>
-                                                <div style="width: 200px;">{{ form.return_date }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <div class="field-holder">
-                                                <label for="return_date">Is available?</label>
-                                                <div style="width: 200px;">{{ form.is_available }}</div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <button type="submit" name="submit" class="theme-btn-1 rounded-lg p-3" style="margin-top:20px;"><i class="fa fa-check" aria-hidden="true"></i> Update</button>
-
                                 </div>
-                             
-
                             </form>
+                            
                             
                             {% if form.errors %}
                             <div class="alert alert-danger">
