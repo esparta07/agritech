@@ -11,7 +11,6 @@ from .models import Cart,UserProfile,UserProfile, User, is_project_approved
 from .context_processors import get_cart_counter , get_cart_amounts
 from orders.forms import OrderForm
 from django.db.models import Count
-from django.core.exceptions import ValidationError
 from django.db.models import F
 from django.db.models import Q
 
@@ -57,7 +56,7 @@ def shop_view(request):
 
         projects = projects.filter(Q(id__in=project_ids) | Q(vendor_id__in=vendor_ids))
 
-    paginator = Paginator(projects, 6)
+    paginator = Paginator(projects,10)
     project_page = paginator.get_page(page)
 
     context = {

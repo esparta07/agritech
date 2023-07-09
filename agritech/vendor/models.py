@@ -3,7 +3,8 @@ from django.db import models
 from account.models import User, UserProfile
 from account.utils import send_notification
 from datetime import time, date, datetime
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Create your models here.
 
 
@@ -57,3 +58,9 @@ class Vendor(models.Model):
                     mail_subject = "We're sorry! You are not eligible for publishing your food menu on our marketplace."
                     send_notification(mail_subject, mail_template, context)
         return super(Vendor, self).save(*args, **kwargs)
+
+
+
+
+
+

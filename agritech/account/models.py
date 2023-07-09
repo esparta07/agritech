@@ -112,29 +112,31 @@ class UserProfile(models.Model):
         return f"{self.first_name} {self.last_name}"
     
     
-    from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import User, UserProfile
-
+from vendor.models import Vendor
 
 @receiver(post_save, sender=User)
-def post_save_create_profile_receiver(sender, instance, created, **kwargs):
-    print(created)
+def post_save_create_profile_vendor_receiver(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
-        print('user profile is created')
+        profile, _ = UserProfile.objects.get_or_create(user=instance)
+        print('User profile is created')
+
+        if instance.role == User.VENDOR:
+            vendor = Vendor.objects.create(user=instance, user_profile=profile)
+            print('Vendor is created:', vendor)
+
     else:
         try:
             profile = UserProfile.objects.get(user=instance)
             profile.save()
-        except:
-            # Create the userprofile if not exist
-            UserProfile.objects.create(user=instance)
-            print('Profile not exist,new created')
-        print('user is updated')
+            print('User profile is updated')
 
+        except UserProfile.DoesNotExist:
+            profile = UserProfile.objects.create(user=instance)
+            print('User profile does not exist, created')
 
 @receiver(pre_save, sender=User)
 def pre_save_profile_receiver(sender, instance, **kwargs):
-   pass
-
+    pass

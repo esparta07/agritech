@@ -12,10 +12,10 @@ class CustomUserAdmin(UserAdmin):
         ('Permissions', {'fields': ('is_admin', 'is_staff', 'is_superuser','is_verified')}),
     )
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('phone_number', 'password1', 'password2'),
-        }),
+    (None, {
+        'classes': ('wide',),
+        'fields': ('phone_number', 'role', 'password1', 'password2'),
+    }),
     )
 
 admin.site.register(User, CustomUserAdmin)
