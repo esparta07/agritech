@@ -79,7 +79,7 @@ def place_order(request):
             order.save()
             order_number = generate_order_number(order.id)
             order.order_number = order_number
-            order.vendors.set(vendors_user_ids)
+            order.vendors.add(*vendors_user_ids)
             order.save()
 
             
