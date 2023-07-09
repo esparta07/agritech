@@ -62,8 +62,9 @@ def place_order(request):
             phone_number = form.cleaned_data['phone']
             phone_number = phone_number[-10:]
             form.cleaned_data['phone'] = phone_number
-            
-            order.project = cart_items.project
+            order.phone=phone_number
+            for cart_item in cart_items:
+                order.project = cart_item.project
             order.email = form.cleaned_data['email']
             order.address = form.cleaned_data['address']
             order.country = form.cleaned_data['country']

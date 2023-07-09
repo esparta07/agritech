@@ -238,7 +238,7 @@ def vendordashboard(request):
     total_revenue = Order.objects.filter(vendors__user=request.user, is_ordered=True).aggregate(total_revenue=Sum('total'))['total_revenue'] or 0
     project_count = Project.objects.filter(vendor=vendor.user).count()
 
-    projects = Project.objects.filter(vendor=vendor.user)
+    projects = Project.objects.filter(vendor=vendor.user,is_approved=True)
 
     context = {
         'orders': orders,

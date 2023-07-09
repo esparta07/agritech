@@ -63,12 +63,12 @@ def get_vendor(request):
     return vendor
 
 
-
+from django.db.models import Count, Q
 @login_required(login_url='account:login')
 @user_passes_test(check_role_vendor)
 def menu_builder(request):
     vendor = get_vendor(request)
-    categories = Category.objects.annotate(num_projects=Count('project')).order_by('created_at')
+    categories = Category.objects.annotate(num_projects=Count('project', filter=Q(project__vendor=vendor.user))).order_by('created_at')
     context = {
         'categories': categories,
     }
