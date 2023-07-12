@@ -1,8 +1,13 @@
 
+from django.contrib.admin.sites import site
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from account.forms import UserProfileForm
 from account.models import User, UserProfile
+from account import admin
+import ecom
+from ecom.admin import ProjectAdmin
 from ecom.models import ExtraImage, ProjectStatus
 from .models import Vendor
 from .forms import ProjectStatusForm, VendorForm
@@ -25,6 +30,9 @@ from orders.models import Order, FarmOrder
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Count,Sum
 # Create your views here.
+import folium
+from folium import plugins
+
 
 
 @login_required(login_url='account:login')
@@ -125,10 +133,30 @@ def add_product(request):
         else:
             messages.error(request, 'Error adding product. Please correct the form errors.')
             print(form.errors)
+    
+
 
     context = {
         'form': form,
+        # Get the HTML representation of the map
     }
+
+    # Create an instance of ProjectAdmin
+    model_admin = ecom.admin.ProjectAdmin(Project, site)
+
+    # Prepare the context for rendering
+    admin_context = {
+        'admin': model_admin,
+        'opts': model_admin.model._meta,
+        'app_label': model_admin.model._meta.app_label,
+        'media': model_admin.media,
+        'title': model_admin.model._meta.verbose_name_plural,
+        'root_path': reverse('admin:index'),
+    }
+
+    # Update the existing context with admin_context
+    context.update(admin_context)
+    
     return render(request, 'vendor/add_product.html', context)
 
 @login_required(login_url='account:login')

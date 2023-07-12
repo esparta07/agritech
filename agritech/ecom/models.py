@@ -4,6 +4,7 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from account.models import UserProfile ,User
+from os.path import basename
 from vendor.models import Vendor
 from django.core.exceptions import ValidationError
 from decimal import Decimal
@@ -11,6 +12,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseForbidden
 from django.db.models import Count 
+
 
 
 class Category(models.Model):
@@ -61,8 +63,12 @@ class Project(models.Model):
     max_shares_per_user = models.PositiveIntegerField()
     return_date = models.DateField()
     percent_return_after_due_date = models.DecimalField(max_digits=5, decimal_places=2)
-    
+
     farm_image = models.ImageField(upload_to='media/farmimages/', default='', blank=True)
+
+    address = models.CharField(max_length=255, blank=True, null=True )
+    latitude = models.DecimalField( max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField( max_digits=9, decimal_places=6, null=True, blank=True )
 
     is_available = models.BooleanField(default=True)
     is_approved = models.BooleanField(default=False)
@@ -114,6 +120,16 @@ class Project(models.Model):
     
     def __str__(self):
         return f"{self.pk} - Shares Available: {self.num_shares_available}"
+    
+
+    @property
+    def document_name(self):
+        if self.project_documents:
+            return basename(self.project_documents.name)
+        return None
+
+    
+
     @property
     def vendor_username(self):
         return self.vendor.username

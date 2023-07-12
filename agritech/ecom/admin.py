@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Category, Project, Tax, ExtraImage,ProjectStatus
+
+from agritech import settings
+from .models import Category, Project, Tax, ExtraImage,ProjectStatus 
 from .models import Cart
 from decimal import Decimal
 
@@ -8,10 +10,12 @@ class ExtraImageInline(admin.StackedInline):
     extra = 1
     max_num = 5  # Set the maximum number of extra images to 5
 
+
+
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ['project_title', 'display_duration', 'total_no_shares', 'project_type', 'return_date', 'value_of_share', 'percent_return_after_due_date', 'is_approved','is_completed']
     list_editable = ['is_approved']
-    search_fields = ['project_title', 'project_type__category_name']
+    search_fields = ['project_title', 'project_type__category_name', 'address']
     
 
     
@@ -19,10 +23,18 @@ class ProjectAdmin(admin.ModelAdmin):
         duration = obj.calculate_duration()
         return f'{duration} months'
 
-    
     display_duration.short_description = 'Duration'
 
 
+    class Media:
+        if hasattr(settings, 'GOOGLE_API_KEY') and settings.GOOGLE_API_KEY:
+            css = {
+                'all': ('ecom/css/custom.css',),
+            }
+            js = (
+                'https://maps.googleapis.com/maps/api/js?key={}'.format(settings.GOOGLE_API_KEY),
+                'ecom/js/location_picker.js',
+            )
 
 
 

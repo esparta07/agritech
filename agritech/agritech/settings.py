@@ -183,4 +183,4 @@ MAX_OTP_TRY = 3
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
-GOOGLE_API_KEY = 'AIzaSyCDesrTi3lnsP5iZSmtboadmm4_loGZbDk'
+GOOGLE_API_KEY = config('GOOGLE_API')
