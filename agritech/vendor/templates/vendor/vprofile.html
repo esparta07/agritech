@@ -21,6 +21,11 @@
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
                             <h2  style="margin-top:20px; text-align:center;"> <b>Manage Your Profile </b></h2>
+							<br>
+							{% if not user.is_verified %}
+							<h5 style="text-align:center; color:red;">Please update your profile to verify your account.</h5>
+							{% endif %}
+							<br>
 									<!-- My  Form Start -->
 									<form action="{% url 'account:vprofile' %}" method="POST" enctype="multipart/form-data">
                                         {% csrf_token %}

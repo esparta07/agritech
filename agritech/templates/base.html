@@ -28,21 +28,21 @@
     <!-- Custom JS -->
     <script src="{% static 'ecom/js/custom.js' %}"></script>
     <script src="{% static 'ecom/js/tables.js' %}"></script>
+    <script src="{% static 'ecom/js/location_picker.js' %}"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete" async defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!--Jquerry-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <!--Khalti-->
+    
     <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
-
-    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
 </head>
 
 <body>
@@ -761,25 +761,14 @@
         </div>
     </div>
 </footer>
+<script src="{% static 'ecom/js/plugins.js' %}"></script>
 <script>
   $(document).ready( function () {
     $('#myOrdersTable').DataTable();
   } );
 </script>
 <!-- FOOTER AREA END -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- DataTables JavaScript -->
-  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
 </body>
 
 </html>
- {% comment %} <!-- preloader area start -->
- <div class="preloader" id="preloader">
-  <div class="preloader-inner">
-      <div class="spinner">
-          <div class="dot1"></div>
-          <div class="dot2"></div>
-      </div>
-  </div>
-</div>
-<!-- preloader area end --> {% endcomment %}

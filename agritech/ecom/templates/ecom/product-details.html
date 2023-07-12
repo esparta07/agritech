@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-12">
-                <div class="ltn__shop-details-inner mb-60">
+                <div class="ltn__shop-details-inner mb-20">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ltn__shop-details-img-gallery">
@@ -95,6 +95,15 @@
                                             <strong>Available Shares:</strong> 
                                             <span class="greenish">
                                                 <b>{{ proj.total_no_shares }}</b>
+                                        </li>
+                                        {% if proj.documents %}
+                                        <li>
+                                            <strong>Project documents:</strong>
+                                            <span class="greenish">
+                                                <a href="{{ proj.project_documents.url }}" class="rounded-sm" target="_blank"> <i class="fas fa-file-pdf text-danger"></i> {{ proj.document_name }}</a>
+                                            </span>
+                                        </li>
+                                        {% endif%}
                                     </ul>
                                 </div>
                                 <div class="ltn__product-details-menu-2">
@@ -144,8 +153,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                 
-                                   
                                 </div>
                             </div>
                         </div>

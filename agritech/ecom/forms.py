@@ -43,7 +43,7 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ['project_title', 'project_type', 'project_description', 'project_documents', 'total_cost', 'farm_image', 'is_available',
                   'value_of_share', 'max_shares_per_user', 'return_date', 'percent_return_after_due_date', 'extra_images',
-                  'is_approved', 'is_completed', 'is_soldout']
+                  'address', 'latitude' , 'longitude']
         exclude = ['is_approved', 'is_completed', 'is_soldout']
 
 

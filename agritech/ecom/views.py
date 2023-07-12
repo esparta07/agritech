@@ -64,6 +64,7 @@ def shop_view(request):
         'selected_category': selected_category,
         'project_page': project_page,
         'sort_by': sort_by,
+        'projects' : projects
     }
 
     return render(request, 'ecom/shop-grid.html', context)
