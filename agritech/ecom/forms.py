@@ -14,6 +14,9 @@ class CategoryForm(forms.ModelForm):
 
 
 
+from django import forms
+from .models import Project
+
 class ProjectForm(forms.ModelForm):
     project_title = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control'}),
@@ -32,19 +35,15 @@ class ProjectForm(forms.ModelForm):
         required=False
     )
   
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            if field_name not in ['is_available', 'is_approved', 'is_completed', 'is_soldout' , 'description']:
-                field.widget.attrs.update({'class': 'form-control'})
-
-
     class Meta:
         model = Project
         fields = ['project_title', 'project_type', 'project_description', 'project_documents', 'total_cost', 'farm_image', 'is_available',
                   'value_of_share', 'max_shares_per_user', 'return_date', 'percent_return_after_due_date', 'extra_images',
-                  'address', 'latitude' , 'longitude']
+                  'address', 'latitude', 'longitude']
         exclude = ['is_approved', 'is_completed', 'is_soldout']
+
+
+
 
 
 

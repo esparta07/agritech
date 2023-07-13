@@ -81,6 +81,7 @@
                     </div>
                     <h1><i class="fas fa-circle" style="color: #5ad539;font-size: 12px; position: relative; top: -8px;"></i> Active Farms</h1>
                     <div class="row  justify-content-start">
+                        {% if not project.is_completed %}
                         {% for project in vendor.project_set.all %}
                             {% if project.is_approved %}                                
                                     <div class="ltn__feature-item ltn__feature-item-6 text-center m-1">
@@ -102,6 +103,7 @@
                             {% endif %}
                             {% endif %}
                         {% endfor %}
+                        {% endif %}
                     </div>
 
                     <h1>Completed Projects</h1>

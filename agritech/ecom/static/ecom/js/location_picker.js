@@ -15,8 +15,8 @@
   
     // If we don't have a lat/lon in the input fields,
     // this is where the map will be centered initially.
-    var initial_lat = 27.706112,
-        initial_lon = 85.345665;
+    var initial_lat = 51.516448,
+        initial_lon = -0.130463;
   
     // Initial zoom level for the map.
     var initial_zoom = 6;

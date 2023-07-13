@@ -30,8 +30,7 @@ from orders.models import Order, FarmOrder
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Count,Sum
 # Create your views here.
-import folium
-from folium import plugins
+
 
 
 
@@ -144,18 +143,7 @@ def add_product(request):
     # Create an instance of ProjectAdmin
     model_admin = ecom.admin.ProjectAdmin(Project, site)
 
-    # Prepare the context for rendering
-    admin_context = {
-        'admin': model_admin,
-        'opts': model_admin.model._meta,
-        'app_label': model_admin.model._meta.app_label,
-        'media': model_admin.media,
-        'title': model_admin.model._meta.verbose_name_plural,
-        'root_path': reverse('admin:index'),
-    }
-
-    # Update the existing context with admin_context
-    context.update(admin_context)
+  
     
     return render(request, 'vendor/add_product.html', context)
 
