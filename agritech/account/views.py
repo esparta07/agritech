@@ -205,9 +205,7 @@ def custdashboard(request):
     
     # Calculate the sum of return_amount for completed farm orders
     profit_gained = orders.filter(farmorder__project__is_completed=True).aggregate(total_return_amount=Sum(F('farmorder__return_amount')))['total_return_amount'] or 0
-    
-    limit = 10
-    invested_projects = invested_projects[:limit]
+    expected_profit =orders.aggregate(total_return_amount=Sum(F('farmorder__return_amount')))['total_return_amount'] or 0
     
     context = {
         'orders': orders,
@@ -218,6 +216,7 @@ def custdashboard(request):
         'projects_due_soon': projects_due_soon,
         'invested_projects': invested_projects,
         'profit_gained': profit_gained,
+        'expected_profit': expected_profit,
     }
     return render(request, 'account/custdashboard.html', context)
 

@@ -12,6 +12,11 @@
 
         <!-- App favicon -->
         <link rel="shortcut icon" href="{% static 'ecom/img/favicon.png' %}" type="image/x-icon" />
+        <!-- Plugins css -->
+        <link href="{% static 'ecom/plugins/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'ecom/plugins/datatables/responsive.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'ecom/plugins/datatables/buttons.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'ecom/plugins/datatables/select.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
 
         <!-- App css -->
         <link href="{% static 'ecom/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
@@ -51,14 +56,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                    href="javascript:void(0)">
-                                    <span>Inbox</span>
-                                    <span>
-                                        <span class="badge badge-pill badge-info">3</span>
-                                    </span>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                    href="javascript:void(0)">
+                                    href="{% url 'account:cprofile' %}">
                                     <span>Profile</span>
                                     <span>
                                         <span class="badge badge-pill badge-warning">1</span>
@@ -73,7 +71,7 @@
                                     <span>Lock Account</span>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                    href="javascript:void(0)">
+                                    href="{% url 'account:logout' %}"
                                     <span>Log Out</span>
                                 </a>
                             </div>
@@ -82,13 +80,11 @@
                     </div>
                 </div>
             </header>
-            {% if user.vendor %}
+        {% if user.get_role == 'Vendor' %}
             {% include "includes/v_sidebar.html" %}
-            {% else %}
+        {% else %}
             {% include "includes/c_sidebar.html" %}
-            {% endif %}
-            
-           
+        {% endif %}  
             <!-- ============================================================== -->
             <!-- Start right Content here -->
             <!-- ============================================================== -->
@@ -170,7 +166,24 @@
 
         <!-- App js -->
         <script src="{% static 'ecom/assets/js/theme.js' %}"></script>
+        <!-- third party js -->
+        <script src="{% static 'ecom/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/dataTables.bootstrap4.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/buttons.flash.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/buttons.print.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/dataTables.keyTable.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/dataTables.select.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/pdfmake.min.js' %}"></script>
+        <script src="{% static 'ecom/plugins/datatables/vfs_fonts.js' %}"></script>
+        <!-- third party js ends -->
 
+        <!-- Datatables init -->
+        <script src="{% static 'ecom/assets/pages/datatables-demo.js' %}"></script>
     </body>
 
 </html>

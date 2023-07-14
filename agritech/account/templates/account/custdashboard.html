@@ -1,31 +1,192 @@
 {% extends 'base2.html' %}
 {% block dashb %}
+{% load humanize %}
+<div class="row">
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    
+                    <h5 class="card-title mb-0"><a href="{% url 'account:customer_my_orders' %}">Total Orders</a>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            {{ orders_count }}
+                        </h2>
+                    </div>
+                   
+                </div>
 
-<div class="col-md-6 col-xl-3">
-  <div class="card">
-      <div class="card-body">
-          <div class="mb-4">
-              <span class="badge badge-soft-primary float-right">Daily</span>
-              <h5 class="card-title mb-0">Cost per Unit</h5>
-          </div>
-          <div class="row d-flex align-items-center mb-4">
-              <div class="col-8">
-                  <h2 class="d-flex align-items-center mb-0">
-                      $17.21
-                  </h2>
-              </div>
-              <div class="col-4 text-right">
-                  <span class="text-muted">12.5% <i
-                          class="mdi mdi-arrow-up text-success"></i></span>
-              </div>
-          </div>
+                
+            </div>
+            <!--end card body-->
+        </div><!-- end card-->
+    </div> <!-- end col-->
 
-          <div class="progress shadow-sm" style="height: 5px;">
-              <div class="progress-bar bg-success" role="progressbar" style="width: 57%;">
-              </div>
-          </div>
-      </div>
-      <!--end card body-->
-  </div><!-- end card-->
-</div> <!-- end col-->
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <span class="badge badge-soft-primary float-right">All Time</span>
+                    <h5 class="card-title mb-0"><a href="{% url 'account:my_investment' user.id %}">Total Investment</a></h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            रु‎ {{total_investment|floatformat:2|intcomma}}
+                        </h2>
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+            <!--end card body-->
+        </div><!-- end card-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <span class="badge badge-soft-primary float-right">All Time</span>
+                    <h5 class="card-title mb-0">Profit Gained</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            रु‎{{profit_gained|floatformat:2|intcomma}}
+                        </h2>
+                    </div>
+                    
+                </div>
+                <div class="progress shadow-sm" style="height: 5px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{profit_gained}}%;" aria-valuenow="{{profit_gained}}" aria-valuemin="0" aria-valuemax="{{expected_profit}}"></div>
+                </div>
+                
+            </div>
+            <!--end card body-->
+        </div>
+        <!--end card-->
+    </div> <!-- end col-->
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <span class="badge badge-soft-primary float-right">Current</span>
+                    <h5 class="card-title mb-0">Expected Profit</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            रु‎ {{expected_profit|floatformat:2|intcomma}}
+                        </h2>
+                    </div>
+                    
+                </div>
+            </div>
+            <!--end card body-->
+        </div>
+        <!--end card-->
+    </div> <!-- end col-->
+</div>
+<!-- end row-->
+<div class="row">
+    <div class="col-6">
+        <div class="card-group">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Upcoming Events</h5>
+                    {% for proj in projects_due_soon %}
+                    <p class="card-text"><a href="{% url 'account:cfarm_status' proj.id %}"><b>{{ proj.project_title }}</b></a> matures on {{ proj.return_date }}</p>
+                    {% empty %}
+                    <p class="card-text">No upcoming events</p>
+                    {% endfor %}        
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    {% if invested_projects%}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div style="display: flex;">
+                    <h4 class="card-title">Investments</h4>
+                    <p class="card-subtitle mb-4" style="margin-left: auto;">
+                        For more info <a href="{% url 'account:my_investment' user.id %}">My Investments</a>
+                    </p>
+                </div>
+                
+                <table id="state-saving-datatable" class="table activate-select dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>Farm</th>
+                            <th>Status</th>
+                            <th>Return %</th>
+                            <th>Invested Amount</th>
+                            <th>Share Owned</th>
+                            <th>Expected Profit:</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                        {% for proj in invested_projects %}
+                             <tr>
+                               <td>
+                                     <div class="d-flex align-items-center" >
+                                        <a href="{% url 'account:cfarm_status' proj.id %}">
+                                         <img src="{{ proj.farm_image.url }}" alt="" style="width: 65px; height: 45px;" />
+                                        </a>
+                                         <div style="margin-left:3px;">
+                                             <p class="fw-bold mb-1"></p>
+                                             
+                                             <p class="text-muted mb-0">{{ proj.project_title }}</p>
+                                            
+                                         </div>
+                                     </div>
+                                </td>
+                               <td>
+                               {% if proj.is_completed %}
+                               <span class="badge badge-success rounded-pill" >Completed</span>
+                               {% elif proj.is_soldout%}
+                               <span class="badge badge-danger rounded-pill" > Soldout</span>
+                               {% else %}
+                               <span class="badge badge-primary rounded-pill" >Active</span>
+                               {% endif %}  
+                               </td>
+                                 <td>        
+                                    <p>{{proj.percent_return_after_due_date}}%</p>
+                                   </td>
+                                 <td>
+                                   <h4>रु‎{{ proj.total_investment|floatformat:2|intcomma}}</h4>
+                                 </td >
+                                 <td>
+                                   <p>{{ proj.total_quantity }}</p>
+                                 </td>
+                                 <td>
+                                   रु‎{{proj.return_amount|floatformat:2|intcomma}}
+                                   
+                                 </td>
+                             </tr>
+                         {% endfor %}
+                        
+                    </tbody>
+                </table>
+                
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+    {% else %}
+     <div class="text-center">
+    <h1 style="margin-left:10px;"> No Invested Projects Yet</h1>
+    </div>
+    {% endif %}
+</div>
+<!-- end row-->
+
 {% endblock  %}
