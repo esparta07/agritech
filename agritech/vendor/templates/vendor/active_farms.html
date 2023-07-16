@@ -1,246 +1,102 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load static %}
 
-{% block content %}
+{% block dashb %}
 {% include 'includes/alerts.html' %}
-
-<!-- Main Section Start -->
-<div class="main-section">
-    
-    
-    <div class="page-section account-header buyer-logged-in">
-        <div class="container">
-            <div class="row">
-                
-                    {% include 'includes/v_sidebar.html' %}
-                
-                
-                    <div class="user-dashboard loader-holder">
-                        <a class="btn theme-btn-1" href="{% url 'account:completed_farms' %}" style="margin-top: 10px; margin-bottom:0px;margin-left:900px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;background-color:#357960;">Completed Farms</a>   
-                        
-                            <h2 class="text-uppercase mt-10" style="margin-left:40px;">Active Farms</h2>
-                            <div class="ltn__grid-list-tab-menu" style="margin:40px;">
-                                <div class="ltn__search-widget">
-                                    <form action="" method="GET">
-                                        <input type="text" name="search" value="{{ search_query }}" placeholder="Search by project title">
-                                    <button type="submit">Search</button>
-                                    </form>
-                                </div>
-                            </div>
-                              
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-left:20px;" >
-                                    <div class="user-orders-list">
-                                        <div class="row ltn__custom-gutter mt-10 mb-10 justify-content-start">
-                                            {% if not project.is_completed %}
-                                            {% for project in active_projects %}
-                                            
-                                                    
-                                                        <div class="ltn__feature-item ltn__feature-item-6 text-center" style="margin-right:2px">
-                                                            <div class="ltn__feature-icon">
-                                                                <a href="{% url 'account:farm_status' project.id %}">
-                                                                    <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
-                                                                </a>                                    
-                                                            </div>
-                                                            <div class="ltn__feature-info">
-                                                                <h4><a href="{% url 'ecom:product' id=project.id %}">{{ project.project_title }}</a></h4>
-                                                                <span class="greenish">रु‎ {{ project.value_of_share }}</span><br>
-                                                                <button class="update_status_button" data-project-id="{{ project.id }}" data-project-title="{{ project.project_title }}">Update Status</button>
-                                                            </div>
-                                                        </div>
-
-                                                    {% if forloop.counter|divisibleby:4 or forloop.last %}
-                                                        </div>
-                                                        {% if not forloop.last %}
-                                                            <div class="row ltn__custom-gutter mt-50 mb-20">
-                                                        {% endif %}
-
-                                                    {% endif %}
-                                                {% endfor %}
-
-                                                {% else %}
-                                                    <div class="col-md-12">
-                                                        <p>No active projects.</p>
-                                                    </div>
-                                                {% endif %}										
-                                        </div>
-                                        <div class="row ltn__custom-gutter mt-10 mb-10 justify-content-start">
-                                            <h2 class="text-uppercase mt-10">Completed Farms</h2>
-                                            {% if  project.is_completed %}
-                                            {% for project in completed_projects %}
-                                            
-                                                    
-                                                        <div class="ltn__feature-item ltn__feature-item-6 text-center" style="margin-right:2px">
-                                                            <div class="ltn__feature-icon">
-                                                                <a href="{% url 'account:farm_status' project.id %}">
-                                                                    <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
-                                                                </a>                                    
-                                                            </div>
-                                                            <div class="ltn__feature-info">
-                                                                <h4><a href="{% url 'ecom:product' id=project.id %}">{{ project.project_title }}</a></h4>
-                                                                <span class="greenish">रु‎ {{ project.value_of_share }}</span><br>
-                                                               
-                                                            </div>
-                                                        </div>
-
-                                                    {% if forloop.counter|divisibleby:4 or forloop.last %}
-                                                        </div>
-                                                        {% if not forloop.last %}
-                                                            <div class="row ltn__custom-gutter mt-50 mb-20">
-                                                        {% endif %}
-
-                                                    {% endif %}
-                                                {% endfor %}
-
-                                                {% else %}
-                                                    <div class="col-md-12">
-                                                        <p>No Completed projects.</p>
-                                                    </div>
-                                                {% endif %}										
-                                        </div>
-                                </div>
-                            </div>
-                    </div>
-                
-            </div>
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">My Investments</h4>
+            <a href="{% url 'account:completed_farms' %}"><button type="button" class="btn btn-outline-success waves-effect waves-light">Completed Farms</button></a> 
         </div>
     </div>
 </div>
-<!-- Main Section End -->
-
-<!-- STATUS MODAL -->
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h1 style="padding-left: 290px; color:black;">Update Status</h1>
-        
-        <form id="statusForm" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <select id="projectSelect" name="project_id" class="form-control" required>
-                    <option value="">Select Project</option>
-                    {% for project in active_projects %}
-                        <option value="{{ project.id }}">{{ project.project_title }}</option>
-                    {% endfor %}
-                </select>
+<!-- end page title -->
+<form class="p-3" method="GET">
+    <div class="form-group m-0">
+        <div class="input-group">
+            <input type="text" name="search" value="{{ search_query }}" class="form-control" placeholder="Search by project title"
+                aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit"><i
+                        class="mdi mdi-magnify"></i></button>
             </div>
-            <br>
-            <br>
-            <!-- Add title input field -->
-            <div class="form-group">
-                <input type="text" id="statusTitle" name="title" placeholder="Enter status title" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-                <textarea id="statusUpdate" rows="4" cols="50" placeholder="Enter your status update" name="status" class="form-control" required></textarea>
-            </div>
-            
-            <!-- Display form errors -->
-            {% if form.errors %}
-                <div class="form-errors">
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <p class="error">{{ error }}</p>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            
-            <button type="submit" id="saveStatusButton" class="update_status_button">Save</button>
-        </form>
+        </div>
     </div>
-</div>
+</form>
+<br>
+<div class="row">
+    
+    {% for project in active_projects %}
+    {% if not project.is_completed %}
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'account:farm_status' project.id %}">{{ project.project_title }}</a>
+                    {% if project.is_completed %}
+                        <span class="badge badge-success rounded-pill">Completed</span>
+                     {% elif project.is_soldout %}
+                        <span class="badge badge-danger rounded-pill">Soldout</span>
+                     {% else %}
+                        <span class="badge badge-success rounded-pill">Active</span>
+                      {% endif %}
+                </h5>
+                <h6 class="card-subtitle text-muted">{{ project.project_type }}</h6>
+            </div>
+            <img class="img-fluid" src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 400px; height: 200px; object-fit: cover;">
+            <div class="card-body" style="display: flex; justify-content: center;">
+                <a href="{% url 'account:farm_status' project.id %}">
+                    <button type="button" class="btn btn-danger btn-sm waves-effect waves-light" 
+                    style="background-color: #E8A430; margin-right:2px;">View Details</button>
+                </a>
+                
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger btn-sm waves-effect waves-light" 
+                data-toggle="modal" data-target="#modal{{ project.id }}"
+                style="background-color: #357960; margin-right:2px;">Update Status</button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="modal{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="modal{{ project.id }}Title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modal{{ project.id }}Title">Update Status({{project.project_title}})</h5>
+                                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Include the form to update status -->
+                                <form method="post" id="statusForm{{ project.id }}">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input type="hidden" name="project_id" value="{{ project.id }}">
+                                </form>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="handleFormSubmission('statusForm{{ project.id }}')">Update</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+    {% endif %}
+{% endfor %}
 
 <script>
-    $(document).ready(function() {
-        // Event listener for the update status button
-        $('.update_status_button').click(function() {
-          var projectId = $('#projectSelect').val();
-          var projectTitle = $('#projectSelect option:selected').text();
-          
-          // Set the project title in the modal
-          $('#projectTitle').text(projectTitle);
-      
-          // Set the project ID as a data attribute in the form
-          $('#statusForm').data('project-id', projectId);
-      
-          // Display the modal
-          $('#myModal').css('display', 'block');
-        });
-      
-        // Event listener for the close button
-        $('#closeModal').click(function() {
-          // Hide the modal
-          $('#myModal').css('display', 'none');
-        });
-      
-        // Event listener for the form submission
-        $('#statusForm').submit(function(event) {
-          event.preventDefault(); // Prevent the default form submission
-      
-          // Get the form action URL
-          var formAction = $(this).attr('action');
-      
-          // Get the CSRF token
-          var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-      
-          // Get the project ID from the data attribute in the form
-          var projectId = $(this).data('project-id');
-      
-          // Get the status and title from the input fields
-          var status = $('#statusUpdate').val();
-          var title = $('#statusTitle').val();
-      
-          // Create the form data object
-          var formData = new FormData();
-          formData.append('csrfmiddlewaretoken', csrfToken);
-          formData.append('project_id', projectId);
-          formData.append('status', status);
-          formData.append('title', title);
-      
-          // Perform the AJAX request
-          $.ajax({
-            url: formAction,
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-              console.log(response); // Display the response in the console
-              if (response.hasOwnProperty('error')) {
-                displayErrors(response.error); // Show form errors in the modal
-              } else if (response.hasOwnProperty('message')) {
-                alert(response.message); // Show a success message
-                $('#myModal').css('display', 'none'); // Close the modal
-              }
-            },
-            error: function(xhr, status, error) {
-              console.log(xhr.responseText); // Display the error in the console
-              alert('An error occurred. Please try again.'); // Show a generic error message
-            }
-          });
-        });
-      });
-      
-      // Function to display form errors in the modal
-      function displayErrors(errors) {
-        var errorContainer = $('.form-errors');
-        errorContainer.empty(); // Clear previous errors
-      
-        // Loop through the errors and add them to the error container
-        for (var field in errors) {
-          if (errors.hasOwnProperty(field)) {
-            var errorMessages = errors[field];
-            for (var i = 0; i < errorMessages.length; i++) {
-              var errorMessage = errorMessages[i];
-              var errorElement = $('<p class="error">' + errorMessage + '</p>');
-              errorContainer.append(errorElement);
-            }
-          }
-        }
-      }
-      
-      
-  </script>
-  
+    function handleFormSubmission(formId) {
+        var form = document.getElementById(formId);
+        form.submit();
+    }
+</script>
+    
+</div>
+
 {% endblock %}

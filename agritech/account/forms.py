@@ -50,7 +50,12 @@ class UserProfileForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'profile_picture', 'address', 'country', 'state', 'city', 'pin_code', 'passport_photo', 'citizenship_front', 'citizenship_back']
 
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
 
+            
 
 class UserInfoForm(forms.ModelForm):
     class Meta:

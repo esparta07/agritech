@@ -1,255 +1,192 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load static %}
 {% load humanize %}
-{% block content %}
+{% block dashb %}
 {% include 'includes/alerts.html' %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<!-- Main Section Start -->
-
-
-<div class="main-section">
-
-    <div class="page-section account-header buyer-logged-in">
-        <div class="container">
-            <div class="row">
-               {% include 'includes/c_sidebar.html' %}
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                  <h1 class="text-center pt-10 pb-10 h-60"style="margin-top:0px;">FARM STATUS</h1>
-                    <div class="user-dashboard loader-holder">
-                        <div class="user-holder">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-left:40px;"> 
-                                    <h1 class="mt-4"></h1>
-                                    {% for proj in project %}
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="modal-product-info shop-details-info pl-0">
-                                                <h3>{{ proj.project_title }}</h3>
-                                                <div class="product-price">
-                                                    <span class="greenish">रु‎ </span><span>{{ proj.value_of_share }}</span>
-                                                </div>
-                                                <div class="modal-product-meta ltn__product-details-menu-1">
-                                                    <ul>
-                                                        <li>
-                                                            <strong>Duration:</strong>
-                                                            <span>
-                                                                <a>{{ proj.duration_in_months }} months</a>
-                                                            </span><br>
-                                                            <strong>Posted Date:</strong>
-                                                            <span>
-                                                                <a>{{ proj.created_at|date:"M. d, Y" }}</a>
-                                                            </span><br>                                                                                      
-                                                            <strong>Return Date:</strong>
-                                                            <span>
-                                                                <a>{{ proj.return_date }}</a>
-                                                            </span><br>
-                                                            
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                
-                                                <div class="modal-product-meta ltn__product-details-menu-1">
-                                                    <ul>
-                                                        <li>
-                                                            <strong>Total Cost:</strong>
-                                                            <span>
-                                                                <a>रु‎ {{ proj.total_cost|floatformat:2|intcomma }}</a>
-                                                            </span><br>
-                                                            <strong>Farmer <br>Investment:</strong>
-                                                            <span>
-                                                                <a>रु‎{{ proj.fund_invested|floatformat:2|intcomma }}</a>
-                                                            </span><br>
-                                                            <strong>Demand:</strong>
-                                                            <span>
-                                                                <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
-                                                            </span><br>
-                                                            <strong>Duration:</strong>
-                                                            <span>
-                                                                <a>{{ proj.duration_in_months }} months</a>
-                                                            </span><br>
-                                                            
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                
-                                                <div class="modal-product-meta ltn__product-details-menu-1">
-                                                    <ul>
-                                                        <li>
-                                                            <strong>Available Shares:</strong> 
-                                                            <span class="greenish">
-                                                                <b>{{ proj.total_no_shares }}</b>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="single-large-img" style="width: 300px; height: 300px">
-                                                <a href="{{ proj.farm_image.url }}" data-rel="lightcase:myCollection">
-                                                    <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
-                                                </a>
-                                                <div class="modal-product-meta ltn__product-details-menu-1">
-                                                    <ul>
-                                                      {% if not proj.is_completed %}
-                                                        <li>
-                                                            <strong>Active Since:</strong>
-                                                            <span class="greenish">
-                                                                <a>{{ proj.days_since_created }} Days</a>
-                                                            </span><br>
-                                                    
-                                                        </li>
-                                                        {% endif %}
-                                                        <li>
-                                                          <strong>Invested Amount:</strong>
-                                                          <span class="greenish">
-                                                              <a>रु‎ {{ invested_amount }} </a>
-                                                          </span><br>
-                                                  
-                                                        </li>
-                                                        <li>
-                                                          <strong>Profit %:</strong>
-                                                          <span class="greenish">
-                                                              <a>{{ proj.percent_return_after_due_date }} % </a>
-                                                          </span><br>
-                                                  
-                                                        </li>
-                                                        <li>
-                                                          {% if proj.is_completed %}
-                                                          <strong>Profit Gained:</strong>
-                                                          {% else %}
-                                                          <strong>Expected Profit:</strong>
-                                                          {% endif %}
-                                                          <span class="greenish">
-                                                              <a>रु‎ {{ return_amount }} </a>
-                                                          </span><br>
-                                                  
-                                                        </li>
-                                                    </ul>
-                                                </div>
-   
-                                            </div>
-                                        </div>
-                                        <h1 style="margin-left:10px; margin-top:10px;">Farm Status:
-                                          {% if proj.is_completed %}
-                                          <span style="color:green;">COMPLETED<span>
-                                          {% endif %}
-                                        </h1>
-                                           
-                                        {% if not proj.is_completed%}
-                                        <div id="progress-bar-container">
-                                          <ul class="status-list">
-                                            {% if status_messages %}
-                                              {% for status in status_messages %}
-                                              <li class="step {% if forloop.first %}active{% endif %}">
-                                                
-                                              </li>
-                                              {% endfor %}
-                                            {% else %}
-                                              <li class="step active">
-                                                No status
-                                              </li>
-                                            {% endif %}
-                                          </ul>
-                                          
-                                          <div id="line">
-                                            <div id="line-progress"></div>
-                                          </div>
-                                        </div>
-                                        
-                                        <div id="progress-content-section">
-                                          <div class="swiper-container">
-                                            <div class="swiper-wrapper">
-                                              {% if status_messages %}
-                                                {% for status in status_messages %}
-                                                <div class="section-content swiper-slide {% if forloop.first %}active{% endif %} plow">
-                                                  <h2>{{ status.status }}</h2>
-                                                  <p>{{ status.message }}</p>
-                                                  <p>{{ status.created_at }}</p>
-                                                </div>
-                                                {% endfor %}
-                                                
-                                              {% else %}
-                                                <div class="section-content swiper-slide active">
-                                                  <h2>No status available</h2>
-                                                </div>
-                                              {% endif %}
-                                            </div>
-                                            
-                                           
-                                          </div>
-                                        </div>
-                                        {% endif %}
-                                    </div>
-                                    <br>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+{% for proj in project %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h2 class="mb-0 font-size-38 mt-2">{{proj.project_title}}
+                    {% if proj.is_completed %}
+                        <span class="badge badge-success rounded-pill" >Completed</span>
+                     {% elif proj.is_soldout%}
+                        <span class="badge badge-danger rounded-pill" > Soldout</span>
+                     {% else %}
+                        <span class="badge badge-success rounded-pill" >Active</span>
+                     {% endif %}
+            </h2>
+            <span style="float:right;">
+              Farmer:<b><a href="{% url 'account:vendor_detail' vendor_id=proj.vendor.id %}">{{ proj.vendor.user.user_profile.first_name }} {{ proj.vendor.user.user_profile.last_name }}</a></b>
+              <img src="{% static 'ecom/img/verified.png' %}">
+              </span>
         </div>
     </div>
 </div>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
+<!-- end page title -->
+
+<div style="display: flex;">
+  <div>
+    <div class="card">
+      <img class="card-img-top img-fluid" src="{{ proj.farm_image.url }}" alt="Card image cap" style="width:60rem ; height:50rem; object-fit: cover;">
+      <div class="card-body">
+        <p class="card-text">
+          <strong>Invested Amount:</strong>  
+          <a>रु‎ {{ invested_amount }} </a>
+          <br>
+        </p> 
+        <p>
+          {% if proj.is_completed %}
+          <strong>Profit Gained:</strong>
+          {% else %}
+          <strong>Expected Profit:</strong>
+          {% endif %}
+          <span class="greenish">
+            <a>रु‎ {{ return_amount }} </a>
+          </span><br>
+          <p>
+          <strong>Active Since:</strong>
+            <span class="greenish">
+                <a>{{ proj.days_since_created }} Days</a>
+            </span><br>
+          </P>
+        </p>
+      </div>
+    </div>
+      
+      <div class="card" style="max-height: 350px;">
+        <div class="card-body">
+          <ul class="nav nav-tabs nav-justified mb-2" style="max-height: 30px;">
+            <li class="nav-item">
+              <a href="#home1" data-toggle="tab" aria-expanded="false" class="nav-link">
+                <i class="mdi mdi-home-variant d-lg-none d-block"></i>
+                <span class="d-none d-lg-block">Description</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#profile1" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                <i class="mdi mdi-account-circle d-lg-none d-block"></i>
+                <span class="d-none d-lg-block">Location</span>
+              </a>
+            </li>
+          </ul>
+      
+          <div class="tab-content" style="max-height: 300px;">
+            <div class="tab-pane" id="home1">
+              <p>{{proj.project_description}}</p>
+            </div>
+            <div class="tab-pane show active" id="profile1">
+              <p><strong>Location:</strong> <span class="greenish">{{ proj.address }}</span></p>
+              <div id="map" style="height: 250px;"></div>
+            </div>
+          </div>
+        </div> <!-- end card-body-->
+      </div> <!-- end card-->
+      
+  </div>
+  <div >
+    <div class="col" style="margin-left:10px;">
+      <div class="card">
+        <div class="card-body col-xl-22">
+          <h3>Farm Details</h3>
+          <hr>
+          <p class="card-text">
+            <strong>Duration:</strong>
+            <span>
+                <a>{{ proj.duration_in_months }} months</a>
+            </span><br>
+            <strong>Posted Date:</strong>
+            <span>
+                <a>{{ proj.created_at|date:"M. d, Y" }}</a>
+            </span><br>                                                                                      
+            <strong>Return Date:</strong>
+            <span>
+                <a>{{ proj.return_date }}</a>
+            </span><br>
+            <hr>
+            <strong>Total Cost:</strong>
+              <span>
+                  <a>रु‎ {{ proj.total_cost|floatformat:2|intcomma }}</a>
+              </span><br>
+              <strong>Farmer Investment:</strong>
+              <span>
+                  <a>रु‎{{ proj.fund_invested|floatformat:2|intcomma }}</a>
+              </span><br>
+              <strong>Demand:</strong>
+              <span>
+                  <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
+              </span><br>
+              <hr>
+              <strong><a href="{% url 'ecom:product' id=proj.id %}">Available Shares:</a></strong> 
+              <span>
+                  <b>{{ proj.total_no_shares }}</b>
+              </span>
+              
+            </p>
+            
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">FARM STATUS</h5>  
+            {% for status in status_messages %}
+<div class="card mb-0">
+  <div class="card-header" id="heading{{ forloop.counter }}">
+    <h5 class="m-0 font-size-15">
+      <a class="collapsed d-block pt-2 pb-2 text-dark" data-toggle="collapse" href="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+        {{ status.title }} <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
+      </a>
+    </h5>
+  </div>
+  <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}">
+    <div class="card-body">
+      {{ status.status }}
+    </div>
+  </div>
+</div>
+<!-- end card-->
+{% empty %}
+<div class="card mb-0">
+  <div class="card-header">
+    <h5 class="m-0 font-size-15">
+      No status messages found.
+    </h5>
+  </div>
+</div>
+{% endfor %}
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+{% for proj in project  %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places"></script>
+<script src="{% static 'ecom/js/location_picker.js' %}"></script>
 <script>
-  $(document).ready(function() {
-      var totalSteps = {{ status_messages|length }};
-      var currentStep = 1;
-      
-      function updateProgress() {
-          var progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-          $("#line-progress").css("width", progress + "%");
-      }
-      
-      function showSectionContent() {
-          $(".section-content").removeClass("active");
-          $(".section-content").eq(currentStep - 1).addClass("active");
-      }
-      
-      $(".step").click(function() {
-          currentStep = $(this).index() + 1;
-          updateProgress();
-          showSectionContent();
-      });
-      
-      updateProgress();
-      showSectionContent();
-  });
+    var map;
+    var marker;
 
-  var swiper = new Swiper('.swiper-container', {
-    slidesPerView: 1,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-  });
+    function initMap() {
+        var initialLat = parseFloat({{ proj.latitude }}) || 27.706112;
+        var initialLng = parseFloat({{ proj.longitude }}) || 85.345665;
 
-  var statusListItems = document.querySelectorAll('.status-list li');
-  var progressContentSlides = document.querySelectorAll('.progress-content-section .swiper-slide');
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: { lat: initialLat, lng: initialLng }
+        });
 
-  statusListItems.forEach(function(item, index) {
-    item.addEventListener('click', function() {
-      // Remove active class from all list items and slides
-      statusListItems.forEach(function(listItem) {
-        listItem.classList.remove('active');
-      });
-      progressContentSlides.forEach(function(slide) {
-        slide.classList.remove('active');
-      });
+        marker = new google.maps.Marker({
+            map: map,
+            position: { lat: initialLat, lng: initialLng }
+        });
+    }
 
-      // Add active class to the clicked list item and slide
-      item.classList.add('active');
-      progressContentSlides[index].classList.add('active');
-    });
-  });
+    google.maps.event.addDomListener(window, 'load', initMap);
 </script>
-<!-- Main Section End -->
-
-
+{% endfor %}
+{% endfor %}
 {% endblock %}

@@ -1,9 +1,9 @@
 
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
 {% load static %}
 
-{% block content %}
+{% block dashb %}
 {% include 'includes/alerts.html' %}
 
 <!-- Main Section Start -->
@@ -11,8 +11,6 @@
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
             <div class="row">
-                {% include 'includes/v_sidebar.html' %}
-                
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
                         <h2 class="text-center mt-4">Modify product Item</h2> <b>
@@ -40,9 +38,6 @@
                                             <div class="field-holder">
                                                 <label for="farm_image">Farm Image</label>
                                                 <br>
-                                                {% if form.farm_image.value %}
-                                                    <img src="{{ form.farm_image.value.url }}" alt="Farm Image">
-                                                {% endif %}
                                                 {{ form.farm_image }}
                                                 {{ form.farm_image.errors }}
                                             </div>

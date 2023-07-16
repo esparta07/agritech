@@ -1,31 +1,163 @@
 {% extends 'base2.html' %}
 {% block dashb %}
-<div class="col-md-6 col-xl-3">
-  <div class="card">
-      <div class="card-body">
-          <div class="mb-4">
-              <span class="badge badge-soft-primary float-right">Daily</span>
-              <h5 class="card-title mb-0">Cost per Unit</h5>
-          </div>
-          <div class="row d-flex align-items-center mb-4">
-              <div class="col-8">
-                  <h2 class="d-flex align-items-center mb-0">
-                      $17.21
-                  </h2>
-              </div>
-              <div class="col-4 text-right">
-                  <span class="text-muted">12.5% <i
-                          class="mdi mdi-arrow-up text-success"></i></span>
-              </div>
-          </div>
+{% load static %}
+<div class="row">
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h5 class="card-title mb-0">Total Orders</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            {{orders_count}}
+                        </h2>
+                    </div>
+                    <div class="col-4 text-right">
+                        <span class="text-muted">12.5% <i
+                                class="mdi mdi-arrow-up text-success"></i></span>
+                    </div>
+                </div>
 
-          <div class="progress shadow-sm" style="height: 5px;">
-              <div class="progress-bar bg-success" role="progressbar" style="width: 57%;">
-              </div>
-          </div>
-      </div>
-      <!--end card body-->
-  </div><!-- end card-->
-</div> <!-- end col-->
+                <div class="progress shadow-sm" style="height: 5px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 57%;">
+                    </div>
+                </div>
+            </div>
+            <!--end card body-->
+        </div><!-- end card-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h5 class="card-title mb-0">Total Revenue</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            रु‎ {{ total_revenue }}
+                        </h2>
+                    </div>
+                    <div class="col-4 text-right">
+                        <span class="text-muted">18.71% <i
+                                class="mdi mdi-arrow-down text-danger"></i></span>
+                    </div>
+                </div>
+
+                <div class="progress shadow-sm" style="height: 5px;">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 57%;">
+                    </div>
+                </div>
+            </div>
+            <!--end card body-->
+        </div><!-- end card-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h5 class="card-title mb-0">Active Farms</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            {{ project_count }}
+                        </h2>
+                    </div>
+                    <div class="col-4 text-right">
+                        <span class="text-muted">57% <i
+                                class="mdi mdi-arrow-up text-success"></i></span>
+                    </div>
+                </div>
+
+                <div class="progress shadow-sm" style="height: 5px;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 57%;">
+                    </div>
+                </div>
+            </div>
+            <!--end card body-->
+        </div>
+        <!--end card-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h5 class="card-title mb-0">Daily Visits</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            1,15,187
+                        </h2>
+                    </div>
+                    <div class="col-4 text-right">
+                        <span class="text-muted">17.8% <i
+                                class="mdi mdi-arrow-down text-danger"></i></span>
+                    </div>
+                </div>
+
+                <div class="progress shadow-sm" style="height: 5px;">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 57%;"></div>
+                </div>
+            </div>
+            <!--end card body-->
+        </div><!-- end card-->
+    </div> <!-- end col-->
+</div>
+<!-- end row-->
+{% if projects %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="basic-datatable" class="table dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>Projects</th>
+                            <th>Status</th>
+                            <th>Return Date</th>
+                            <th>Investments</th>
+                            <th>Added Date </th>
+                            <th>Available share</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in projects %}
+                        <tr>
+                            <td>
+                                <h5><a href="{% url 'account:farm_status' project.id %}">{{ project.project_title }}</a></h5>
+                            </td>
+                            <td>
+                                {% if project.is_approved %}
+                                    {% if project.is_completed %}
+                                            <span class="badge badge-success mb-20">Completed</span>
+                                        {% elif project.is_soldout %}
+                                            <span class="badge badge-danger mb-20">Sold Out</span>
+                                        {% else %}
+                                            <span class="badge badge-primary mb-20">Active</span>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>{{project.return_date}}</td>
+                            <td>{{project.collected_amount}}</td>
+                            <td>{{project.created_at}}</td>
+                            <td>{{ project.total_no_shares }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+{% endif %}
+<!-- end row-->
 
 {% endblock  %}

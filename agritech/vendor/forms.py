@@ -26,6 +26,11 @@ class VendorForm(forms.ModelForm):
         model = Vendor
         fields = ['vendor_logo', 'company_registeration','vendor_description']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
 class ProjectStatusForm(forms.ModelForm):
     title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     status = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))

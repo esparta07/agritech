@@ -1,4 +1,5 @@
 
+from decimal import Decimal
 from django.contrib.admin.sites import site
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect, render
@@ -299,34 +300,36 @@ def farm_status(request, id):
     # the users who have ordered the specific farm
     ordered_users = User.objects.filter(farmorder__project=project).distinct()
     
+    project_total_return = FarmOrder.objects.filter(project=project).aggregate(Sum('return_amount'))['return_amount__sum']
+    project_total_return = Decimal(project_total_return) if project_total_return else Decimal('0.00')
 
-        # Retrieve the FarmOrder data for the specific project and calculate the sum of quantity and return_amount for each user
-    invested_projects = FarmOrder.objects.filter(project=project).values('user').annotate(
-        total_quantity=Sum('quantity'),
-        total_return_amount=Sum('return_amount'),
-        invested_amount = Sum('amount')
-    )
+    collected_amount = Decimal(project.collected_amount)
+
+    project_total_return = project_total_return + collected_amount
 
     combined_farm_orders = []
     for user in ordered_users:
         quantity_sum = FarmOrder.objects.filter(user=user, project=project).aggregate(Sum('quantity'))['quantity__sum'] or 0
-        invested_projects = FarmOrder.objects.filter(project=project).values('user').annotate(total_quantity=Sum('quantity'),
-        total_return_amount=Sum('return_amount'),invested_amount = Sum('amount'))
-        combined_farm_orders.append({'user': user, 'quantity': quantity_sum , 'invested_projects':invested_projects})
-        
+        invested_amount = FarmOrder.objects.filter(user=user, project=project).aggregate(Sum('amount'))['amount__sum'] or 0
+        total_return_amount = FarmOrder.objects.filter(user=user, project=project).aggregate(Sum('return_amount'))['return_amount__sum'] or 0
+        combined_farm_orders.append({
+            'user': user,
+            'quantity': quantity_sum,
+            'invested_amount': invested_amount,
+            'total_return_amount': total_return_amount
+        })
+
     quantity = combined_farm_orders[0]['quantity'] if combined_farm_orders else 0
-
-   
-
     context = {
         'project': [project],
         'progress_ratio': progress_ratio,
         'status_messages': status_messages,
         'farm_orders': combined_farm_orders,
         'combined_farm_orders': quantity,
-        'invested_projects' : invested_projects
+        'project_total_return': project_total_return,
+        'collected_amount': collected_amount,
     }
-    
+
     return render(request, 'vendor/farm_status.html', context)
 
 
