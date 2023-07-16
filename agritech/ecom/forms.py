@@ -43,7 +43,10 @@ class ProjectForm(forms.ModelForm):
         exclude = ['is_approved', 'is_completed', 'is_soldout']
 
 
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
 
 
 

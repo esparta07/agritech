@@ -1,6 +1,15 @@
 {% extends 'base2.html' %}
 {% block dashb %}
 {% load humanize %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Dashboard</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
 <div class="row">
     <div class="col-md-6 col-xl-3">
         <div class="card">
@@ -34,7 +43,7 @@
                 <div class="row d-flex align-items-center mb-4">
                     <div class="col-8">
                         <h2 class="d-flex align-items-center mb-0">
-                            रु‎ {{total_investment|floatformat:2|intcomma}}
+                            रु‎{{total_investment|floatformat:2|intcomma}}
                         </h2>
                     </div>
                     
@@ -93,22 +102,25 @@
 </div>
 <!-- end row-->
 <div class="row">
-    <div class="col-6">
-        <div class="card-group">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Upcoming Events</h5>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Upcoming Events
+            </div>
+            <div class="card-body">
+                <blockquote class="card-bodyquote">
                     {% for proj in projects_due_soon %}
-                    <p class="card-text"><a href="{% url 'account:cfarm_status' proj.id %}"><b>{{ proj.project_title }}</b></a> matures on {{ proj.return_date }}</p>
-                    {% empty %}
-                    <p class="card-text">No upcoming events</p>
-                    {% endfor %}        
-                    </p>
-                </div>
+                        <p class="card-text"><a href="{% url 'account:cfarm_status' proj.id %}"><b>{{ proj.project_title }}</b></a> matures on {{ proj.return_date }}</p>
+                        {% empty %}
+                        <p class="card-text">No upcoming events</p>
+                        {% endfor %}
+                    </footer>
+                </blockquote>
             </div>
         </div>
-    </div>
+    </div> 
 </div>
+
 <br>
 <div class="row">
     {% if invested_projects%}
@@ -183,7 +195,7 @@
     </div><!-- end col-->
     {% else %}
      <div class="text-center">
-    <h1 style="margin-left:10px;"> No Invested Projects Yet</h1>
+    <h1 style="margin-left:10px;"> No Investments</h1>
     </div>
     {% endif %}
 </div>
