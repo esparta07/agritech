@@ -92,10 +92,8 @@
                             {% for i, j in value.items %}
                             <li style="list-style-type: none;">
                                 <b>{{ key }} <small>({{ i }}%)</small>:</b>
-                                
                                     रु‎
                                     <span id="tax-{{ key }}">{{ j }}</span>
-                                
                             </li>
                             {% endfor %}
                             {% endfor %}
@@ -109,13 +107,11 @@
                 <div class="d-print-none my-4">
                     <div class="text-right">
                         <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i class="fa fa-print m-r-5"></i> Print</a>
-                        
                     </div>
                 </div>
             </div>
         </div> <!-- end card-->
     </div> <!-- end col -->
 </div>
-
 <!-- end row-->
 {% endblock %}

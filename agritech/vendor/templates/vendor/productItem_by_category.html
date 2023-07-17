@@ -30,7 +30,7 @@
                             <span class="badge badge-danger">Not Available</span>
                             {% endif %}
                         </td>
-                        <td><a href="{% url 'account:edit_product' product.id %}" style="color: unset;"><i class="fa fa-pencil" aria-hidden="true"></i>  Edit</a> &nbsp; </td>
+                        <td><a href="{% url 'account:edit_product' product.id %}" style="color: unset;"><span class="badge badge-success bg-warning">Edit</span></a> &nbsp; </td>
                       </tr>
                     {% endfor %}
                     </tbody>
