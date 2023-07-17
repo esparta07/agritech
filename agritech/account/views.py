@@ -21,10 +21,10 @@ from django.contrib.auth import get_user_model
 from datetime import timedelta
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
 import datetime
 from django.db.models import Sum, F
 from django.utils import timezone
+from .forms import CustomPasswordChangeForm
 
 
 # Restrict the vendor from accessing the customer page
@@ -123,7 +123,7 @@ def send_sms_otp(phone_number, otp):
     
     url = "http://api.sparrowsms.com/v2/sms/"
     data = {
-        'token': 'v2_4Bg0gTIExiCMGTN1GDd9bsUEytF.wHW',
+        'token': 'v2_4Bg0gTIExiCMGTN1GDd9bsUEytF.wHW1',
         'from': 'Demo',
         'to': extracted_number,
         'text': f'Your OTP is: {otp}',
@@ -351,7 +351,7 @@ def reset_password(request):
 @login_required
 def customer_change_password(request):
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
+        form = CustomPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Update session
@@ -359,13 +359,13 @@ def customer_change_password(request):
             logout(request)  # Log out the user
             return redirect('index')  
     else:
-        form = PasswordChangeForm(user=request.user)  # Pass user=request.user to initialize the form with the user's data
+        form = CustomPasswordChangeForm(user=request.user)  # Pass user=request.user to initialize the form with the user's data
     return render(request, 'account/customer_change_password.html', {'form': form})
 
 @login_required
 def vendor_change_password(request):
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
+        form = CustomPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Update session
@@ -373,7 +373,7 @@ def vendor_change_password(request):
             logout(request)  # Log out the user
             return redirect('index')  
     else:
-        form = PasswordChangeForm(user=request.user)  # Pass user=request.user to initialize the form with the user's data
+        form = CustomPasswordChangeForm(user=request.user)  # Pass user=request.user to initialize the form with the user's data
     return render(request, 'account/vendor_change_password.html', {'form': form})
 
 def vendor_detail(request, vendor_id):

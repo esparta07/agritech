@@ -9,138 +9,132 @@
 
 {% block dashb %}
 
-
-    {% include 'includes/alerts.html' %}
-    <!-- Main Section Start -->
-    <div class="main-section">
-        <div class="page-section account-header buyer-logged-in">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                        <div class="user-dashboard loader-holder">
-                            <div class="user-holder p-3">
-                                <h1 class="text-uppercase" style="text-align:center;">Add your product.</h1><b>
-                                <hr>
-                                <button class="btn btn-primary btn-rounded waves-effect waves-light" onclick="history.back()"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</button>
-                                <br><br>
-                                <form action="{% url 'account:add_product' %}" method="POST" enctype="multipart/form-data" style="margin-bottom:50px;">
-                                    {% csrf_token %}
-                                    <div class="form-fields-set">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label>Project Title *</label>
-                                                    {{ form.project_title }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label>Category *</label><br>
-                                                    {{ form.project_type }}
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <br>
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label>Description</label>
-                                                    {{ form.project_description }}
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="farm_image">Farm Image</label>
-                                                    <br>
-                                                    {{ form.farm_image }}
-                                                    {{ form.farm_image.errors }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label>Address</label>
-                                                    {{ form.address }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 mb-10">
-                                                <div class="field-holder">
-                                                    <label>Map</label>
-                                                    <div id="map" style="height: 500px;"></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label>Latitude</label><br>
-                                                    {{ form.latitude }}
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label>Longitude</label><br>
-                                                    {{ form.longitude }}
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="total_cost">Total Cost</label>
-                                                    <br>
-                                                    {{ form.total_cost }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="value_of_share">Value of Share</label>
-                                                    <br>
-                                                    {{ form.value_of_share }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="max_shares_per_user">Maximum Share per User</label>
-                                                    <br>
-                                                    {{ form.max_shares_per_user }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="percent_return_after_due_date">Return Percentage</label>
-                                                    <br>
-                                                    {{ form.percent_return_after_due_date }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label for="return_date">Return Date</label>
-                                                    {{ form.return_date }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="field-holder">
-                                                    <label>Documents</label>
-                                                    {{ form.project_documents }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <div class="field-holder">
-                                                    <button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light" style="margin-top:20px;">
-                                                        <i class="fa fa-check" aria-hidden="true"></i> Create
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+<div class="row">
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-body">
+                <div class="p-3">
+                    <h1 class="text-uppercase" style="text-align:center;">Add your product.</h1><b>
+                    <hr>
+                    <button class="btn btn-primary btn-rounded waves-effect waves-light" onclick="history.back()"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</button>
+                    <br><br>
+                    <form action="{% url 'account:add_product' %}" method="POST" enctype="multipart/form-data" style="margin-bottom:50px;">
+                        {% csrf_token %}
+                        <div class="form-fields-set">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="field-holder">
+                                        <label>Project Title *</label>
+                                        {{ form.project_title }}
                                     </div>
-                                </form>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="field-holder">
+                                        <label>Category *</label><br>
+                                        {{ form.project_type }}
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="field-holder">
+                                        <label>Description</label>
+                                        {{ form.project_description }}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label for="farm_image">Farm Image</label>
+                                        <br>
+                                        {{ form.farm_image }}
+                                        {{ form.farm_image.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="field-holder">
+                                        <label>Address</label>
+                                        {{ form.address }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-10">
+                                    <div class="field-holder">
+                                        <label>Map</label>
+                                        <div id="map" style="height: 500px;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label>Latitude</label><br>
+                                        {{ form.latitude }}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label>Longitude</label><br>
+                                        {{ form.longitude }}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label for="total_cost">Total Cost</label>
+                                        <br>
+                                        {{ form.total_cost }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label for="value_of_share">Value of Share</label>
+                                        <br>
+                                        {{ form.value_of_share }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label for="max_shares_per_user">Maximum Share per User</label>
+                                        <br>
+                                        {{ form.max_shares_per_user }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label for="percent_return_after_due_date">Return Percentage</label>
+                                        <br>
+                                        {{ form.percent_return_after_due_date }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label for="return_date">Return Date</label>
+                                        {{ form.return_date }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="field-holder">
+                                        <label>Documents</label>
+                                        {{ form.project_documents }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="field-holder">
+                                        <button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light" style="margin-top:20px;">
+                                            <i class="fa fa-check" aria-hidden="true"></i> Create
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Main Section End -->
+        <!--end card body-->
+    </div> <!-- end card-->
+</div> <!-- end col -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places"></script>
 <script src="{% static 'ecom/js/location_picker.js' %}"></script>
