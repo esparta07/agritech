@@ -222,11 +222,6 @@ def my_orders(request):
     return render(request, 'vendor/my_orders.html', context)
 
 
-
-
-
-
-
 @login_required(login_url='account:login')
 def active_farms(request):
     user = request.user
@@ -312,11 +307,13 @@ def farm_status(request, id):
         quantity_sum = FarmOrder.objects.filter(user=user, project=project).aggregate(Sum('quantity'))['quantity__sum'] or 0
         invested_amount = FarmOrder.objects.filter(user=user, project=project).aggregate(Sum('amount'))['amount__sum'] or 0
         total_return_amount = FarmOrder.objects.filter(user=user, project=project).aggregate(Sum('return_amount'))['return_amount__sum'] or 0
+        total_amount=invested_amount+total_return_amount
         combined_farm_orders.append({
             'user': user,
             'quantity': quantity_sum,
             'invested_amount': invested_amount,
-            'total_return_amount': total_return_amount
+            'total_return_amount': total_return_amount,
+            'total_amount':total_amount,
         })
 
     quantity = combined_farm_orders[0]['quantity'] if combined_farm_orders else 0

@@ -94,7 +94,8 @@
                     <th>Investor Name</th>
                     <th>Applied Share</th>
                     <th>Invested Amount</th>
-                    <th>Expected Return</th>
+                    <th>Profit Gained</th>
+                    <th>Return amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -125,6 +126,9 @@
                     </td>
                     <td>
                       <span>रु‎{{ farm_order.total_return_amount }}</span>
+                    </td>
+                    <td>
+                      <span>रु‎{{ farm_order.total_amount }}</span>
                     </td>
                   </tr>
                   {% endfor %}
