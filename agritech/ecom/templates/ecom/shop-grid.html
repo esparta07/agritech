@@ -4,20 +4,20 @@
 <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
 <!-- PRODUCT DETAILS AREA START -->
 
-<div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
-  <div class="carousel-inner " style="padding-bottom:0px;height:380px;">
+{% comment %} <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+  <div class="carousel-inner" style="max-height: 380px;">
     {% for project in top_projects %}
-      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+      <div class="carousel-item {% if forloop.first %}active{% endif %}" style="background-image: url('{% static 'ecom/img/coww.jpg' %}'); background-size: contain; background-repeat: no-repeat; background-position: center; display:fit-content;">
         <div class="mask flex-center">
           <div class="container">
             <div class="row align-items-center">
-              <div class="col-md-7 col-12 order-md-1 order-2">
-                <h4 style="color:#357960;">{{ project.project_title }}</h4>
-                <p style="color:#e8a22b;">{{ project.project_description }}</p>
+              <div class="col-md-7 col-12 mt-100">
+                <h4 style="color: #357960;">{{ project.project_title }}</h4>
+                <p style="color: #e8a22b;">{{ project.project_description }}</p>
                 <a href="{% url 'ecom:product' id=project.id %}">BUY NOW</a>
               </div>
-              <div class="col-md-5 col-12 order-md-2 order-1">
-                <img src="{{ project.farm_image.url }}" class="mx-auto mt-2" alt="{{ project.project_title }}">
+              <div class="col-md-5 col-12 order-md-2 order-1 d-flex align-items-center">
+                <!-- Add your content here -->
               </div>
             </div>
           </div>
@@ -25,16 +25,33 @@
       </div>
     {% endfor %}
   </div>
-  <!-- Add carousel controls if needed -->
-  <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+</div> {% endcomment %}
+<!-- SLIDER AREA START (slider-3) -->
+<div class="ltn__slider-area ltn__slider-3 section-bg-2---">
+  <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1">
+    {% for proj in top_projects %}
+    <!-- ltn__slide-item -->
+    <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal--- ltn__slide-item-3 bg-image bg-overlay-theme-black-20 text-color-white" data-bg="{{proj.farm_image.url}}" style="height:30rem;">
+      <div class="container">
+        <div class="slide-item-info" style="min-height:100px;">
+          <div class="slide-item-info-inner ltn__slide-animation">
+            <h6 class="slide-sub-title ltn__secondary-color--- animated text-uppercase"><span><i class="fas fa-square-full"></i></span>  Get High Returns</h6>
+            <h1 class="slide-title animated">{{proj.project_title}}</h1>
+            <div class="slide-brief animated">
+              <p></p>
+            </div>
+            <div class="btn-wrapper animated">
+              <a href="{% url 'ecom:product' id=proj.id %}" class="theme-btn-2 btn btn-effect-2">Buy Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
+<!-- SLIDER AREA END -->
+
  
 <div class="ltn__product-area ltn__product-gutter mb-100" >
     <div class="container">
@@ -245,10 +262,5 @@
     {% endfor %}
   </div>
   <!-- MODAL AREA END --> 
-  <script>
-    $('#myCarousel').carousel({
-      interval: 100,
-   })
-  </script>
 {% endblock %}
 
