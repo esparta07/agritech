@@ -15,18 +15,10 @@ from django.db.models import F
 from django.db.models import Q
 
 
-# Create your views here.
-def supplier(request):
-  
-    return render(request, 'ecom/shop.html')
-
-
-
-
-
 def shop_view(request):
     categories = Category.objects.all()
     projects = Project.objects.filter(is_approved=True,is_soldout=False)  # Filter approved projects
+    top_projects = Project.objects.filter(is_approved=True,is_soldout=False,is_completed=False).order_by('-percent_return_after_due_date')[:3]
     page = request.GET.get('page')
     search_query = request.GET.get('search_query')
     selected_category = request.GET.get('category')  # Get the selected category from the dropdown
@@ -60,6 +52,7 @@ def shop_view(request):
     project_page = paginator.get_page(page)
 
     context = {
+        'top_projects': top_projects,
         'categories': categories,
         'selected_category': selected_category,
         'project_page': project_page,

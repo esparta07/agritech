@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 app_name ='ecom'
 
 urlpatterns =[
-    path('supplier/',views.supplier, name='supplier'),
     path('' , views.shop_view,name='shop'),
     path('<int:id>/', views.prod_view, name='product'),
      # ADD TO CART
