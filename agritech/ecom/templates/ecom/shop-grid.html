@@ -96,7 +96,7 @@
                         <div class="row">
                             {% if project_page|length > 0 %}
                             {% for proj in project_page %}
-                            <div class="col-lg-6" >
+                            <div class="col-lg-8" >
                                 <div class="ltn__product-item ltn__product-item-3 border border-light">
                                     <div class="product-img mt-30 mb-30" style="width: 300px; height: 200px; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);margin-left:10px;">
                                         <a href="{% url 'ecom:product' id=proj.id %}"><img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;"></a>
@@ -142,6 +142,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="ltn__pagination-area text-center">
                     <div class="ltn__pagination mb-40">
                         <ul>
@@ -191,10 +192,12 @@
                         </ul>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
 </div>
+
 <!-- MODAL AREA START (Add To Cart Modal) -->
 <div class="ltn__modal-area ltn__add-to-cart-modal-area">
     {% for proj in project  %}

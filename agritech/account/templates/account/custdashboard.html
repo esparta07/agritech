@@ -1,15 +1,20 @@
 {% extends 'base2.html' %}
 {% block dashb %}
 {% load humanize %}
-<!-- start page title -->
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0 font-size-18">Dashboard</h4>
-        </div>
-    </div>
+
+{% if customer_notice %}
+<div class="alert alert-success mb-0" role="alert">
+    <h5 class="alert-heading ">{{ customer_notice.title }}</h5>
+    <p style="text-align: justify;">{{ customer_notice.notice }}</p>
+    <hr>
 </div>
-<!-- end page title -->
+{% else %}
+<div class="alert alert-success mb-0" role="alert">
+    <h5 class="alert-heading ">Welcome {{user.userprofile.full_name}}</h5>
+</div>
+
+{% endif %}
+<br>
 <div class="row">
     <div class="col-md-6 col-xl-3">
         <div class="card">

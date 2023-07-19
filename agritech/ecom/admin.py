@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from agritech import settings
-from .models import Category, Project, Tax, ExtraImage,ProjectStatus 
+from .models import Category, Project, Tax, ExtraImage,ProjectStatus,Notice
 from .models import Cart
 from decimal import Decimal
 
@@ -51,3 +51,4 @@ admin.site.register(Tax, TaxAdmin)
 admin.site.register(Category)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectStatus)
+admin.site.register(Notice)

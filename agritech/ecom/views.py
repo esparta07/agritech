@@ -47,10 +47,10 @@ def shop_view(request):
         )]
 
         projects = projects.filter(Q(id__in=project_ids) | Q(vendor_id__in=vendor_ids))
-
+    
     paginator = Paginator(projects,10)
     project_page = paginator.get_page(page)
-
+    print(project_page)
     context = {
         'top_projects': top_projects,
         'categories': categories,

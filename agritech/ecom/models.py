@@ -193,6 +193,26 @@ class ProjectStatus(models.Model):
         verbose_name_plural = 'project statuses'
 
 
+class Notice(models.Model):
+    VENDOR = 'V'
+    USER = 'U'
+    BOTH = 'B'
+
+    AUDIENCE_CHOICES = (
+        (VENDOR, 'Vendor'),
+        (USER, 'User'),
+        (BOTH, 'Both'),
+    )
+
+    title = models.CharField(max_length=100, default='Notice', blank=True, null=True)
+    notice = models.TextField(max_length=2000)
+    created_at = models.DateTimeField(default=timezone.now)
+    audience = models.CharField(max_length=1, choices=AUDIENCE_CHOICES, default=BOTH)
+
+    def __str__(self):
+        return f"Notice: '{self.notice}'"
+
+ 
 
 
 class Cart(models.Model):

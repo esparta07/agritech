@@ -1,6 +1,30 @@
 {% extends 'base2.html' %}
 {% block dashb %}
 {% load static %}
+{% comment %} {% if vendor_notice %}
+<div class="alert alert-success mb-0" role="alert">
+    <h5 class="alert-heading">{{ vendor_notice.title }}</h5>
+    <p>{{ vendor_notice.notice }}</p>
+    <hr>
+</div>
+{% else %}
+<div class="alert alert-success mb-0" role="alert">
+</div>
+{% endif %} {% endcomment %}
+{% if vendor_notice %}
+<div class="alert alert-success mb-0" role="alert">
+    <h5 class="alert-heading ">{{ vendor_notice.title }}</h5>
+    <p style="text-align: justify;">{{ vendor_notice.notice }}</p>
+    <hr>
+</div>
+{% else %}
+<div class="alert alert-success mb-0" role="alert">
+    <h5 class="alert-heading ">Welcome {{user.userprofile.full_name}}</h5>
+</div>
+
+{% endif %}
+
+<br>
 <div class="row">
     <div class="col-md-6 col-xl-3">
         <div class="card">

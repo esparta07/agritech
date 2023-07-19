@@ -2,6 +2,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http.response import HttpResponse
 from django.utils.http import urlsafe_base64_decode
 from django.http import HttpResponseRedirect
+from ecom.models import Notice
 from ecom.models import Project
 from orders.models import Order
 from django.urls import reverse
@@ -207,6 +208,9 @@ def custdashboard(request):
     profit_gained = orders.filter(farmorder__project__is_completed=True).aggregate(total_return_amount=Sum(F('farmorder__return_amount')))['total_return_amount'] or 0
     expected_profit =orders.aggregate(total_return_amount=Sum(F('farmorder__return_amount')))['total_return_amount'] or 0
     
+    # Retrieve the relevant notice for customers
+    customer_notice = Notice.objects.filter(audience__in=[Notice.USER, Notice.BOTH]).first()
+
     context = {
         'orders': orders,
         'orders_count': orders.count(),
@@ -217,6 +221,7 @@ def custdashboard(request):
         'invested_projects': invested_projects,
         'profit_gained': profit_gained,
         'expected_profit': expected_profit,
+        'customer_notice':customer_notice
     }
     return render(request, 'account/custdashboard.html', context)
 
@@ -238,7 +243,10 @@ def vendordashboard(request):
     project_count = Project.objects.filter(vendor=vendor.user).count()
 
     projects = Project.objects.filter(vendor=vendor.user,is_approved=True)
-
+    
+    # Retrieve the relevant notice for vendors
+    vendor_notice = Notice.objects.filter(audience__in=[Notice.VENDOR, Notice.BOTH]).first()
+    
     context = {
         'orders': orders,
         'orders_count': orders.count(),
@@ -247,6 +255,8 @@ def vendordashboard(request):
         'show_popup': False,
         'project_count': project_count,
         'projects': projects,
+        'vendor_notice':vendor_notice,
+        
     }
 
     if request.user.role == User.VENDOR:
