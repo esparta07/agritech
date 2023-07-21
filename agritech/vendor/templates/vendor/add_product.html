@@ -1,11 +1,6 @@
 {% extends 'base2.html' %}
 {% load static %}
 
-{% block extra_head %}
-    {{ block.super }}
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
-    <script src="{% static 'js/location_picker.js' %}"></script>
-{% endblock %}
 
 {% block dashb %}
 
@@ -136,7 +131,7 @@
 </div> <!-- end col -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete"></script>
 <script src="{% static 'ecom/js/location_picker.js' %}"></script>
 
 <script>
