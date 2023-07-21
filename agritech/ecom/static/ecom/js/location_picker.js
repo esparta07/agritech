@@ -119,4 +119,4 @@
       initMap();
     });
   
-  })(django.jQuery);
+  });
