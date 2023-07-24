@@ -12,10 +12,10 @@
 </div>
 {% endif %} {% endcomment %}
 {% if vendor_notice %}
-<div class="alert alert-success mb-0" role="alert">
-    <h5 class="alert-heading ">{{ vendor_notice.title }}</h5>
+<div class="alert alert-success mb-0 " style="background-color:#F4D160; color:black;padding:30px;" role="alert">
+    <h5 class="alert-heading "><img  style="margin-right:5px;margin-bottom:2px;" src="{% static 'ecom/img/notification.png' %}">{{ vendor_notice.title }}</h5>
     <p style="text-align: justify;">{{ vendor_notice.notice }}</p>
-    <hr>
+    
 </div>
 {% else %}
 <div class="alert alert-success mb-0" role="alert">
