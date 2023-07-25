@@ -1,63 +1,98 @@
-{% extends 'base.html' %}
-{% load static%}
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-<section class="vh-100" style="background-image: url('{% static 'ecom/img/nicee2.png' %}');background-size: cover;
-background-position: center;">
-  <div class="container h-100" style="margin-top: -100px;">
-    <div class="row d-flex align-items-center h-100">
-      <div class="card mt-100 mb-100" style="width: 70%; margin: 0 auto;">
-        <div class="card-body p-1">
-          <b><h1 class="text-center">REGISTER</h1></b>
-          <div class="row">
-            <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-1">
-              <form method="post" action="{% url 'account:user_registration' %}" class="p-4">
-                {% csrf_token %}
-                {{ form.as_p }}
-                {% if otp_required %}
-                <div class="form-group">
-                  <label for="id_otp">OTP:</label>
-                  <input type="text" id="id_otp" name="otp" class="form-control" required style="width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px; outline: none; border: none; border-bottom: 1px solid black;">
-                </div>
-                <button type="submit" class="btn theme-btn-1 rounded-pill mt-20">Verify OTP</button>
-                {% else %}
-                <button type="submit" class="btn theme-btn-1 rounded-pill">Generate OTP</button>
-                <p class="small fw-bold mt-2 pt-1 mb-0 text-black">Already have an account? <a href="{% url 'account:login' %}" class="text-primary">Sign In</a></p>
-                {% endif %}
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <!-- Load message -->
-                    {% include 'includes/alerts.html' %}
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="col-md-10 col-lg-6 col-xl-7 order-1 order-lg-2">
-              <img src="{% static 'ecom/img/login.jpg' %}" class="img-fluid" alt="Sample image" style="width: 100%; height: 100%; border-radius: 10px; ">
-            </div>
-          </div>
-        </div>
-      </div>
+<head>
+    <meta charset="utf-8" />
+    <title> AgriTech</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="Dashboard" name="description" />
+    <meta content="MyraStudio" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'ecom/js/custom.js' %}"></script>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'ecom/img/favicon.png' %}" type="image/x-icon" />
+    
+    
+    <!-- App css -->
+    <link href="{% static 'ecom/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'ecom/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'ecom/assets/css/theme.min.css' %}" rel="stylesheet" type="text/css" />  
+</head>
+
+<body>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- Load message -->
+        {% include 'includes/alerts.html' %}
     </div>
-  </div>
-</section>
+</div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex align-items-center min-vh-100">
+                        <div class="w-100 d-block bg-white shadow-lg rounded my-5">
+                            <div class="row">
+                                <div class="col-lg-5 d-none d-lg-block bg-login rounded-left p-0" ><img src="{% static 'ecom/img/register.jpg' %}"></div>
+                                <div class="col-lg-7">
+                                    <div class="p-5">
+                                        <div class="text-center mb-5">
+                                          <a href="{% url 'index' %}" class="text-dark font-size-22 font-family-secondary ">
+                                            <img src="{% static 'ecom/img/logo-2.png' %}">
+                                        </a>
+                                        </div>
+                                        <h1 class="h5 mb-1">Create an Account!</h1>
+                                        <p class="text-muted mb-4"> Create your own account, it takes less than a minute</p>
+                                        <form method="post" action="{% url 'account:user_registration' %}" class="user" id="registration-form">
+                                          {% csrf_token %}
+                                          {{ form.as_p }}
+                                            {% if otp_required %}
+                                            <div class="form-inline">
+                                                <input type="text" name="otp" class="form-control form-control-user" placeholder="OTP">
+                                                <button type="submit" class="btn btn-primary">Verify OTP</button>
+                                            </div>
+                                            {% else %}
+                                            <button type="submit" class="btn btn-primary">Generate OTP</button>
+                                            {% endif %}    
+                                      </form>
+                                      
+                                        <div class="row mt-4">
+                                            <div class="col-12 text-center">
+                                                <p class="text-muted mb-0">Already have account?  <a href="{% url 'account:login' %}" class="text-muted font-weight-medium ml-1"><b>Sign In</b></a></p>
+                                            </div> <!-- end col -->
+                                        </div>
+                                        <!-- end row -->
+                                    </div> <!-- end .padding-5 -->
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->
+                        </div> <!-- end .w-100 -->
+                    </div> <!-- end .d-flex -->
+                </div> <!-- end col-->
+            </div> <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+   
 
-{% if messages %}
-{% for message in messages %}
-  <div class="alert alert-danger">{{ message }}</div>
-{% endfor %}
-{% endif %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-  $(document).ready(function() {
-    $('#id_phone_number').on('keydown', function(e) {
-      var keyCode = e.keyCode || e.which;
-      if (keyCode === 8 && $(this).val().length <= 5) {
-        e.preventDefault();
-        return false;
-      }
-    });
-  });
-  </script>
+      <!-- jQuery  -->
+      <script src="{% static 'ecom/assets/js/jquery.min.js' %}"></script>
+      <script src="{% static 'ecom/assets/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'ecom/assets/js/metismenu.min.js' %}"></script>
+      <script src="{% static 'ecom/assets/js/waves.js' %}"></script>
+      <script src="{% static 'ecom/assets/js/simplebar.min.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static 'ecom/assets/js/theme.js' %}"></script>
+    
+
   
-{% endblock %}
+
+</body>
+
+
+</html>

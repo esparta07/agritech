@@ -43,6 +43,7 @@ def check_role_customer(user):
     else:
         raise PermissionDenied
 
+
 class OTPVerificationView(View):
     def post(self, request):
         submitted_otp = request.POST.get('otp')
@@ -56,7 +57,7 @@ class OTPVerificationView(View):
             User = get_user_model()
             user = User.objects.create(phone_number=phone_number, role=role)
             user.set_password(password)
-            
+
             if role == User.VENDOR:
                 user.role = User.VENDOR
                 user.save()
@@ -69,7 +70,6 @@ class OTPVerificationView(View):
                     user=user,
                     user_profile=user_profile
                 )
-
             else:
                 user.role = User.CUSTOMER
                 user.save()
@@ -77,7 +77,9 @@ class OTPVerificationView(View):
             return redirect('account:login')
         else:
             messages.error(request, "Invalid OTP. Please try again.")
-            return redirect('otp_verification')
+            form = UserRegistrationForm(request.POST)  # Pass the submitted data back to the form
+            return render(request, 'account/registration.html', {'form': form, 'otp_required': True, 'password': password})
+
 
 
 class UserRegistrationView(View):
@@ -95,11 +97,11 @@ class UserRegistrationView(View):
             phone_number = str(form.cleaned_data['phone_number'])
 
             if 'otp' in request.POST:
-                return HttpResponseRedirect(reverse('account:otp_verification'))
-
+                return OTPVerificationView.as_view()(request)
             else:
                 password = form.cleaned_data['password']
                 otp = generate_otp()
+                print(otp)
                 
                 # Send OTP via SparrowSMS
                 send_sms_otp(phone_number, otp)
@@ -124,7 +126,7 @@ def send_sms_otp(phone_number, otp):
     
     url = "http://api.sparrowsms.com/v2/sms/"
     data = {
-        'token': 'v2_4Bg0gTIExiCMGTN1GDd9bsUEytF.wHW1',
+        'token': 'v2_4Bg0gTIExiCMGTN1GDd9bsUEytF.wHW',
         'from': 'Demo',
         'to': extracted_number,
         'text': f'Your OTP is: {otp}',
@@ -140,10 +142,6 @@ def send_sms_otp(phone_number, otp):
 
     else:
         return HttpResponse("Error occurred {}".format(response.text))
-    
-
-
-
 
 def login(request):
     if request.user.is_authenticated:

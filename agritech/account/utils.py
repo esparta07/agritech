@@ -6,8 +6,6 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage, message
 from django.conf import settings
-
-
 import logging
 from django.conf import settings
 from django.core.mail import EmailMessage

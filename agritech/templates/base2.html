@@ -47,6 +47,40 @@
                             id="vertical-menu-btn">
                             <i class="fa fa-fw fa-bars"></i>
                         </button>
+                        <div class="dropdown d-none d-sm-inline-block">
+                            <a href="{% url 'index' %}">
+                            <button type="button" class="btn header-item waves-effect">
+                                Home
+                            </button>
+                            </a>
+                            
+                        </div>
+                        <div class="dropdown d-none d-sm-inline-block">
+                            <a href="{% url 'about' %}">
+                            <button type="button" class="btn header-item waves-effect">
+                                About
+                            </button>
+                            </a>
+                            
+                        </div>
+                        <div class="dropdown d-none d-sm-inline-block">
+                            <a href="{% url 'ecom:shop' %}">
+                            <button type="button" class="btn header-item waves-effect">
+                                Market
+                            </button>
+                            </a>
+                            
+                        </div>
+                        <div class="dropdown d-none d-sm-inline-block">
+                            <a href="{% url 'contact' %}">
+                            <button type="button" class="btn header-item waves-effect">
+                                Contact
+                            </button>
+                            </a>
+                            
+                        </div>
+                        
+                        
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="dropdown d-inline-block ml-2">
