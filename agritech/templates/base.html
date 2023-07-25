@@ -235,15 +235,12 @@
                                     {% if user.userprofile.profile_picture %}
                                       <div style="position: relative; display: inline-block;">
                                           <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover;"><span>My Account</span>
-                                          {% if user.is_verified %}
-                                          <img src="{% static 'ecom/img/verified.png' %}" alt="Verification Badge" style="position: absolute; bottom: 4px; right: -6px; width: 20px; height: 20px;">
-                                          {% endif %}
+                                          
                                       </div>
                                     {% else %}
                                     <img src="{% static 'ecom/img/icons/user.png' %}" alt="Profile Picture"><span>My Account</span>
-                                    {% if user.is_verified %}
-                                    <img src="{% static 'ecom/img/verified.png' %}" alt="Verification Badge" style="position: absolute; bottom: 1px; right: 1px; width: 20px; height: 20px;">
-                                    {% endif %}
+                                    
+                                    
                                     {% endif %}
                                 </a>
                     
@@ -251,9 +248,9 @@
                   </li>
                   <li>
                       <a href="{% url 'ecom:cart' %}" title="Shoping Cart">
-                          <span class="utilize-btn-icon">
+                          
                               <i class="fas fa-shopping-cart"></i><span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom:10px; left: -5px; ">{{ cart_count }}</span>
-                          </span>
+                          
                           Shoping Cart
                       </a>
                   </li>
