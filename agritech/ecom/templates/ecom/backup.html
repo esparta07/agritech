@@ -1,0 +1,290 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+<link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
+<!-- PRODUCT DETAILS AREA START -->
+
+{% comment %} <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+  <div class="carousel-inner" style="max-height: 380px;">
+    {% for project in top_projects %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}" style="background-image: url('{% static 'ecom/img/coww.jpg' %}'); background-size: contain; background-repeat: no-repeat; background-position: center; display:fit-content;">
+        <div class="mask flex-center">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-md-7 col-12 mt-100">
+                <h4 style="color: #357960;">{{ project.project_title }}</h4>
+                <p style="color: #e8a22b;">{{ project.project_description }}</p>
+                <a href="{% url 'ecom:product' id=project.id %}">BUY NOW</a>
+              </div>
+              <div class="col-md-5 col-12 order-md-2 order-1 d-flex align-items-center">
+                <!-- Add your content here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div> {% endcomment %}
+<!-- SLIDER AREA START (slider-3) -->
+<div class="ltn__slider-area ltn__slider-3 section-bg-2---">
+  <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1">
+    {% for proj in top_projects %}
+    <!-- ltn__slide-item -->
+    <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal--- ltn__slide-item-3 bg-image bg-overlay-theme-black-20 text-color-white" data-bg="{{proj.farm_image.url}}" style="height:30rem;">
+      <div class="container">
+        <div class="slide-item-info" style="min-height:100px;">
+          <div class="slide-item-info-inner ltn__slide-animation">
+            <h6 class="slide-sub-title ltn__secondary-color--- animated text-uppercase"><span><i class="fas fa-square-full"></i></span>  Get High Returns</h6>
+            <h1 class="slide-title animated">{{proj.project_title}}</h1>
+            <div class="slide-brief animated">
+              <p></p>
+            </div>
+            <div class="btn-wrapper animated">
+              <a href="{% url 'ecom:product' id=proj.id %}" class="theme-btn-2 btn btn-effect-2">Buy Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<!-- SLIDER AREA END -->
+
+ 
+<div class="ltn__product-area ltn__product-gutter mb-100" >
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-lg-12">
+                <div class="ltn__shop-options">
+                    <ul>
+                        <li>
+                            <a href="?sort_by=percent_return" class="btn theme-btn-2" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;">High Return</a>  
+                            <a href="?sort_by=duration" class="btn theme-btn-1" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;">Quick Return</a>
+                            <a href="?sort_by=value_of_share" class="btn theme-btn-2" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;">Low Investment</a> 
+                        </li>
+                        <li>
+                            <div class="short-by text-center">
+                                <form action="{% url 'ecom:shop' %}" method="GET">
+                                    <select class="nice-select" name="category">
+                                        <option selected disabled>Categories</option>
+                                        {% for category in categories %}
+                                        <option value="{{ category.category_name }}" {% if category.category_name == selected_category %}selected{% endif %}>{{ category.category_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" style="background-color: #E8A22B; color: white;"><i class="fas fa-search"></i></button>
+                                </form>
+    
+                            </div>    
+                        </li>
+                        <li>
+                            <div class="ltn__grid-list-tab-menu">
+                                <div class="ltn__search-widget">
+                                    <form action="" method="GET">
+                                        <input type="text" name="search_query" placeholder="Search for Project/User" value="{{ request.GET.search_query }}" class="search-input">
+                                        <button type="submit"><i class="fas fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="liton_product_list" >
+                    <div class="ltn__product-tab-content-inner ltn__product-list-view" >
+                        <div class="row">
+                            {% if project_page|length > 0 %}
+                            {% for proj in project_page %}
+                            <div class="col-lg-8" >
+                                <div class="ltn__product-item ltn__product-item-3 border border-light">
+                                    <div class="product-img mt-30 mb-30" style="width: 300px; height: 200px; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);margin-left:10px;">
+                                        <a href="{% url 'ecom:product' id=proj.id %}"><img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <h2 class="product-title"><a href="{% url 'ecom:product' id=proj.id %}">{{ proj.project_title }}</a></h2>
+                                         <div class="product-price">
+                                            <span>रु‎ {{ proj.value_of_share }}</span>
+                                            
+                                        </div>
+                                        
+                                            
+                                                <strong>Available shares: </strong>
+                                                <span class="greenish">
+                                                    <a><b>{{ proj.total_no_shares }}</b></a>
+                                                </span><br>
+                                        
+                                            
+                                                <strong>Return : </strong>
+                                                <span class="greenish">
+                                                    <a><b>{{ proj.percent_return_after_due_date}}%</b></a>
+                                                </span><br>
+                                    
+                                    </div>
+                                     <div style="float:right;margin-top:40px;margin-left:10px;">
+                                    
+                                    <b><a href="{% url 'account:vendor_detail' vendor_id=proj.vendor.id %}">{{ proj.vendor.user.user_profile.first_name }} {{ proj.vendor.user.user_profile.last_name }}</a></b>
+                                    <img src="{% static 'ecom/img/verified.png' %}">
+                                    </div>  
+
+                                </div>
+                                
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="col-lg-12">
+                                <div class="no-results">
+                                    <p>No results found</p>
+                                    <a href="{% url 'ecom:shop' %}"><b>Go Back</b></a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ltn__pagination-area text-center">
+                    <div class="ltn__pagination mb-40">
+                        <ul>
+                            {% if project_page.has_previous %}
+                            <li>
+                                <a href="?page=1"><i class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li>
+                                <a href="?page={{ project_page.previous_page_number }}"><i class="fas fa-angle-left"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="disabled">
+                                <a><i class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li class="disabled">
+                                <a><i class="fas fa-angle-left"></i></a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in project_page.paginator.page_range %}
+                            {% if project_page.number == num %}
+                            <li class="active">
+                                <a>{{ num }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if project_page.has_next %}
+                            <li>
+                                <a href="?page={{ project_page.next_page_number }}"><i class="fas fa-angle-right"></i></a>
+                            </li>
+                            <li>
+                                <a href="?page={{ project_page.paginator.num_pages }}"><i class="fas fa-angle-double-right"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="disabled">
+                                <a><i class="fas fa-angle-right"></i></a>
+                            </li>
+                            <li class="disabled">
+                                <a><i class="fas fa-angle-double-right"></i></a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                  <aside class="sidebar-area blog-sidebar ltn__right-sidebar">
+                      <!-- Author Widget -->
+                      <div class="widget ltn__author-widget">
+                          <h4 class="ltn__widget-title ltn__widget-title-border">About Me</h4>
+                          <div class="ltn__author-widget-inner text-center">
+                              <img src="img/blog/author-3.jpg" alt="Image">
+                              <h5>Rosalina D. Willaimson</h5>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.</p>
+                              <div class="ltn__social-media">
+                                  <ul>
+                                      <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                      <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                      <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                      <li><a href="#" title="Behance"><i class="fab fa-behance"></i></a></li>
+                                      <li><a href="#" title="Youtube"><i class="fab fa-youtube"></i></a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL AREA START (Add To Cart Modal) -->
+<div class="ltn__modal-area ltn__add-to-cart-modal-area">
+    {% for proj in project  %}
+    <div class="modal fade" id="add_to_cart_modal_{{ proj.id }}" tabindex="-1">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body"> 
+            <div class="ltn__quick-view-modal-inner">
+              <div class="modal-product-item">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="modal-product-img " style="width: 100px; height: 100px">
+                        <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                    </div>
+                    <div class="modal-product-info">
+                      <h5>
+                        <a href="product-details.html">{{proj.project_title}}</a>
+                      </h5>
+                      <p class="added-cart">
+                        <i class="fa fa-check-circle"></i> Successfully
+                        added to your Cart
+                      </p>
+                      <div class="btn-wrapper">
+                        <a
+                          href="cart.html"
+                          class="theme-btn-1 btn btn-effect-1"
+                          >View Cart</a
+                        >
+                        <a
+                          href="checkout.html"
+                          class="theme-btn-2 btn btn-effect-2"
+                          >Checkout</a
+                        >
+                      </div>
+                    </div>
+                    <!-- additional-info -->
+                    <div class="additional-info d-none">
+                      <p>
+                        We want to give you <b>10% discount</b> for your
+                        first order, <br />
+                        Use discount code at checkout
+                      </p>
+                      <div class="payment-method">
+                        <img src="img/icons/payment.png" alt="#" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- MODAL AREA END --> 
+{% endblock %}
+
