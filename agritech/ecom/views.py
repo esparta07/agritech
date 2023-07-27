@@ -21,7 +21,6 @@ def shop_view(request):
     top_projects = Project.objects.filter(is_approved=True,is_soldout=False,is_completed=False).order_by('-percent_return_after_due_date')[:3]
     page = request.GET.get('page')
     search_query = request.GET.get('search_query')
-    selected_category = request.GET.get('category')  # Get the selected category from the dropdown
     sort_by = request.GET.get('sort_by')  # Get the value of the 'sort_by' parameter from the request
 
     if sort_by == 'percent_return':
@@ -31,8 +30,7 @@ def shop_view(request):
     elif sort_by == 'value_of_share':
         projects = projects.order_by('value_of_share')
 
-    if selected_category and selected_category != 'Categories':
-        projects = projects.filter(project_type__category_name=selected_category)
+   
 
     if search_query and search_query.strip() != '':
         project_ids = [project.id for project in projects if
@@ -48,13 +46,12 @@ def shop_view(request):
 
         projects = projects.filter(Q(id__in=project_ids) | Q(vendor_id__in=vendor_ids))
     
-    paginator = Paginator(projects,6)
+    paginator = Paginator(projects,8)
     project_page = paginator.get_page(page)
-    print(project_page)
+    
     context = {
         'top_projects': top_projects,
         'categories': categories,
-        'selected_category': selected_category,
         'project_page': project_page,
         'sort_by': sort_by,
         'projects' : projects
@@ -62,7 +59,34 @@ def shop_view(request):
 
     return render(request, 'ecom/shop-grid.html', context)
 
+def category_view(request, id):
+    categories = Category.objects.all()
+    top_projects = Project.objects.filter(is_approved=True, project_type__id=id).order_by('-percent_return_after_due_date')[:3]
+    category_project = Project.objects.filter(project_type__id=id)
 
+    # Retrieve the search query from the request parameters
+    search_query = request.GET.get('search_query')
+
+    if search_query and search_query.strip() != '':
+        category_project = category_project.filter(
+            Q(project_title__icontains=search_query) |
+            Q(project_description__icontains=search_query) |
+            Q(vendor__userprofile__first_name__icontains=search_query) |
+            Q(vendor__userprofile__last_name__icontains=search_query)
+        )
+
+    # Adding pagination
+    paginator = Paginator(category_project, 8)  # Show 8 projects per page
+    page = request.GET.get('page')
+    category_project_page = paginator.get_page(page)
+
+    context = {
+        'category_project': category_project, 
+        'category_project_page':category_project_page,
+        'top_projects': top_projects,
+        'categories': categories,
+    }
+    return render(request, 'ecom/category-view.html', context)
 
 
 
@@ -92,6 +116,8 @@ def prod_view(request, id):
     }
     
     return render(request, 'ecom/product-details.html', context)
+
+
 
 
 

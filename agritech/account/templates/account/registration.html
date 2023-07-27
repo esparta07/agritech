@@ -35,10 +35,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex align-items-center min-vh-100">
-                        <div class="w-100 d-block bg-white shadow-lg rounded my-5">
+                        <div class="w-100 d-block  shadow-lg rounded my-5"style="background-color:#E2F6CA;">
                             <div class="row">
                                 <div class="col-lg-5 d-none d-lg-block bg-login rounded-left p-0" ><img src="{% static 'ecom/img/register.jpg' %}"></div>
                                 <div class="col-lg-7">
+                                    <a href="{% url 'index' %}"><p style="float: right; padding:20px;"><b><i class="mdi mdi-home"></i> Home</b></p></a>
                                     <div class="p-5">
                                         <div class="text-center mb-5">
                                           <a href="{% url 'index' %}" class="text-dark font-size-22 font-family-secondary ">
@@ -88,9 +89,6 @@
 
     <!-- App js -->
     <script src="{% static 'ecom/assets/js/theme.js' %}"></script>
-    
-
-  
 
 </body>
 

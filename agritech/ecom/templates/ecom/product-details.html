@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ltn__shop-details-img-gallery">
-                                <div class="ltn__shop-details-large-img">
+                                <div class="ltn__shop-details-large-img" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
                                     <div class="single-large-img" style="width: 150px; height: 445px">
                                         <a href="{{ proj.farm_image.url }}" data-rel="lightcase:myCollection">
                                             <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
@@ -106,6 +106,7 @@
                                         {% endif%}
                                     </ul>
                                 </div>
+                                {% if user.is_authenticated %}
                                 <div class="ltn__product-details-menu-2">
                                     <ul>
                                         <li>
@@ -117,6 +118,7 @@
                                                 <img src="{% static 'ecom/img/plus.png' %}">
                                             </a>
                                         </li>
+                                        
                                         <li>
                                             <a href={% url 'ecom:cart' %} class="theme-btn-1 btn btn-effect-1" title="Add to Cart"  style="height:45px">
                                                 <i class="fas fa-shopping-cart"></i>
@@ -126,6 +128,7 @@
                                     
                                     </ul>
                                 </div>
+                                {% endif %}
                                 {% for item in cart_items %}
 
                                 <span id="qty-{{item.project.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
@@ -174,14 +177,14 @@
                     <!-- Shop Tab End -->
                 </div>
                 <div class="col-lg-4">
-                    <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
+                    <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar" >
                         <!-- Top Rated Product Widget -->
                         <div class="widget ltn__top-rated-product-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">High Return </h4>
                             <ul>
                                 {% for top_project in top_projects %}
                                 <li>
-                                    <div class="top-rated-product-item clearfix">
+                                    <div class="top-rated-product-item clearfix"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
                                         <div class="top-rated-product-img" style="width:350px; height: 100px">
                                             <a href="{% url 'ecom:product' id=top_project.id %}">
                                                 <img src="{{ top_project.farm_image.url }}" alt="{{ top_project.project_title }}" 
@@ -189,7 +192,7 @@
                                         </div>
                                         <div class="top-rated-product-info">
                                             
-                                            <h6><a href="product-details.html">{{ top_project.project_title }}</a></h6>
+                                            <h6><a href="{% url 'ecom:product' id=top_project.id %}">{{ top_project.project_title }}</a></h6>
                                             <div class="product-price">
                                                 <span><span class="greenish">रु‎ </span>{{ top_project.value_of_share }}</span><br>
                                                 <span>{{ top_project.percent_return_after_due_date}}</span><span class="greenish"> %</span>

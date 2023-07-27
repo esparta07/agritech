@@ -116,29 +116,29 @@ font-family: 'Rajdhani', sans-serif;
     Normalize    0B2C3D
 ---------------------------------------------------- */
 :root {
-  --ltn__primary-color: #357960;
+  --ltn__primary-color: #E2F6CA;
   --ltn__primary-color-2: #141414;
   /* Darken */
-  --ltn__primary-color-3: #357960;
+  --ltn__primary-color-3: #E2F6CA;
   /* Lighten */
-  --ltn__secondary-color: #e8a22b;
-  --ltn__secondary-color-2: #e8a22b;
+  --ltn__secondary-color: #7A9D54;
+  --ltn__secondary-color-2: #7A9D54;
   /* Darken */
   --ltn__secondary-color-2: #7AA874;
   
   /* Lighten */
-  --ltn__heading-color: #357960 ;
-  --ltn__paragraph-color: #357960;
+  --ltn__heading-color: #7A9D54 ;
+  --ltn__paragraph-color: black;
   --ltn__heading-font: 'Rajdhani', sans-serif;
   --ltn__body-font: 'Nunito Sans', sans-serif;
   /* Footer ACD2D8 8CB2B2  */
-  --ltn__color-1: #357960;
-  --ltn__color-2: #357960;
+  --ltn__color-1: #7A9D54;
+  --ltn__color-2: #7A9D54;
   --ltn__color-3: #A3BCC0;
   --ltn__color-4: #84A2A6;
   --ltn__color-5: #5C727D;
   --ltn__color-6: #969FA5;
-  --ltn__color-7: #e5e5e5;
+  --ltn__color-7: #7A9D54;
   /* Gradient Colors */
   --gradient-color-1: linear-gradient(90deg, rgba(242,139,194,1) 0%, rgba(216,177,242,1) 50%);
   --gradient-color-2: linear-gradient(to top, rgba(7,28,31,0) 0%, rgba(7,28,31,1) 90%);
@@ -150,11 +150,11 @@ font-family: 'Rajdhani', sans-serif;
   /* White */
   /* --section-bg-1: #F2F6F7; */
   /* White */
-  --section-bg-2: #357960;
+  --section-bg-2: #E2F6CA;
   /* Black */
   --section-bg-5: #FFF2F0;
   /* White */
-  --section-bg-6: #357960;
+  --section-bg-6: #E2F6CA;
   /* Black */
   --section-bg-7: #282b38;
   /* Black */
@@ -14342,7 +14342,7 @@ input.cart-plus-minus-box {
   background-color: #357960;
       color: var(--white); }
   .theme-btn-2:hover {
-    background-color: #e8a22b;
+    background-color: #7A9D54;
     color: var(--white); }
       
 
@@ -14614,7 +14614,7 @@ background-color:red;
   margin: 1px;
   padding: 0 20px;
   cursor: pointer;
-  background: #e8a22b;
+  background: #7A9D54;
   color: #FFFFFF;
   transition: width .35s ease-in-out,
     background .35s ease-in-out;

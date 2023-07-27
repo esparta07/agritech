@@ -1,0 +1,277 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+<link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
+<!-- PRODUCT DETAILS AREA START -->
+<!-- SLIDER AREA START (slider-3) -->
+{% if top_projects %}
+<div class="ltn__slider-area ltn__slider-3 section-bg-2---">
+  <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1" style="box-shadow: 5px 10px 8px #888888;">
+    {% for proj in top_projects %}
+    <!-- ltn__slide-item -->
+    <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal--- ltn__slide-item-3 bg-image bg-overlay-theme-black-20 text-color-white" data-bg="{{proj.farm_image.url}}" style="height:39.5rem;">
+      <div class="container">
+        <div class="slide-item-info" style="min-height:100px;">
+          <div class="slide-item-info-inner ltn__slide-animation">
+            <h6 class="slide-sub-title ltn__secondary-color--- animated text-uppercase"><span><i class="fas fa-square-full"></i></span>  Get High Returns</h6>
+            <h1 class="slide-title animated">{{proj.project_title}}</h1>
+            <div class="slide-brief animated">
+              <p></p>
+            </div>
+            <div class="btn-wrapper animated">
+              <a href="{% url 'ecom:product' id=proj.id %}" class="theme-btn-2 btn btn-effect-2">Buy Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<!-- SLIDER AREA END -->
+{% else %}
+<div class="ltn__slider-area ltn__slider-3 section-bg-2---">
+  <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1" style="box-shadow: 5px 10px 8px #888888;">
+    <!-- ltn__slide-item -->
+    <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal--- ltn__slide-item-3 bg-image bg-overlay-theme-black-20 text-color-white" data-bg="{% static 'ecom/img/coww.jpg' %}" style="height:39.5rem;">
+      <div class="container">
+        <div class="slide-item-info" style="min-height:100px;">
+          <div class="slide-item-info-inner ltn__slide-animation">
+            <h6 class="slide-sub-title ltn__secondary-color--- animated text-uppercase"><span><i class="fas fa-square-full"></i></span>  Get High Returns</h6>
+            <h1 class="slide-title animated">Start Investing Now</h1>
+            <div class="slide-brief animated">
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- SLIDER AREA END -->
+{% endif %}
+
+<div class="ltn__product-area ltn__product-gutter" 
+style="background-color:#E2F6CA; background-image: url('{% static 'ecom/img/tree.png' %}'); 
+background-size: cover; 
+background-position: center center; margin-top:8px;">
+    <div class="container">
+      <br>
+        <div class="row">
+            
+            <div class="col-lg-12">
+                <div class="ltn__shop-options">
+                    <ul>
+                        <li>
+                        </li>
+                        <li>
+                            <div class="short-by text-center">
+                                <form id="category-form">
+                                    <select class="nice-select" id="category-dropdown">
+                                        <option selected disabled>Farm Categories</option>
+                                        {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.category_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" style="background-color: #7a9d54; color: white; max-height:50px;"><i class="fas fa-search"></i></button>
+                                </form>
+                                
+                                <script>
+                                    document.getElementById("category-form").addEventListener("submit", function(event) {
+                                        event.preventDefault();
+                                        const selectedCategoryId = document.getElementById("category-dropdown").value;
+                                        if (selectedCategoryId) {
+                                            window.location.href = `/ecom/categories/${selectedCategoryId}/`; // Replace with your actual URL pattern
+                                        }
+                                    });
+                                </script>
+                            </div>    
+                        </li>
+                        <li>
+                            <div class="ltn__grid-list-tab-menu">
+                                <div class="ltn__search-widget">
+                                    <form action="" method="GET">
+                                        <input type="text" name="search_query"  value="{{ request.GET.search_query }}" class="search-input" style="background-color:white; ">
+                                        <button type="submit"><i class="fas fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="liton_product_list" >
+                    <div class="ltn__product-tab-content-inner ltn__product-list-view" >
+                        <div class="row">
+                            {% if category_project_page|length > 0 %}
+                            {% for proj in category_project_page %}
+                            <div class="col-lg-6" >
+                                <div class="ltn__product-item ltn__product-item-3 border border-light bg-white shadow-sm  bg-white rounded ">
+                                    <div class="product-img mt-30 mb-30" style="width: 300px; height: 200px; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);margin-left:10px;">
+                                        <a href="{% url 'ecom:product' id=proj.id %}"><img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <h2 class="product-title"><a href="{% url 'ecom:product' id=proj.id %}">{{ proj.project_title }}</a></h2>
+                                         <div class="product-price">
+                                            <span>रु‎ {{ proj.value_of_share }}</span>
+                                            
+                                        </div>
+                                        
+                                            
+                                                <strong>Available shares: </strong>
+                                                <span class="greenish">
+                                                    <a><b>{{ proj.total_no_shares }}</b></a>
+                                                </span><br>
+                                        
+                                            
+                                                <strong>Return : </strong>
+                                                <span class="greenish">
+                                                    <a><b>{{ proj.percent_return_after_due_date}}%</b></a>
+                                                </span><br>
+                                    
+                                    </div>
+                                     <div style="float:right;margin-top:40px;margin-left:10px;">
+                                    
+                                    <b><a href="{% url 'account:vendor_detail' vendor_id=proj.vendor.id %}">{{ proj.vendor.user.user_profile.first_name }} {{ proj.vendor.user.user_profile.last_name }}</a></b>
+                                    <img src="{% static 'ecom/img/verified.png' %}">
+                                    </div>  
+
+                                </div>
+                                
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="col-lg-12">
+                                <div class="no-results">
+                                    <p>No results found</p>
+                                    <a href="{% url 'ecom:shop' %}"><b>Go Back</b></a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ltn__pagination-area text-center">
+                    <div class="ltn__pagination mb-40">
+                        <ul>
+                            {% if category_project_page.has_previous %}
+                            <li>
+                                <a href="?page=1"><i class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li>
+                                <a href="?page={{ category_project_page.previous_page_number }}"><i class="fas fa-angle-left"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="disabled">
+                                <a><i class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li class="disabled">
+                                <a><i class="fas fa-angle-left"></i></a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in category_project_page.paginator.page_range %}
+                            {% if category_project_page.number == num %}
+                            <li class="active">
+                                <a>{{ num }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if category_project_page.has_next %}
+                            <li>
+                                <a href="?page={{ category_project_page.next_page_number }}"><i class="fas fa-angle-right"></i></a>
+                            </li>
+                            <li>
+                                <a href="?page={{ category_project_page.paginator.num_pages }}"><i class="fas fa-angle-double-right"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="disabled">
+                                <a><i class="fas fa-angle-right"></i></a>
+                            </li>
+                            <li class="disabled">
+                                <a><i class="fas fa-angle-double-right"></i></a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL AREA START (Add To Cart Modal) -->
+<div class="ltn__modal-area ltn__add-to-cart-modal-area">
+    {% for proj in project  %}
+    <div class="modal fade" id="add_to_cart_modal_{{ proj.id }}" tabindex="-1">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body"> 
+            <div class="ltn__quick-view-modal-inner">
+              <div class="modal-product-item">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="modal-product-img " style="width: 100px; height: 100px">
+                        <img src="{{ proj.farm_image.url }}" alt="{{ proj.project_title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                    </div>
+                    <div class="modal-product-info">
+                      <h5>
+                        <a href="product-details.html">{{proj.project_title}}</a>
+                      </h5>
+                      <p class="added-cart">
+                        <i class="fa fa-check-circle"></i> Successfully
+                        added to your Cart
+                      </p>
+                      <div class="btn-wrapper">
+                        <a
+                          href="cart.html"
+                          class="theme-btn-1 btn btn-effect-1"
+                          >View Cart</a
+                        >
+                        <a
+                          href="checkout.html"
+                          class="theme-btn-2 btn btn-effect-2"
+                          >Checkout</a
+                        >
+                      </div>
+                    </div>
+                    <!-- additional-info -->
+                    <div class="additional-info d-none">
+                      <p>
+                        We want to give you <b>10% discount</b> for your
+                        first order, <br />
+                        Use discount code at checkout
+                      </p>
+                      <div class="payment-method">
+                        <img src="img/icons/payment.png" alt="#" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- MODAL AREA END --> 
+{% endblock %}
+

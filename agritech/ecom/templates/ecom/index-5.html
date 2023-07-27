@@ -194,14 +194,17 @@
                   
                     {% endif %}
                 </li>
-                <li>
-                    <a href="{% url 'ecom:cart' %}" title="Shoping Cart">
-                        
-                            <i class="fas fa-shopping-cart"></i><span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom:10px; left: -5px; ">{{ cart_count }}</span>
-                        
-                        Shoping Cart
-                    </a>
-                </li>
+                {% if user.is_authenticated %}
+                  <li>
+                    
+                      <a href="{% url 'ecom:cart' %}" title="Shoping Cart">
+                          
+                              <i class="fas fa-shopping-cart"></i><span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom:10px; left: -5px; ">{{ cart_count }}</span>
+                          
+                          Shoping Cart
+                      </a>
+                  </li>
+                  {% endif %}
             </ul>
         </div>
         <div class="ltn__social-media-2">
@@ -298,7 +301,7 @@
             <div class="row">
                 <div class="col-lg-6 align-self-center">
                     <div class="about-us-img-wrap about-img-left">
-                        <img src=" {% static 'ecom/img/others/17.jpg' %} " alt="About Us Image">
+                        <img src=" {% static 'ecom/img/D3.jpg' %} " alt="About Us Image">
                     </div>
                 </div>
                 <div class="col-lg-6 align-self-center">
@@ -354,18 +357,7 @@
                 </div>
                 <div class="col-lg-6 align-self-center">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="ltn__feature-item ltn__feature-item-6 box-shadow-1">
-                                <div class="ltn__feature-icon">
-                                    <span><img src="{% static 'ecom/img/tractor.png' %}"></span>
-                                </div>
-                                <div class="ltn__feature-info">
-                                    <h3><a href="#">Agricultural Market</a></h3>
-                                    <p>Market for all agricultural Products</p>
-                                    <a class="ltn__service-btn ltn__service-btn-2" href="#">Argi Shop<i class="flaticon-right-arrow"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="col-sm-6">
                             <div class="ltn__feature-item ltn__feature-item-6 box-shadow-1">
                                 <div class="ltn__feature-icon">
@@ -385,7 +377,7 @@
                                 </div>
                                 <div class="ltn__feature-info">
                                     <h3><a href="#">Agri-Support</a></h3>
-                                    <p>Know the recent Agricultural Trends and conncet with Agricultral Experts</p>
+                                    <p>Know the recent Agricultural Trends</p>
                                     <a class="ltn__service-btn ltn__service-btn-2" href="#">Support <i class="flaticon-right-arrow"></i></a>
                                 </div>
                             </div>
@@ -402,7 +394,7 @@
     <!-- BRAND LOGO AREA END -->
 <!-- FOOTER AREA START -->
 <footer class="ltn__footer-area  ">
-    <div class="footer-top-area  section-bg-2 plr--5">
+    <div class="footer-top-area  section-bg-2 plr--5" style="background-color:#557A46;">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-md-6 col-sm-6 col-12">

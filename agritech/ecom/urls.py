@@ -7,6 +7,7 @@ app_name ='ecom'
 
 urlpatterns =[
     path('' , views.shop_view,name='shop'),
+    path('categories/<int:id>/', views.category_view, name='category-view'),
     path('<int:id>/', views.prod_view, name='product'),
      # ADD TO CART
     path('add_to_cart/<int:project_id>/', views.add_to_cart, name='add_to_cart'),

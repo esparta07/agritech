@@ -4,6 +4,7 @@
 <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
 <!-- PRODUCT DETAILS AREA START -->
 <!-- SLIDER AREA START (slider-3) -->
+{% if top_projects %}
 <div class="ltn__slider-area ltn__slider-3 section-bg-2---">
   <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1" style="box-shadow: 5px 10px 8px #888888;">
     {% for proj in top_projects %}
@@ -28,9 +29,32 @@
   </div>
 </div>
 <!-- SLIDER AREA END -->
+{% else %}
+<div class="ltn__slider-area ltn__slider-3 section-bg-2---">
+  <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1" style="box-shadow: 5px 10px 8px #888888;">
+    <!-- ltn__slide-item -->
+    <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal--- ltn__slide-item-3 bg-image bg-overlay-theme-black-20 text-color-white" data-bg="{% static 'ecom/img/coww.jpg' %}" style="height:39.5rem;">
+      <div class="container">
+        <div class="slide-item-info" style="min-height:100px;">
+          <div class="slide-item-info-inner ltn__slide-animation">
+            <h6 class="slide-sub-title ltn__secondary-color--- animated text-uppercase"><span><i class="fas fa-square-full"></i></span>  Get High Returns</h6>
+            <h1 class="slide-title animated">Start Investing Now</h1>
+            <div class="slide-brief animated">
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- SLIDER AREA END -->
+{% endif %}
 
-<div class="ltn__product-area ltn__product-gutter" style="background-image: url('{% static 'ecom/img/shop_bg.jpg' %}');">
-
+<div class="ltn__product-area ltn__product-gutter" 
+style="background-color:#E2F6CA; background-image: url('{% static 'ecom/img/tree.png' %}'); 
+background-size: cover; 
+background-position: center center; margin-top:8px;">
     <div class="container">
       <br>
         <div class="row">
@@ -39,29 +63,39 @@
                 <div class="ltn__shop-options">
                     <ul>
                         <li>
-                            <a href="?sort_by=percent_return" class="btn theme-btn-2" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;">High Return</a>  
-                            <a href="?sort_by=duration" class="btn theme-btn-1" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;">Quick Return</a>
+                            <a href="?sort_by=percent_return" class="btn theme-btn-2" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;  ">High Return</a>  
+                            <a href="?sort_by=duration" class="btn theme-btn-2" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;">Quick Return</a>
                             <a href="?sort_by=value_of_share" class="btn theme-btn-2" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;">Low Investment</a> 
                         </li>
                         <li>
                             <div class="short-by text-center">
-                                <form action="{% url 'ecom:shop' %}" method="GET">
-                                    <select class="nice-select" name="category">
-                                        <option selected disabled>Categories</option>
-                                        {% for category in categories %}
-                                        <option value="{{ category.category_name }}" {% if category.category_name == selected_category %}selected{% endif %}>{{ category.category_name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <button type="submit" style="background-color: #E8A22B; color: white;"><i class="fas fa-search"></i></button>
-                                </form>
-    
+                                
+                              <form id="category-form">
+                                <select class="nice-select" id="category-dropdown">
+                                    <option selected disabled>Farm Categories</option>
+                                    {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.category_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" style="background-color: #7a9d54; color: white; max-height:50px;"><i class="fas fa-search"></i></button>
+                            </form>
+                            
+                            <script>
+                                document.getElementById("category-form").addEventListener("submit", function(event) {
+                                    event.preventDefault();
+                                    const selectedCategoryId = document.getElementById("category-dropdown").value;
+                                    if (selectedCategoryId) {
+                                        window.location.href = `/ecom/categories/${selectedCategoryId}/`; // Replace with your actual URL pattern
+                                    }
+                                });
+                            </script>
                             </div>    
                         </li>
                         <li>
                             <div class="ltn__grid-list-tab-menu">
                                 <div class="ltn__search-widget">
                                     <form action="" method="GET">
-                                        <input type="text" name="search_query" placeholder="Search for Project/User" value="{{ request.GET.search_query }}" class="search-input">
+                                        <input type="text" name="search_query"  value="{{ request.GET.search_query }}" class="search-input" style="background-color:white; ">
                                         <button type="submit"><i class="fas fa-search"></i></button>
                                     </form>
                                 </div>

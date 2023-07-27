@@ -56,16 +56,16 @@
   <!-- HEADER AREA START (header-5) -->
   <div class="ltn_header-middle-area ltnheader-sticky ltn_sticky " >
       <!-- ltn__header-top-area start -->
-      <div class="ltn__header-top-area section-bg-6 top-area-color-white---" >
+      <div class="ltn__header-top-area section-bg-6 top-area-color----" >
           <div class="container">
               <div class="row">
                   <div class="col-md-7">
-                      <div class="ltn__top-bar-menu">
+                      {% comment %} <div class="ltn__top-bar-menu">
                           <ul>
                               <li><a href="mailto:agritechkhalti@gmail.com"><i class="icon-mail"></i>agritechkhalti@gmail.com</a></li>
                               <li><a href="{% url 'contact' %}"><i class="icon-placeholder"></i>Bakhundole,Kathamndu</a></li>
                           </ul>
-                      </div>
+                      </div> {% endcomment %}
                   </div>
                   
               </div>
@@ -74,10 +74,10 @@
       <!-- ltn__header-top-area end -->
       
       <!-- ltn__header-middle-area start -->
-      <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky" style="background-color:#2b3d51;">
+      <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky" style="background-color:#557A46;">
           <div class="container">
               <div class="row">
-                  <div class="col">
+                  <div class="col ">
                       <div class="site-logo-wrap">
                           <div class="site-logo">
                               <a href="{% url 'index' %}"><img src="{% static 'ecom/img/logo.png' %}" alt="Logo"></a>
@@ -118,7 +118,7 @@
                                       </li>
                                       <li>
                                         {% if not user.is_authenticated %}
-                                        <a class="btn theme-btn-1" href="{% url 'account:user_registration' %}" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 150px;">Register</a>                  
+                                        <a class="btn theme-btn-1" href="{% url 'account:user_registration' %}" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: black; border-radius: 10px; width: 150px;">Register</a>                  
                                       {% endif %}
                                       </li>
                                   </ul>
@@ -246,7 +246,9 @@
                     
                       {% endif %}
                   </li>
+                  {% if user.is_authenticated %}
                   <li>
+                    
                       <a href="{% url 'ecom:cart' %}" title="Shoping Cart">
                           
                               <i class="fas fa-shopping-cart"></i><span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom:10px; left: -5px; ">{{ cart_count }}</span>
@@ -254,6 +256,7 @@
                           Shoping Cart
                       </a>
                   </li>
+                  {% endif %}
               </ul>
           </div>
           <div class="ltn__social-media-2">
@@ -531,8 +534,8 @@
 
       <!-- MODAL AREA END -->
     <!-- FOOTER AREA START -->
-<footer class="ltn__footer-area">
-    <div class="footer-top-area  section-bg-2 plr--5">
+<footer class="ltn__footer-area" >
+    <div class="footer-top-area  section-bg-2 plr--5" style="background-color:#557A46;">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-md-6 col-sm-6 col-12">
