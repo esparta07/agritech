@@ -79,35 +79,42 @@
                     </div>
                         
                     </div>
-                    <h1><i class="fas fa-circle" style="color: #5ad539;font-size: 12px; position: relative; top: -8px;"></i> Active Farms</h1>
-                    <div class="row  justify-content-start">
-                        {% for project in vendor.project_set.all %}
-                            {% if project.is_approved %}                                
-                                    <div class="ltn__feature-item ltn__feature-item-6 text-center m-1">
-                                        <div class="ltn__feature-icon">
-                                            <a href="{% url 'ecom:product' id=project.id %}">
-                                                <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
-                                            </a>                                    
+                    <div class="container">
+                        <h1 style="margin-top: 30px;">
+                            <i class="fas fa-circle" style="color: #5ad539; font-size: 12px; position: relative; top: -8px;"></i>
+                            Active Farms
+                        </h1>
+                        <div class="row justify-content-start">
+                            {% for project in vendor.project_set.all %}
+                                {% if project.is_approved %}                                
+                                    <div class="col-md-3">
+                                        <div class="ltn__feature-item ltn__feature-item-6 text-center m-1">
+                                            <div class="ltn__feature-icon">
+                                                <a href="{% url 'ecom:product' id=project.id %}">
+                                                    <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
+                                                </a>                                    
+                                            </div>
+                                            <div class="ltn__feature-info">
+                                                <h4><a href="service.html">{{ project.project_title }}</a></h4>
+                                                <span class="greenish">रु‎ {{project.value_of_share}}</span><br>
+                                            </div>
                                         </div>
-                                        <div class="ltn__feature-info">
-                                            <h4><a href="service.html">{{ project.project_title }}</a></h4>
-                                            <span class="greenish">रु‎ {{project.value_of_share}}</span><br>
-                                        </div>
-                                    </div>            
-                            {% if forloop.counter|divisibleby:4 or forloop.last %}
-                                </div>
-                                {% if not forloop.last %}
-                                    <div class="row ltn__custom-gutter mt-50 mb-20">
+                                    </div>
+                                {% if forloop.counter|divisibleby:4 or forloop.last %}
+                                    </div>
+                                    {% if not forloop.last %}
+                                        <div class="row ltn__custom-gutter mt-50 mb-20 justify-content-start">
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                            {% endif %}
-                        {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
-
+                    
                     <h1>Completed Projects</h1>
                     <div class="row">
                         {% for project in vendor.project_set.all %}
-                            {% if project.is_completed %}   
+                            {% if project.is_completed %}  
                                 <div class="ltn__feature-item ltn__feature-item-6 text-center m-1">
                                     <div class="ltn__feature-icon">
                                         <img src="{{ project.farm_image.url }}" alt="Farm Image" style="width: 200px; height: 180px; object-fit: cover;">
@@ -127,7 +134,7 @@
                         {% endfor %}
                     </div>
                 </div>
-        </div>
+            </div>
             
         </div>
     </div>

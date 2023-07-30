@@ -24,17 +24,15 @@ class UserRegistrationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.initial['phone_number'] = '+977'
         self.fields['phone_number'].widget.attrs.update({
-            'class': 'custom-class',
+            'class': 'form-control',
             'value': '+977',
             'placeholder': 'Phone Number'
         })
         self.fields['password'].widget.attrs.update({
+            'class': 'form-control',
             'placeholder': 'Password'
+
         })
-        
-        # Add wrapper div with styles for each form item
-        self.fields['phone_number'].widget = forms.TextInput(attrs={'style': 'display: block; width: 100%; max-width: 350px; height: 40px; margin-bottom: 5px; padding: 5px;'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'style': 'display: block; width: 100%; max-width: 350px; height: 40px;  margin-bottom: 5px; padding: 5px;'})
 
         
 

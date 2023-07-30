@@ -153,7 +153,7 @@
                           </ul>
                         </div>
                          <!-- mini-cart -->
-                         {% if user.is_authenticated %}
+                         {% if user.is_authenticated and user.get_role == 'Customer' %}
                          <div class="mini-cart-icon">
                           
                             <a href="{% url 'ecom:cart' %}" title="Shoping Cart">
@@ -671,7 +671,7 @@
 <!-- FOOTER AREA END -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- DataTables JavaScript -->
-  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
 </body>
 

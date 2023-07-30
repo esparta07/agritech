@@ -106,7 +106,7 @@
                                         {% endif%}
                                     </ul>
                                 </div>
-                                {% if user.is_authenticated %}
+                                {% if user.is_authenticated and user.get_role == 'Customer' %}
                                 <div class="ltn__product-details-menu-2">
                                     <ul>
                                         <li>
@@ -150,29 +150,29 @@
                         </div>
                     </div>
                   <!-- Shop Tab Start -->
-<div class="ltn__shop-details-tab-inner ltn__shop-details-tab-inner-2">
-    <div class="ltn__shop-details-tab-menu">
-        <div class="nav">
-            <a class="active show" data-toggle="tab" href="#liton_tab_details_1_1">Description</a>
-            <a data-toggle="tab" href="#liton_tab_details_1_2">Farm Location</a>
-            <!-- Add additional tab links here if needed -->
-        </div>
-    </div>
-    <div class="tab-content">
-        <div id="liton_tab_details_1_1" class="tab-pane fade active show">
-            <h4 class="title-2">{{ proj.description_title }}</h4>
-            <p style="text-align: justify;">{{ proj.project_description }}</p>
-        </div>
-        <div id="liton_tab_details_1_2" class="tab-pane fade">
-            <br>
-            <p><strong>Location:</strong> <span class="greenish">{{ proj.address }}</span></p>
-            <div id="map" style="height: 500px;"></div>
-            
-        </div>
-        <!-- Add additional tab content here if needed -->
-    </div>
-</div>
-<!-- Shop Tab End -->
+                    <div class="ltn__shop-details-tab-inner ltn__shop-details-tab-inner-2">
+                        <div class="ltn__shop-details-tab-menu">
+                            <div class="nav">
+                                <a class="active show" data-toggle="tab" href="#liton_tab_details_1_1">Description</a>
+                                <a data-toggle="tab" href="#liton_tab_details_1_2">Farm Location</a>
+                                <!-- Add additional tab links here if needed -->
+                            </div>
+                        </div>
+                        <div class="tab-content">
+                            <div id="liton_tab_details_1_1" class="tab-pane fade active show">
+                                <h4 class="title-2">{{ proj.description_title }}</h4>
+                                <p style="text-align: justify;">{{ proj.project_description }}</p>
+                            </div>
+                            <div id="liton_tab_details_1_2" class="tab-pane fade">
+                                <br>
+                                <p><strong>Location:</strong> <span class="greenish">{{ proj.address }}</span></p>
+                                <div id="map" style="height: 500px;"></div>
+                                
+                            </div>
+                            <!-- Add additional tab content here if needed -->
+                        </div>
+                    </div>
+                    <!-- Shop Tab End -->
 
                     <!-- Shop Tab End -->
                 </div>
@@ -192,10 +192,10 @@
                                         </div>
                                         <div class="top-rated-product-info">
                                             
-                                            <h6><a href="{% url 'ecom:product' id=top_project.id %}">{{ top_project.project_title }}</a></h6>
+                                            <h5><a href="{% url 'ecom:product' id=top_project.id %}">{{ top_project.project_title }}</a></h5>
                                             <div class="product-price">
-                                                <span><span class="greenish">रु‎ </span>{{ top_project.value_of_share }}</span><br>
-                                                <span>{{ top_project.percent_return_after_due_date}}</span><span class="greenish"> %</span>
+                                                <span><span class="greenish">Price: रु‎ </span>{{ top_project.value_of_share }}</span><br>
+                                                <span class="greenish"> Return:</span> {{ top_project.percent_return_after_due_date}}</span><span class="greenish"> %</span>
                                                
                                             </div>
                                         </div>
