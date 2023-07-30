@@ -130,10 +130,10 @@ def payments(request):
         }
 
         headers = {
-            "Authorization": "Key ca62b8971c65497d949f5ba938b58c09"
+            "Authorization": "Key live_secret_key_292ff997b479476b9fa2fb39fa715244"
         }
 
-        response = requests.post("https://a.khalti.com/api/v2/epayment/initiate/", json=data, headers=headers)
+        response = requests.post("https://khalti.com/api/v2/epayment/initiate/", json=data, headers=headers)
 
         if response.status_code == 200:
             data = response.json()
@@ -177,15 +177,13 @@ def payments(request):
 
 def verify(request):
     pidx = request.GET.get('pidx')
-    
-    
     data = {
         "pidx": pidx
     }
     headers = {
-        "Authorization": "Key ca62b8971c65497d949f5ba938b58c09"  
+        "Authorization": "Key live_secret_key_292ff997b479476b9fa2fb39fa715244"
     }
-    response = requests.post("https://a.khalti.com/api/v2/epayment/lookup/", json=data, headers=headers)
+    response = requests.post("https://khalti.com/api/v2/epayment/lookup/", json=data, headers=headers)
     data = response.json()
     status = data.get("status")
     updated_pidx = data.get("pidx")
