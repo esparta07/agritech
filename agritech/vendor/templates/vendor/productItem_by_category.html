@@ -3,43 +3,54 @@
 {% block dashb %}
 {% include 'includes/alerts.html' %}
 
-<div class="col-md-9">
-    <div class="card">
-        <div class="card-header">
-            <h6>Category: <span class="text-uppercase text-success">{{category}}</span></h6>
-            <a href="{% url 'account:add_product' %}" class="btn btn-success float-right mt-100 rounded-lg"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a>
-        </div>
-        <div class="card-body">
-            <blockquote class="card-bodyquote">
-                {% if productItem %}
-                <table class="table table-hover table-borderless">
-                    
-                    <tbody>
-                    {% for product in productItem %}
+<div class="col-xl-11">
+  <div class="card">
+      <div class="card-body">
+          <div class="table-responsive">
+              <table class="table table-striped mb-0">
+                  <thead>
                       <tr>
-                        <td class="text-left">{{ forloop.counter }}</td>
-                        <td class="text-left"><img src="{{product.farm_image.url}}" alt="product Image" style="height:70px; width:100px;"></td>
-                        <td class="text-left">
-                            <a href=""><p class="mb-0 font-weight-bold">{{ product }}</p>
-                            <small class="text-muted">{{product.project_description}}</small></a>
-                        </td>
-                        <td>
-                            {% if product.is_available %}
-                            <span class="badge badge-success">Available</span>
-                            {% else %}
-                            <span class="badge badge-danger">Not Available</span>
-                            {% endif %}
-                        </td>
-                        <td><a href="{% url 'account:edit_product' product.id %}" style="color: unset;"><span class="badge badge-success bg-warning">Edit</span></a> &nbsp; </td>
+                          <th>Image</th>
+                          <th>Product</th>
+                          <th>Status</th>
+                          <th>Edit</th>
                       </tr>
-                    {% endfor %}
-                    </tbody>
-                  </table>
-                {% else %}
-                  <h5 class="text-center">No product items found.</h5>
-                {% endif %}
-            </blockquote>
-        </div>
-    </div>
+                  </thead>
+                  <tbody>
+                      {% for product in productItem %}
+                      <tr>
+                          <td>
+                            <img class="d-flex align-self-start rounded mr-3" src="{{product.farm_image.url}}" alt="Generic placeholder image" height="48" width="54">
+                          </td>
+                          <td>
+                              <a href=""><p class="mb-0 font-weight-bold">{{ product }}</p>
+                              <small class="text-muted">Added date: {{ product.created_at }}</small></a><br>
+                              <small class="text-muted">Return date: {{ product.return_date }}</small></a>
+                          </td>
+                          <td>
+                              {% if product.is_available %}
+                              <span class="badge badge-success">Available</span>
+                              {% else %}
+                              <span class="badge badge-danger">Not Available</span>
+                              {% endif %}
+                          </td>
+                          <td>
+                              <a href="{% url 'account:edit_product' product.id %}" style="color: unset;">
+                                  <span class="badge badge-success bg-warning">Edit</span>
+                              </a> &nbsp;
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div> <!-- end table-responsive-->
+      </div>
+      <!-- end card-body-->
+  </div>
+  <!-- end card -->
 </div>
+<!-- end col -->
+
 {% endblock %}
+
+

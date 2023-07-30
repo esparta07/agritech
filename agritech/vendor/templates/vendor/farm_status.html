@@ -25,201 +25,194 @@
     </div>
 </div>
 <!-- end page title -->
-
-<div style="display: flex;">
-  <div>
-    <div class="card">
-      <img class="card-img-top img-fluid" src="{{ proj.farm_image.url }}" alt="Card image cap" style="width:60rem ; height:50rem; object-fit: cover;">
-      <div class="card-body">
-        <p class="card-text">
-          <strong>Required Amount:</strong>
-          <span class="greenish text-right">
-            <b>रु‎ {{ proj.demand |floatformat:2|intcomma}}</b><br>
-          </span>
-        </p>
-        <p>
-          <strong>Collected Amount:</strong>
-          <span class="greenish text-right">
-            <b>रु‎ {{ proj.collected_amount|floatformat:2|intcomma }}</b><br>
-          </span>
-        </p>
-        <p>
-          <strong>Amount Left:</strong>
-          <span class="greenish text-right">
-            <b>रु‎ {{ proj.amount_left |floatformat:2|intcomma}}</b><br>
-          </span>
-        </p>
-
-        <div class="progress mt-10">
-          <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress_ratio }}%" aria-valuenow="{{ project.collected_amount }}" aria-valuemin="0" aria-valuemax="{{ project.demand }}"></div>
-        </div>
-        <p>
-          <strong>Total Return Amount:</strong>
-          <span class="greenish text-right">
-            <b>रु‎ {{ project_total_return }}</b><br>
-          </span>
-        </p>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <ul class="nav nav-tabs nav-justified mb-2">
-          <li class="nav-item">
-            <a href="#home1" data-toggle="tab" aria-expanded="false" class="nav-link">
-              <i class="mdi mdi-home-variant d-lg-none d-block"></i>
-              <span class="d-none d-lg-block">Location</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#profile1" data-toggle="tab" aria-expanded="true" class="nav-link active">
-              <i class="mdi mdi-account-circle d-lg-none d-block"></i>
-              <span class="d-none d-lg-block">Investors</span>
-            </a>
-          </li>
-        </ul>
-
-        <div class="tab-content" style="max-height: 300px;">
-          <div class="tab-pane" id="home1">
-            <p><strong>Location:</strong> <span class="greenish">{{ proj.address }}</span></p>
-            <div id="map" style="height: 250px;"></div>
-          </div>
-
-          <div class="tab-pane show active" id="profile1">
-            <br>
-            <div class="table-responsive">
-              <table id="basic-datatable" class="table dt-responsive nowrap">
-                <thead>
-                  <tr>
-                    <th>Investor Name</th>
-                    <th>Applied Share</th>
-                    <th>Invested Amount</th>
-                    <th>Profit Gained</th>
-                    <th>Return amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for farm_order in farm_orders %}
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        {% if farm_order.user.userprofile.profile_picture %}
-                        <div style="width: 45px; height: 45px; overflow-wrap: break-word;">
-                          <img src="{{ farm_order.user.userprofile.profile_picture.url }}" alt="" style="width: 100%; height: 100%; object-fit: cover;" class="rounded-circle" />
-                        </div>
-                        {% else %}
-                        <div style="width: 45px; height: 45px; overflow-wrap: break-word;">
-                          <img src="{% static 'ecom/img/icons/user.png' %}" alt="" style="width: 100%; height: 100%; object-fit: cover;" class="rounded-circle" />
-                        </div>
-                        {% endif %}
-                        <div class="ms-3 pl-2">
-                          <p class="fw-bold mb-1">{{ farm_order.user.userprofile.full_name }}</p>
-                          <p class="text-muted mb-0">{{ farm_order.user.email }}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="fw-normal mb-1">{{ farm_order.quantity }}</p>
-                    </td>
-                    <td>
-                      <span>रु‎{{ farm_order.invested_amount }}</span>
-                    </td>
-                    <td>
-                      <span>रु‎{{ farm_order.total_return_amount }}</span>
-                    </td>
-                    <td>
-                      <span>रु‎{{ farm_order.total_amount }}</span>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="col" style="margin-left:10px;">
+<div class="row">
+  <div class="col-md-6">
       <div class="card">
-        <div class="card-body col-xl-22">
+          <img class="card-img-top img-fluid" src="{{ proj.farm_image.url }}" alt="Card image cap" style="object-fit: cover;">
+          <div class="card-body">
+              <p class="card-text">
+                  <strong>Required Amount:</strong>
+                  <span class="greenish text-right">
+                      <b>रु‎ {{ proj.demand | floatformat:2 | intcomma}}</b><br>
+                  </span>
+              </p>
+              <p>
+                  <strong>Collected Amount:</strong>
+                  <span class="greenish text-right">
+                      <b>रु‎ {{ proj.collected_amount | floatformat:2 | intcomma }}</b><br>
+                  </span>
+              </p>
+              <p>
+                  <strong>Amount Left:</strong>
+                  <span class="greenish text-right">
+                      <b>रु‎ {{ proj.amount_left | floatformat:2 | intcomma}}</b><br>
+                  </span>
+              </p>
+              <p>
+                <strong>Total Return Amount:</strong>
+                <span class="greenish text-right">
+                    <b>रु‎ {{ project_total_return }}</b><br>
+                </span>
+            </p>
+              
+             
+          </div>
+      </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body col-xl-22">
           <h3>Farm Details</h3>
           <hr>
           <p class="card-text">
-            <strong>Duration:</strong>
-            <span>
-              <a>{{ proj.duration_in_months }} months</a>
-            </span><br>
-            <strong>Posted Date:</strong>
-            <span>
-              <a>{{ proj.created_at|date:"M. d, Y" }}</a>
-            </span><br>
-            <strong>Return Date:</strong>
-            <span>
-              <a>{{ proj.return_date }}</a>
-            </span><br>
+              <strong>Duration:</strong>
+              <span>
+                  <a>{{ proj.duration_in_months }} months</a>
+              </span><br>
+              <strong>Posted Date:</strong>
+              <span>
+                  <a>{{ proj.created_at|date:"M. d, Y" }}</a>
+              </span><br>
+              <strong>Return Date:</strong>
+              <span>
+                  <a>{{ proj.return_date }}</a>
+              </span><br>
 
-            <strong>Active Since:</strong>
-            <span class="greenish">
-              <a>{{ proj.days_since_created }} Days</a>
-            </span><br>
-            <hr>
-            <strong>Total Cost:</strong>
-            <span>
-              <a>रु‎ {{ proj.total_cost|floatformat:2|intcomma }}</a>
-            </span><br>
-            <strong>Farmer Investment:</strong>
-            <span>
-              <a>रु‎{{ proj.fund_invested|floatformat:2|intcomma }}</a>
-            </span><br>
-            <strong>Demand:</strong>
-            <span>
-              <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
-            </span><br>
-            <hr>
-            <strong><a href="{% url 'ecom:product' id=proj.id %}">Available Shares:</a></strong>
-            <span>
-              <b>{{ proj.total_no_shares }}</b>
-            </span>
+              <strong>Active Since:</strong>
+              <span class="greenish">
+                  <a>{{ proj.days_since_created }} Days</a>
+              </span><br>
+              <hr>
+              <strong>Total Cost:</strong>
+              <span>
+                  <a>रु‎ {{ proj.total_cost|floatformat:2|intcomma }}</a>
+              </span><br>
+              <strong>Farmer Investment:</strong>
+              <span>
+                  <a>रु‎{{ proj.fund_invested|floatformat:2|intcomma }}</a>
+              </span><br>
+              <strong>Demand:</strong>
+              <span>
+                  <a>रु‎{{ proj.demand|floatformat:2|intcomma}}</a>
+              </span><br>
+              <hr>
+              <strong><a href="{% url 'ecom:product' id=proj.id %}">Available Shares:</a></strong>
+              <span>
+                  <b>{{ proj.total_no_shares }}</b>
+              </span>
           </p>
-        </div>
       </div>
+  </div>
       <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">FARM STATUS</h5>
-          {% for status in status_messages %}
-          <div class="card mb-0">
-            <div class="card-header" id="heading{{ forloop.counter }}">
-              <h5 class="m-0 font-size-15">
-                <a class="collapsed d-block pt-2 pb-2 text-dark" data-toggle="collapse" href="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
-                  {{ status.title }} <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
-                </a>
-              </h5>
-            </div>
-            <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}">
-              <div class="card-body">
-                {{ status.status }}
+          <div class="card-body">
+              <h5 class="card-title">FARM STATUS</h5>
+              {% for status in status_messages %}
+              <div class="card mb-0">
+                  <div class="card-header" id="heading{{ forloop.counter }}">
+                      <h5 class="m-0 font-size-15">
+                          <a class="collapsed d-block pt-2 pb-2 text-dark" data-toggle="collapse" href="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                              {{ status.title }} <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
+                          </a>
+                      </h5>
+                  </div>
+                  <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}">
+                      <div class="card-body">
+                          {{ status.status }}
+                      </div>
+                  </div>
               </div>
-            </div>
+              <!-- end card-->
+              {% empty %}
+              <div class="card mb-0">
+                  <div class="card-header">
+                      <h5 class="m-0 font-size-15">
+                          No status messages found.
+                      </h5>
+                  </div>
+              </div>
+              {% endfor %}
           </div>
-          <!-- end card-->
-          {% empty %}
-          <div class="card mb-0">
-            <div class="card-header">
-              <h5 class="m-0 font-size-15">
-                No status messages found.
-              </h5>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
       </div>
+  </div>
+</div>
+</div>
+<div class="card">
+  <div class="card-body">
+      <ul class="nav nav-tabs nav-justified mb-2">
+          <li class="nav-item">
+              <a href="#home1" data-toggle="tab" aria-expanded="false" class="nav-link">
+                  <i class="mdi mdi-home-variant d-lg-none d-block"></i>
+                  <span class="d-none d-lg-block">Location</span>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a href="#profile1" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                  <i class="mdi mdi-account-circle d-lg-none d-block"></i>
+                  <span class="d-none d-lg-block">Investors</span>
+              </a>
+          </li>
+      </ul>
+      <div class="tab-content" style="max-height: 300px;">
+          <div class="tab-pane" id="home1">
+              <p><strong>Location:</strong> <span class="greenish">{{ proj.address }}</span></p>
+              <div id="map" style="max-height: 250px;"></div>
+          </div>
+          <div class="tab-pane show active" id="profile1">
+          <br>
+      </div>
+  </div>
+  <div class="table-responsive">
+    <table id="basic-datatable" class="table dt-responsive nowrap">
+        <thead>
+            <tr>
+                <th>Investor Name</th>
+                <th>Applied Share</th>
+                <th>Invested Amount</th>
+                <th>Profit Gained</th>
+                <th>Return amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for farm_order in farm_orders %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        {% if farm_order.user.userprofile.profile_picture %}
+                        <div style="width: 45px; height: 45px; overflow-wrap: break-word;">
+                            <img src="{{ farm_order.user.userprofile.profile_picture.url }}" alt="" style="width: 100%; height: 100%; object-fit: cover;" class="rounded-circle" />
+                        </div>
+                        {% else %}
+                        <div style="width: 45px; height: 45px; overflow-wrap: break-word;">
+                            <img src="{% static 'ecom/img/icons/user.png' %}" alt="" style="width: 100%; height: 100%; object-fit: cover;" class="rounded-circle" />
+                        </div>
+                        {% endif %}
+                        <div class="ms-3 pl-2">
+                            <p class="fw-bold mb-1">{{ farm_order.user.userprofile.full_name }}</p>
+                            <p class="text-muted mb-0">{{ farm_order.user.email }}</p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ farm_order.quantity }}</p>
+                </td>
+                <td>
+                    <span>रु‎{{ farm_order.invested_amount }}</span>
+                </td>
+                <td>
+                    <span>रु‎{{ farm_order.total_return_amount }}</span>
+                </td>
+                <td>
+                    <span>रु‎{{ farm_order.total_amount }}</span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     </div>
   </div>
 </div>
-
 {% endfor %}
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places"></script>
