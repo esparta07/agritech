@@ -1,70 +1,97 @@
 {% load static %}
 <!-- ========== Left Sidebar Start ========== -->
-<div class="vertical-menu" style="background-color:#E2F6CA;">
-
+<div class="vertical-menu" style="background-color: #ffffff">
   <div data-simplebar class="h-100">
-
     <div class="navbar-brand-box">
       <a href="{% url 'index' %}" class="logo">
-          <img src="{% static 'ecom/img/logo-2.png' %}">
-          
+        <img src="{% static 'ecom/img/logo-2.png' %}" />
       </a>
-  </div>
+    </div>
 
-      <!--- Sidemenu -->
-      <div id="sidebar-menu">
-          <!-- Left Menu Start -->
-          <ul class="metismenu list-unstyled" id="side-menu">
-              
-              
-              <li>
-                <a href="{% url 'account:vendordashboard' %}" style="color: black; font-weight: bold;">
-                  <i class="fas fa-home"></i> Dashboard
-                </a>
-              </li>
-              {% if user.is_verified %}
-              <li>
-                <a href="{% url 'account:vprofile' %}" style="color: black; font-weight: bold;">
-                  <i class="fas fa-user"></i> My Profile
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'account:menu_builder' %}" style="color: black; font-weight: bold;">
-                  <i class="fas fa-plus"></i> Projects
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'account:vendor_my_orders' %}" style="color: black; font-weight: bold;">
-                  <i class="fas fa-file-invoice"></i> Order
-                </a>
-              </li>
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+      <!-- Left Menu Start -->
+      <ul class="metismenu list-unstyled" id="side-menu">
+        <li>
+          <a
+            href="{% url 'account:vendordashboard' %}"
+            style="color: black; font-weight: bold"
+          >
+            <i class="fas fa-home"></i> Dashboard
+          </a>
+        </li>
+        {% if user.is_verified %}
+        <li>
+          <a
+            href="{% url 'account:vprofile' %}"
+            style="color: black; font-weight: bold"
+          >
+            <i class="fas fa-user"></i> My Profile
+          </a>
+        </li>
+        <li>
+          <a
+            href="{% url 'account:menu_builder' %}"
+            style="color: black; font-weight: bold"
+          >
+            <i class="fas fa-plus"></i> Projects
+          </a>
+        </li>
+        <li>
+          <a
+            href="{% url 'account:vendor_my_orders' %}"
+            style="color: black; font-weight: bold"
+          >
+            <i class="fas fa-file-invoice"></i> Order
+          </a>
+        </li>
 
-              
-              <li>
-                <a href="{% url 'account:active farms' %}" style="color: black; font-weight: bold;">
-                  <i class="fas fa-circle" style="color: #5ad539; font-size: 8px; position: relative; top: -3px;"></i> Active Farm
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'account:vendor_detail' user.id %}" style="color: black; font-weight: bold;">
-                  <i class="fas fa-user"></i> My Details
-                </a>
-              </li>
-              {% else %}
-              <li>
-                <a href="{% url 'account:vprofile' %}" style="color: black; font-weight: bold;">
-                  <i class="fas fa-user"></i> My Profile
-                </a>
-              </li>
-              {% endif %}
-              <li>
-                <a href="{% url 'account:vendor_change_password' %}" style="color: black; font-weight: bold;">
-                  <i class="fas fa-lock"></i> Security
-                </a>
-              </li>
-          </ul>
-      </div>
-      <!-- Sidebar -->
+        <li>
+          <a
+            href="{% url 'account:active farms' %}"
+            style="color: black; font-weight: bold"
+          >
+            <i
+              class="fas fa-circle"
+              style="
+                color: #5ad539;
+                font-size: 8px;
+                position: relative;
+                top: -3px;
+              "
+            ></i>
+            Active Farm
+          </a>
+        </li>
+        <li>
+          <a
+            href="{% url 'account:vendor_detail' user.id %}"
+            style="color: black; font-weight: bold"
+          >
+            <i class="fas fa-user"></i> My Details
+          </a>
+        </li>
+        {% else %}
+        <li>
+          <a
+            href="{% url 'account:vprofile' %}"
+            style="color: black; font-weight: bold"
+          >
+            <i class="fas fa-user"></i> My Profile
+          </a>
+        </li>
+        {% endif %}
+        <li>
+          <a
+            href="{% url 'account:vendor_change_password' %}"
+            style="color: black; font-weight: bold"
+          >
+            <i class="fas fa-lock"></i> Security
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- Sidebar -->
   </div>
 </div>
 <!-- Left Sidebar End -->
