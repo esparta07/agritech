@@ -90,12 +90,12 @@
                     {% if user.is_authenticated %}
                         <a href="{% url 'account:myAccount' %}">
                             {% if user.userprofile.profile_picture %}
-                                <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                                <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
                             {% else %}
                                 <img src="{% static 'ecom/img/icons/user.png' %}" alt="Profile Picture" style="margin-right: 10px;">
                             {% endif %}
                         </a>
-
+                        {% if user.is_authenticated and user.get_role == 'Customer' %}
                         <div class="mini-cart-icon" style="margin-top: 5px;">
                             <a href="{% url 'ecom:cart' %}" title="Shopping Cart" style="margin-left: 10px;">
                                 <span class="utilize-btn-icon">
@@ -104,7 +104,7 @@
                                 </span>
                             </a>
                         </div>
-                    
+                        {% endif %}
                     {% endif %}
                     {% if not user.is_authenticated %}                                                             
                     <a class="btn theme-btn-1" href="{% url 'account:user_registration' %}" style="margin-top: 10px; margin-bottom: 10px; padding: 10px 5px; color: white; border-radius: 10px; width: 200px;">Register</a>
