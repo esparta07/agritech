@@ -52,7 +52,7 @@
 {% endif %}
 
 <div class="ltn__product-area ltn__product-gutter" 
-style="background-color:#E2F6CA; background-image: url('{% static 'ecom/img/tree.png' %}'); 
+style="background-color:#E2F6CA; 
 background-size: cover; 
 background-position: center center; margin-top:8px;">
     <div class="container">
@@ -131,6 +131,10 @@ background-position: center center; margin-top:8px;">
                                                 <span class="greenish">
                                                     <a><b>{{ proj.percent_return_after_due_date}}%</b></a>
                                                 </span><br>
+
+                                                <span class="greenish">
+                                                  <a><b> <i class="fas fa-map-marker-alt text-danger"></i> {{ proj.address }}</b></a>
+                                              </span><br>
                                     
                                     </div>
                                      <div style="float:right;margin-top:40px;margin-left:10px;">

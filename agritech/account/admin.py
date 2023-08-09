@@ -4,6 +4,7 @@ from .models import User, UserProfile
 
 class CustomUserAdmin(UserAdmin):
     list_display = ('phone_number', 'user_name', 'role', 'is_active','is_verified')
+    list_editable = ('is_verified',)
     ordering = ('-date_joined',)
     filter_horizontal = ()
     list_filter = ()

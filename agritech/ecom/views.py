@@ -1,4 +1,5 @@
 
+from django.forms import ValidationError
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http.response import JsonResponse
 from django.urls import reverse
@@ -17,11 +18,12 @@ from django.db.models import Q
 
 def shop_view(request):
     categories = Category.objects.all()
-    projects = Project.objects.filter(is_approved=True,is_soldout=False)  # Filter approved projects
-    top_projects = Project.objects.filter(is_approved=True,is_soldout=False,is_completed=False).order_by('-percent_return_after_due_date')[:3]
+    projects = Project.objects.filter(is_approved=True, is_soldout=False)
+    top_projects = Project.objects.filter(is_approved=True, is_soldout=False, is_completed=False).order_by(
+        '-percent_return_after_due_date')[:3]
     page = request.GET.get('page')
     search_query = request.GET.get('search_query')
-    sort_by = request.GET.get('sort_by')  # Get the value of the 'sort_by' parameter from the request
+    sort_by = request.GET.get('sort_by')
 
     if sort_by == 'percent_return':
         projects = projects.order_by('-percent_return_after_due_date')
@@ -30,14 +32,16 @@ def shop_view(request):
     elif sort_by == 'value_of_share':
         projects = projects.order_by('value_of_share')
 
-   
-
     if search_query and search_query.strip() != '':
-        project_ids = [project.id for project in projects if
-                       project.project_title.lower().find(search_query.lower()) != -1]
+        project_ids = []
+        for project in projects:
+            if (project.project_title and project.project_title.lower().find(search_query.lower()) != -1) or \
+                    (project.address and project.address.lower().find(search_query.lower()) != -1):
+                project_ids.append(project.id)
 
         user_profile_ids = [profile.user.id for profile in UserProfile.objects.filter(
-            Q(first_name__icontains=search_query) | Q(last_name__icontains=search_query)
+            Q(first_name__icontains=search_query) | Q(
+                last_name__icontains=search_query)
         )]
 
         vendor_ids = [vendor.id for vendor in User.objects.filter(
@@ -45,16 +49,17 @@ def shop_view(request):
         )]
 
         projects = projects.filter(Q(id__in=project_ids) | Q(vendor_id__in=vendor_ids))
-    
-    paginator = Paginator(projects,8)
+
+
+    paginator = Paginator(projects, 8)
     project_page = paginator.get_page(page)
-    
+
     context = {
         'top_projects': top_projects,
         'categories': categories,
         'project_page': project_page,
         'sort_by': sort_by,
-        'projects' : projects
+        'projects': projects
     }
 
     return render(request, 'ecom/shop-grid.html', context)
@@ -118,47 +123,37 @@ def prod_view(request, id):
     return render(request, 'ecom/product-details.html', context)
 
 
-
-
-
-
 @user_passes_test(check_role_customer)
 def add_to_cart(request, project_id):
-    if request.user.is_authenticated:
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            # Check if project exists
-            try:
-                project = Project.objects.get(id=project_id)
-                # Check if the user has already added that project to the cart
-                try:
-                    chkCart = Cart.objects.get(user=request.user, project=project)
-                    # Check if the maximum share limit has been reached
-                    if chkCart.quantity < project.max_shares_per_user:
-                        # Increase the cart quantity
-                        chkCart.quantity += 1
-                        chkCart.save()
-                        return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
-                    else:
-                        return JsonResponse({'status': 'Failed', 'message': 'Maximum share limit reached '})
-                except Cart.DoesNotExist:
-                    # Check if the maximum share limit has been reached
-                    if project.max_shares_per_user > 0:
-                        if project.total_no_shares > 0:
-                            chkCart = Cart.objects.create(user=request.user, project=project, quantity=1)
-                            return JsonResponse({'status': 'Success', 'message': 'Added the project to the cart', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
-                        else:
-                            return JsonResponse({'status': 'Failed', 'message': 'No more shares available for this project!'})
-                    else:
-                        return JsonResponse({'status': 'Failed', 'message': 'Maximum share limit reached'})
-            except Project.DoesNotExist:
-                return JsonResponse({'status': 'Failed', 'message': 'This project does not exist!'})
-        else:
-            return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
-        
-    else:
+    if not request.user.is_authenticated:
         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
 
-
+    try:
+        project = Project.objects.get(id=project_id)
+        try:
+            chkCart = Cart.objects.get(user=request.user, project=project)
+            if chkCart.quantity < project.max_shares_per_user:
+                chkCart.quantity += 1
+                chkCart.save()
+                return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
+            else:
+                return JsonResponse({'status': 'Failed', 'message': 'Maximum share limit reached '})
+        except Cart.DoesNotExist:
+            if project.max_shares_per_user > 0:
+                if project.total_no_shares > 0:
+                    chkCart = Cart.objects.create(user=request.user, project=project, quantity=1)
+                    return JsonResponse({'status': 'Success', 'message': 'Added the project to the cart', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
+                else:
+                    return JsonResponse({'status': 'Failed', 'message': 'No more shares available for this project!'})
+            else:
+                return JsonResponse({'status': 'Failed', 'message': 'Maximum share limit reached'})
+    except Project.DoesNotExist:
+        return JsonResponse({'status': 'Failed', 'message': 'This project does not exist!'})
+    except ValidationError as e:
+        error_message = ' '.join(e.messages)
+        return JsonResponse({'status': 'Failed', 'message': error_message})
+    
+    
 def decrease_cart(request, project_id):
     if request.user.is_authenticated:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':

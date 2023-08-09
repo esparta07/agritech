@@ -122,27 +122,52 @@
 						{{ profile_form.last_name }}
 					</div>
 			</div>
-				<div class="form-group ">
-					<label><b>Address *</b></label>
-					{{profile_form.address}}
-					<small class="text-muted float-right" style="color:darkblue;">powered by Google</small>
+				<div class="form-group">
+          <label><b>Address *</b></label>
+          {{profile_form.address}}
+          <small class="text-muted float-right" style="color: darkblue"
+            >powered by Google</small
+          >
+        </div>
+        <div class="form-group">
+          <label><b>Email *</b></label>
+          {{ profile_form.email }}
+        </div>
+        
+        <div class="form-group">
+          <label><b>Gender</b></label>
+          {{ profile_form.gender }}
+        </div>
+        
+
+        <div class="container">
+			<div class="row">
+			  <div class="col-6">
+				<div class="form-group">
+				  <label><b>Country *</b></label>
+				  {{ profile_form.country }}
 				</div>
-					<div class="form-group">
-						<label><b>Country *</b></label>
-						{{profile_form.country}}
-					</div>
-					<div class="form-group">
-						<label><b>State *</b></label>
-						{{profile_form.state}}
-					</div>
-					<div class="form-group">
-						<label><b>City *</b></label>
-						{{profile_form.city}}
-					</div>
-					<div class="form-group">
-						<label><b>Pin Code *</b></label>
-						{{profile_form.pin_code}}
-					</div>
+			  </div>
+			  <div class="col-6">
+				<div class="form-group">
+				  <label><b>State *</b></label>
+				  {{ profile_form.state }}
+				</div>
+			  </div>
+			  <div class="col-6">
+				<div class="form-group">
+				  <label><b>City *</b></label>
+				  {{ profile_form.city }}
+				</div>
+			  </div>
+			  <div class="col-6">
+				<div class="form-group">
+				  <label><b>Pin Code *</b></label>
+				  {{ profile_form.pin_code }}
+				</div>
+			  </div>
+			</div>
+		  </div>
 				<button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light">Submit</button>
 			</form>
 

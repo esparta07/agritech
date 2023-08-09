@@ -1,19 +1,10 @@
-from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import EmailMessage, message
-from django.conf import settings
-import logging
-from django.conf import settings
 from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth.tokens import default_token_generator
+from django.conf import settings
 from .models import User, UserProfile
 
 
@@ -28,6 +19,9 @@ def detectUser(user):
             redirectUrl = 'account:custdashboard'
         else:
             redirectUrl = 'account:cprofile' if user.is_active else None
+    elif user.role == None and user.is_superuser:
+        redirectUrl = '/admin'
+        return redirectUrl
     else:
         redirectUrl = None
     

@@ -12,7 +12,7 @@
         
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{% static 'ecom/js/custom.js' %}"></script>
-
+        <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete" async defer></script>
         <!-- App favicon -->
         <link rel="shortcut icon" href="{% static 'ecom/img/favicon.png' %}" type="image/x-icon" />
         <!-- Plugins css -->
@@ -79,8 +79,7 @@
                             </a>
                             
                         </div>
-                        
-                        
+    
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="dropdown d-inline-block ml-2">

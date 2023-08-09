@@ -33,10 +33,7 @@ class UserRegistrationForm(forms.ModelForm):
             'placeholder': 'Password'
 
         })
-
-        
-
-        
+     
 class UserProfileForm(forms.ModelForm):
     address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Start typing...', 'required': 'required'}))
     profile_picture = forms.ImageField(widget=forms.FileInput(attrs={'class': 'btn btn-info'}), required=False)
@@ -44,7 +41,8 @@ class UserProfileForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ['first_name', 'last_name', 'profile_picture', 'address', 'country', 'state', 'city', 'pin_code', 'passport_photo', 'citizenship_front', 'citizenship_back']
+        fields = ['first_name', 'last_name', 'profile_picture', 'email' , 'gender' , 'address', 'country', 'state', 'city', 'pin_code', 'passport_photo', 'citizenship_front', 'citizenship_back' ,
+                  'facebook', 'linkedin' , 'twitter' , 'instagram']
 
 
     def __init__(self, *args, **kwargs):

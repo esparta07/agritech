@@ -55,32 +55,32 @@ class OTPVerificationView(View):
             messages.success(request, "OTP verification successful")
             phone_number = request.session.get('phone_number')
             User = get_user_model()
-            user = User.objects.create(phone_number=phone_number, role=role)
+            user = User.objects.create_user(phone_number=phone_number, password=password, role=role)
             user.set_password(password)
+            
 
-            if role == User.VENDOR:
+            if int(role) == User.VENDOR:
                 user.role = User.VENDOR
                 user.save()
-
-                # Check if a UserProfile already exists for the user
                 user_profile, created = UserProfile.objects.get_or_create(user=user)
 
-                # Create a Vendor object associated with the user and user_profile
-                vendor = Vendor.objects.create(
+                vendor, vendor_created = Vendor.objects.get_or_create(
                     user=user,
-                    user_profile=user_profile
-                )
+                    user_profile=user_profile,
+                    vendor_name=user_profile.full_name
+                )  
             else:
                 user.role = User.CUSTOMER
                 user.save()
 
+                user_profile, created = UserProfile.objects.get_or_create(user=user)
+
             return redirect('account:login')
         else:
             messages.error(request, "Invalid OTP. Please try again.")
-            form = UserRegistrationForm(request.POST)  # Pass the submitted data back to the form
-            return render(request, 'account/registration.html', {'form': form, 'otp_required': True, 'password': password})
+            return redirect('account:otp_verification')
 
-
+        
 
 class UserRegistrationView(View):
     
@@ -102,7 +102,6 @@ class UserRegistrationView(View):
                 password = form.cleaned_data['password']
                 otp = generate_otp()
                 print(otp)
-                
                 # Send OTP via SparrowSMS
                 send_sms_otp(phone_number, otp)
 
@@ -111,7 +110,6 @@ class UserRegistrationView(View):
                 request.session['password'] = password
                 request.session['role'] = form.cleaned_data['role']
                 form.fields['password'].widget.attrs['value'] = password
-
                 return render(request, 'account/registration.html', {'form': form, 'otp_required': True, 'password': password})
 
         return render(request, 'account/registration.html', {'form': form, 'otp_required': False})

@@ -36,28 +36,4 @@ class Vendor(models.Model):
     def __str__(self):
         return self.vendor_name
 
-    def save(self, *args, **kwargs):
-        if self.pk is not None:
-            # Update
-            orig = Vendor.objects.get(pk=self.pk)
-            if orig.is_approved != self.is_approved:
-                mail_template = 'account/emails/admin_approval_email.html'
-                context = {
-                    'user': self.user,
-                    'is_approved': self.is_approved,
-                }
-                if self.user.userprofile.email:
-                    context['to_email'] = self.user.userprofile.email
-                else:
-                    # Set a default value if email is not available
-                    context['to_email'] = ''
-
-                if self.is_approved:
-                    # Send notification email
-                    mail_subject = "Congratulations! Your Farm has been approved."
-                    send_notification(mail_subject, mail_template, context)
-                else:
-                    # Send notification email
-                    mail_subject = "We're sorry! You are not eligible for publishing your Farm on our marketplace."
-                    send_notification(mail_subject, mail_template, context)
-        return super(Vendor, self).save(*args, **kwargs)
+    

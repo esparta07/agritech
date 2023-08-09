@@ -31,7 +31,7 @@
           />
           {% else %}
           <img
-            src="{% static 'ecom/img/back2.jpg' %}"
+            src="{% static 'ecom/img/def_profile.jpg' %}"
             alt="Profile Picture"
             style="max-height: 280px; max-width: 200px; border-radius: 5%"
           />
@@ -59,7 +59,7 @@
           >
         </div>
 
-        <label> Choose Documents </label>
+        <label> Choose Documents *</label>
         <div class="col-xl-12">
           <div class="mb-4">
             <p>
@@ -206,7 +206,7 @@
           aria-expanded="false"
           aria-controls="collapseExample"
         >
-          Upload Documents
+          Upload Documents *
         </a>
         <div class="collapse" id="collapseD">
           <div class="col-xl-12">
@@ -246,12 +246,12 @@
           <!-- end col -->
         </div>
         <div class="form-group" style="margin-top: 20px">
-          <label>First Name</label>
+          <label>First Name *</label>
           {{ profile_form.first_name }}
         </div>
 
         <div class="form-group">
-          <label>Last Name</label>
+          <label>Last Name *</label>
           {{ profile_form.last_name }}
         </div>
 
@@ -260,6 +260,17 @@
           {{vendor_form.vendor_description}}
         </div>
 
+        
+        <div class="form-group">
+          <label><b>Email *</b></label>
+          {{ profile_form.email }}
+        </div>
+        
+        <div class="form-group">
+          <label><b>Gender</b></label>
+          {{ profile_form.gender }}
+        </div>
+        
         <div class="form-group">
           <label><b>Address *</b></label>
           {{profile_form.address}}
@@ -267,7 +278,6 @@
             >powered by Google</small
           >
         </div>
-
         <div class="form-group">
           <label><b>Country *</b></label>
           {{profile_form.country}}
@@ -285,6 +295,35 @@
           {{profile_form.pin_code}}
         </div>
 
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label><b>Facebook</b></label>
+              {{ profile_form.facebook }}
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="form-group">
+              <label><b>LinkedIn</b></label>
+              {{ profile_form.linkedin }}
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="form-group">
+              <label><b>Twitter</b></label>
+              {{ profile_form.twitter }}
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="form-group">
+              <label><b>Instagram</b></label>
+              {{ profile_form.instagram }}
+            </div>
+          </div>
+        </div>
         <button
           type="submit"
           class="btn btn-primary btn-rounded waves-effect waves-light"

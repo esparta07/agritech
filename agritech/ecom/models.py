@@ -223,15 +223,22 @@ class Cart(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def clean(self):
+        user = self.user
+        if not user.is_verified:
+            raise ValidationError("User must be verified to invest")
+        
         max_shares_per_user = self.project.max_shares_per_user
         total_shares = self.project.total_no_shares
+
         # Check if the quantity exceeds the maximum shares per user
         if self.quantity > max_shares_per_user:
             raise ValidationError("Quantity exceeds the maximum shares per user")
+
         # Check if the quantity exceeds the available shares
         if self.quantity > total_shares:
             raise ValidationError("No more shares available")
-        existing_cart = Cart.objects.filter(user=self.user).exclude(pk=self.pk).first()
+
+        existing_cart = Cart.objects.filter(user=user).exclude(pk=self.pk).first()
         if existing_cart:
             raise ValidationError("Only one project is allowed per user in the cart.")
 

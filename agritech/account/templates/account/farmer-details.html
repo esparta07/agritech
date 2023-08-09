@@ -95,7 +95,7 @@
                                                 </a>                                    
                                             </div>
                                             <div class="ltn__feature-info">
-                                                <h4><a href="service.html">{{ project.project_title }}</a></h4>
+                                                <h4><a href="{% url 'ecom:product' id=project.id %}">{{ project.project_title }}</a></h4>
                                                 <span class="greenish">रु‎ {{project.value_of_share}}</span><br>
                                             </div>
                                         </div>
