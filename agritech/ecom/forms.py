@@ -31,7 +31,7 @@ class ProjectForm(forms.ModelForm):
         required=False
     )
     extra_images = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'class': 'form-control-file', 'multiple': True}),
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control-file', 'multiple': False}),
         required=False
     )
   
@@ -61,7 +61,7 @@ class EditProjectForm(forms.ModelForm):
     )
     
     extra_images = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'class': 'form-control-file', 'multiple': True}),
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control-file', 'multiple': False}),
         required=False
     )
 
